@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: bash -c "rm /app/tmp/pids/server.pid; bundle exec rails s -p 3000 -b '0.0.0.0'"
+    # command: bash -c "rm /app/tmp/pids/server.pid; ./bin/server"
+    volumes:
+      - .:/app
+      - bundle_install:/app/vendor/bundle
+      - bundle:/app/.bundle
+      - node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    links:
+      - redis
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7.10
+    environment:
+      MYSQL_ROOT_PASSWORD: 'pass'
+    ports:
+      - '3306:3306'
+    volumes:
+      - db-data:/var/lib/mysql
+
+  redis:
+    image: redis
+
+volumes:
+  bundle_install:
+    driver: local
+  bundle:
+    driver: local
+  node_modules:
+    driver: local
+  db-data:
+    driver: local
