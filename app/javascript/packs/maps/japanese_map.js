@@ -7,12 +7,12 @@
 
 // import Vue from 'vue/dist/vue.esm'
 import Vue from 'vue'
-import Maps from '../../components/maps/maps.vue'
+import JapaneseMap from '../../components/maps/JapaneseMap.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     el: '#map',
-    components: { Maps }
+    components: { JapaneseMap }
   })
 
   console.log(app)
