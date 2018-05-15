@@ -1,9 +1,11 @@
 h1 Prefectures#index
 p Find me in app/views/prefectures/index.html.erb
-/ - @prefectures.each do |pre|
-/   p
-/     = pre.name
+div#prefectures
+  - @regions.each do |region|
+    li v-on:click="expand('#{region.name}')"
+      = region.name
 div#map
   japanese-map
 
+= javascript_pack_tag 'prefectures/form'
 = javascript_pack_tag 'maps/japanese_map'
