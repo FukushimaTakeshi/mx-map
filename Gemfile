@@ -28,6 +28,8 @@ gem 'webpacker'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'slim-rails'
+gem 'bulma-rails', '~> 0.7.1'
+gem 'turbolinks', '~> 5'
 
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'
