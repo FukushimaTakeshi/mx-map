@@ -1,11 +1,33 @@
-h1 Prefectures#index
-p Find me in app/views/prefectures/index.html.erb
-div#prefectures
-  - @regions.each do |region|
-    li v-on:click="expand('#{region.name}')"
-      = region.name
-div#map
-  japanese-map
+
+/ section class="hero is-info is-medium"
+
+div.container
+  h1.title Prefectures#index
+  div#prefectures
+    div class="columns is-mobile is-multiline is-centered"
+      - @regions.each_with_index do |region, index|
+
+        div class="column is-half"
+          div class="bd-notification is-primary" v-on:click="view = 'v-#{index}'"
+            = region.name
+            | {{view}}
+
+        transition name="bounce"
+          div class="column is-half" v-if="view === 'v-#{index}'"
+            - @prefectures.where(region_id: region.id).each do |pref|
+              div class="bd-notification is-primary"
+                = pref.name
+
+    / div.tile
+      div class="tile is-mobile is-vertical is-multiline is-centered"
+        - @regions.each_with_index do |region, index|
+          div class="tile is-child notification is-white" v-on:click="getPref('#{region.name}', $event)" data-v="#{index}"
+            = region.name
+
+      | {{selected_prefs}}
+
+  div#map
+    japanese-map
 
 = javascript_pack_tag 'prefectures/form'
 = javascript_pack_tag 'maps/japanese_map'

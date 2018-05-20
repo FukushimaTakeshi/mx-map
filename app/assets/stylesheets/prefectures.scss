@@ -1,3 +1,21 @@
 // Place all the styles related to the prefectures controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.bounce-enter-active {
+  animation: bounce-in .3s;
+}
+// .bounce-leave-active {
+//   animation: bounce-in .5s reverse;
+// }
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
