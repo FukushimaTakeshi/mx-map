@@ -8,12 +8,11 @@ div.container
       - @regions.each_with_index do |region, index|
 
         div class="column is-half"
-          div class="bd-notification is-primary" v-on:click="view = 'v-#{index}'"
+          div class="bd-notification is-primary" v-on:click="setArea('#{index}')"
             = region.name
-            | {{view}}
 
         transition name="bounce"
-          div class="column is-half" v-if="view === 'v-#{index}'"
+          div class="column is-half" v-if="selectedArea === '#{index}'"
             - @prefectures.where(region_id: region.id).each do |pref|
               div class="bd-notification is-primary"
                 = pref.name
