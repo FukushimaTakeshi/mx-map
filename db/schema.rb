@@ -10,19 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_13_150158) do
+ActiveRecord::Schema.define(version: 2018_05_24_141945) do
 
-  create_table "prefectures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "off_road_circuits", force: :cascade do |t|
     t.string "name"
-    t.bigint "region_id"
+    t.string "address"
+    t.string "url"
+    t.integer "prefecture_id"
+    t.integer "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prefecture_id"], name: "index_off_road_circuits_on_prefecture_id"
+    t.index ["region_id"], name: "index_off_road_circuits_on_region_id"
+  end
+
+  create_table "prefectures", force: :cascade do |t|
+    t.string "name"
+    t.integer "region_id"
     t.index ["region_id"], name: "index_prefectures_on_region_id"
   end
 
-  create_table "regions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "regions", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "prefectures", "regions"
 end
