@@ -1,4 +1,4 @@
-class PrefecturesController < ApplicationController
+class RegionsController < ApplicationController
   def index
     @prefectures = Prefecture.all
     @regions = Region.all

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PrefecturesController, type: :controller do
+RSpec.describe RegionsController, type: :controller do
 
   describe "GET #index" do
     it "returns http success" do
