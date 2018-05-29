@@ -16,7 +16,7 @@ div.container
               ul v-if="selectedArea === '#{index}'"
                 - @prefectures.where(region_id: region.id).each do |pref|
                   li
-                    a class="is-primary"
+                    = link_to region_prefectures_path(pref)
                       = pref.name
 
 

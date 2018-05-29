@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  resources :prefectures, only: [:index, :show]
+  resources :regions, only: [:index, :show] do
+    resources :prefectures, param: :id, only: [:index]
+  end
 end

@@ -62,3 +62,7 @@ Prefecture.find_or_create_by(id: 44, region_id: 8, name: '大分県')
 Prefecture.find_or_create_by(id: 45, region_id: 8, name: '宮崎県')
 Prefecture.find_or_create_by(id: 46, region_id: 8, name: '鹿児島県')
 Prefecture.find_or_create_by(id: 47, region_id: 8, name: '沖縄県')
+
+OffRoadCircuit.find_or_create_by(id: 1, name: 'テストコース', address: '東京都中央区', url: 'http://hogehoge.com', prefecture_id: 13, region_id: 3)
+OffRoadCircuit.find_or_create_by(id: 2, name: 'テストコース２', address: '東京都千代田区', url: 'http://hogehoge2.com', prefecture_id: 13, region_id: 3)
+OffRoadCircuit.find_or_create_by(id: 3, name: 'テストコース３', address: '東京都新宿区', url: 'http://hogehoge3.com', prefecture_id: 13, region_id: 3)
