@@ -18,6 +18,8 @@ services:
     stdin_open: true
     depends_on:
       - db
+    environment:
+      - PLACES_API_KEY=
 
   db:
     image: mysql:5.7.10

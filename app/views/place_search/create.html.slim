@@ -1,0 +1,11 @@
+h1 PlaceSearch#create
+p Find me in app/views/place_search/create.html.slim
+
+- @place_search.each do |name, place_id|
+  li
+    = "名称：#{name}"
+  p
+    = "ID：#{place_id}"
+  br
+
+= link_to new_place_search_path

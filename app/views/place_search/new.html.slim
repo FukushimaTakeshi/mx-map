@@ -1,0 +1,16 @@
+h1 PlaceSearch#new
+p Find me in app/views/place_search/new.html.slim
+
+= form_with(model: @place_search, url: place_search_index_path, local: true) do |f|
+
+  - if @place_search.errors.any?
+    div
+      strong
+      | 入力内容にエラーがあります
+      ul
+        - @place_search.errors.full_messages.each do |msg|
+          li
+            = msg
+
+  = f.text_field :query
+  = f.submit '検索'
