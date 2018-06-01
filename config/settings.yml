@@ -1,0 +1,7 @@
+apis:
+  google:
+    base_url: "https://maps.googleapis.com"
+    place:
+      text_search: "/maps/api/place/textsearch/json"
+      details: "/maps/api/place/details/json"
+      photo: "/maps/api/place/photo"
