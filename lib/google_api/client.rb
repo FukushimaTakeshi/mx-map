@@ -41,8 +41,11 @@ module GoogleApi
     end
 
     def parse_response(response)
-      if response.success?
+      case response.status
+      when 200..299, 400..499
         JSON.parse(response.body)
+      when 300..399
+        response.headers
       else
         raise 'api_error'
       end
