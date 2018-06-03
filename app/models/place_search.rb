@@ -9,4 +9,9 @@ class PlaceSearch
     google_api_client = GoogleApi::Client.new
     google_api_client.text_search(@query)
   end
+
+  def details
+    google_api_client = GoogleApi::Client.new
+    google_api_client.details(@query)
+  end
 end

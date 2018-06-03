@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   end
 
   resources :place_search, only: [:new, :create]
+  resources :place_details_search, param: :place_id, only: [:show]
 end

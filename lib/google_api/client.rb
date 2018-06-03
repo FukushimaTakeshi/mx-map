@@ -11,7 +11,7 @@ module GoogleApi
     def text_search(query)
       params = { query: query }.merge(api_key)
       response = http_get(Settings.apis.google.place.text_search, params)
-      parse_response(response).map do |result|
+      parse_response(response)['results'].map do |result|
         [result['name'], result['place_id']]
       end
     end
@@ -19,9 +19,15 @@ module GoogleApi
     def details(place_id)
       params = { placeid: place_id }.merge(api_key)
       response = http_get(Settings.apis.google.place.details, params)
-      parse_response(response).map do |result|
-        result['photos']['photo_reference']
+      parse_response(response)['result']['photos'].map do |photo|
+        photo['photo_reference']
       end
+    end
+
+    def photo(photo_reference)
+      params = { photoreference: photo_reference, maxheight: 1000 }.merge(api_key)
+      response = http_get(Settings.apis.google.place.photo, params)
+      parse_response(response)
     end
 
     private
@@ -36,7 +42,7 @@ module GoogleApi
 
     def parse_response(response)
       if response.success?
-        JSON.parse(response.body)['results']
+        JSON.parse(response.body)
       else
         raise 'api_error'
       end
