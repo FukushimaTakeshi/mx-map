@@ -22,6 +22,9 @@ module GoogleApi
       parse_response(response)['result']['photos'].map do |photo|
         photo['photo_reference']
       end
+      parse_response(response)['result']['reviews'].map do |review|
+        [review['rating'], review['relative_time_description'], review['text']]
+      end
     end
 
     def photo(photo_reference)
@@ -46,6 +49,8 @@ module GoogleApi
         JSON.parse(response.body)
       when 300..399
         response.headers
+      when 500..599
+        raise
       else
         raise 'api_error'
       end
