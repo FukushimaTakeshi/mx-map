@@ -19,12 +19,13 @@ module GoogleApi
     def details(place_id)
       params = { placeid: place_id }.merge(api_key)
       response = http_get(Settings.apis.google.place.details, params)
-      parse_response(response)['result']['photos'].map do |photo|
-        photo['photo_reference']
-      end
-      parse_response(response)['result']['reviews'].map do |review|
-        [review['rating'], review['relative_time_description'], review['text']]
-      end
+      parse_response(response)
+      # parse_response(response)['result']['photos'].map do |photo|
+      #   photo['photo_reference']
+      # end
+      # parse_response(response)['result']['reviews'].map do |review|
+      #   [review['rating'], review['relative_time_description'], review['text']]
+      # end
     end
 
     def photo(photo_reference)

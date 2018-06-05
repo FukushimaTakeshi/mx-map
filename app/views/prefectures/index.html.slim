@@ -1,7 +1,9 @@
+script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"
+
 h1.title Prefectures#index
 
 div.box
-  - @off_road_circuit.each do |circuit|
+  - @off_road_circuits.each do |circuit|
     article.media
       div.media-left
         figure class="image is-128x128"
@@ -9,23 +11,25 @@ div.box
 
       div.media-content
         div.content
-          h4
-            = circuit.name
+          h6 = circuit.name
+
+          nav class="level is-mobile"
+            div.level-left
+              div class="level-item has-text-success" aria-label="reply" = @reviews[circuit.place_id]
+              - @reviews[circuit.place_id].to_i.times do |i|
+                div class="level-item" aria-label="reply"
+                  span class="icon is-small has-text-success"
+                    i class="fas fa-star" aria-hidden="true"
+
           small
-            = "住所：#{circuit.address}"
+            div class="level is-mobile"
+              div class="level-left"
+                i class="level-item fas fa-map-marker-alt"
+                = @vicinity[circuit.place_id]
+
           small
-            = circuit.url
-
-        nav class="level is-mobile"
-          div.level-left
-            a class="level-item" aria-label="reply"
-              span class="icon is-small"
-                i class="fas fa-reply" aria-hidden="true"
-
-            a class="level-item" aria-label="retweet"
-              span class="icon is-small"
-                i class="fas fa-retweet" aria-hidden="true"
-
-            a class="level-item" aria-label="like"
-              span class="icon is-small"
-                i class="fas fa-heart" aria-hidden="true"
+            div class="level is-mobile"
+              div class="level-left"
+                / span class="has-text-info"
+                i class="level-item fas fa-info-circle has-text-info"
+                = circuit.url
