@@ -32,6 +32,9 @@ services:
 
   redis:
     image: redis
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
 
 volumes:
   bundle_install:
@@ -41,4 +44,6 @@ volumes:
   node_modules:
     driver: local
   db-data:
+    driver: local
+  redis-data:
     driver: local

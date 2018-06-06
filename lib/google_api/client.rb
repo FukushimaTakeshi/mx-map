@@ -17,7 +17,7 @@ module GoogleApi
     end
 
     def details(place_id)
-      params = { placeid: place_id }.merge(api_key)
+      params = { placeid: place_id, language: 'ja' }.merge(api_key)
       response = http_get(Settings.apis.google.place.details, params)
       parse_response(response)
       # parse_response(response)['result']['photos'].map do |photo|

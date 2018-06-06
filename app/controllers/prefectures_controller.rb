@@ -1,11 +1,9 @@
 class PrefecturesController < ApplicationController
   def index
     @off_road_circuits = OffRoadCircuit.where(prefecture_id: params[:region_id])
-    @photos = {}
-    @reviews = {}
-    @vicinity = {}
+    @details = {}
     @off_road_circuits.each do |circuit|
-      circuit_details(circuit.place_id)
+      circuit_details(circuit.place_id.to_sym)
     end
   end
 
@@ -17,11 +15,14 @@ class PrefecturesController < ApplicationController
   def circuit_details(place_id)
     details = JSON.parse(Rails.cache.read(place_id))
 
-    @photos[place_id] = details['result']['photos'].map do |photo|
+    photo_array = details['result']['photos'].map do |photo|
       photo['photo_reference']
     end
 
-    @reviews[place_id] = details['result']['rating']
-    @vicinity[place_id] = details['result']['vicinity']
+    @details[place_id] = {
+      photos: photo_array,
+      rating: details['result']['rating'],
+      vicinity: details['result']['vicinity']
+     }
   end
 end
