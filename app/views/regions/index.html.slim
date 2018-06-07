@@ -16,8 +16,11 @@ div.container
               ul v-if="selectedArea === '#{index}'"
                 - @prefectures.where(region_id: region.id).each do |pref|
                   li
-                    = link_to region_prefectures_path(pref)
-                      = pref.name
+                    - if @prefectures_count[pref.name]
+                      = link_to region_prefectures_path(pref)
+                        = "#{pref.name} (#{@prefectures_count[pref.name] || '-'})"
+                    - else
+                      a = "#{pref.name} (-)"
 
 
     / div.tile

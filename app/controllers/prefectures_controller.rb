@@ -12,8 +12,14 @@ class PrefecturesController < ApplicationController
 
   private
 
+  def cached_details(place_id)
+    Rails.cache.fetch(place_id, expired_in: 10.days) do
+      PlaceSearch.new(query: place_id).details
+    end
+  end
+
   def circuit_details(place_id)
-    details = JSON.parse(Rails.cache.read(place_id))
+    details = cached_details(place_id)
 
     photo_array = details['result']['photos'].map do |photo|
       photo['photo_reference']
