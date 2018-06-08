@@ -1,5 +1,6 @@
 class PrefecturesController < ApplicationController
   def index
+    @prefecture = Prefecture.find(params[:region_id])
     @off_road_circuits = OffRoadCircuit.where(prefecture_id: params[:region_id])
     @details = {}
     @off_road_circuits.each do |circuit|
