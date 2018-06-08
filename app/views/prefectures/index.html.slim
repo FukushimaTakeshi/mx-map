@@ -24,7 +24,8 @@ section.section
 
                 nav class="level is-mobile"
                   div.level-left
-                    div class="level-item has-text-success" aria-label="reply" = @details[place_id][:rating]
+                    div class="has-text-success"
+                      = @details[place_id][:rating]
                     - @details[place_id][:rating].to_i.times do |i|
                       span class="icon mdi-18px has-text-success"
                         i class="fas fa-star"
@@ -32,5 +33,5 @@ section.section
                 small
                   div class="level is-mobile"
                     div class="level-left"
-                      i class="level-item fas fa-map-marker-alt icon is-small"
+                      i class="fas fa-map-marker-alt icon is-small"
                       = @details[place_id][:vicinity]
