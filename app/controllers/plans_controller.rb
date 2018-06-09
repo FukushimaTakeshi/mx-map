@@ -1,6 +1,6 @@
 class PlansController < ActionController::Base
   def show
-    plans = Plan.all
+    plans = Plan.find(params[:id])
     render json: { plans: plans }
   end
 end
