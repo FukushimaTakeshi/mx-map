@@ -3,8 +3,11 @@ script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"
 
 section.section
   div class="container grid"
-    div#map
-      plan
+  div id="map"
+    / | {{ putAttendance(1) }}
+    / div id="map"
+    /   plan
+    /     | <child-component :fuga=fuga></child-component>
 
     h1.title Prefectures#index
 
@@ -12,14 +15,27 @@ section.section
       p class="panel-heading"
         = "#{@prefecture.name}のモトクロスコース"
 
+      / test-component :user-id="#{@off_road_circuits.pluck(:id)}"
+      / span v-if="testfunc"
+      /   | {{ testfunc }}
+      /
+      / child-component val="message"
+      / span v-if="getAttendance(#{@off_road_circuits.pluck(:id)})"
 
+
+      / span v-if="output"
+      /   li v-for="val in output"{{ val.attendance }}
+        / | {{ output[1].attendance }}
+      / | {{ plans[2].attendance }}
+      / | {{ plans[3].attendance }}
       - @off_road_circuits.each do |circuit|
         - place_id = circuit.place_id.to_sym
         a class="panel-block" href="http://hoge"
           article.media
             div.media-left
-              figure class="image is-128x128"
-                img src="https://bulma.io/images/placeholders/128x128.png" alt="Image"
+              - circuit.photo.each do |photo|
+                figure class="image is-128x128"
+                  = image_tag photo.url
 
             div.media-content
               div.content
@@ -38,3 +54,10 @@ section.section
                     div class="level-left"
                       i class="fas fa-map-marker-alt icon is-small"
                       = @details[place_id][:vicinity]
+
+        / plan
+        / span class="icon mdi-18px" v-on:click.once="putAttendance(#{circuit.id})"
+        /   i class="fas fa-heart"
+        / | {{ plans[2].attendance }}
+        / li v-for="val in plans"{{ val.attendance }}
+        / | {{plans}}

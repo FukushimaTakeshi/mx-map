@@ -22,12 +22,7 @@ class PrefecturesController < ApplicationController
   def circuit_details(place_id)
     details = cached_details(place_id)
 
-    photo_array = details['result']['photos'].map do |photo|
-      photo['photo_reference']
-    end
-
     @details[place_id] = {
-      photos: photo_array,
       rating: details['result']['rating'],
       vicinity: details['result']['vicinity']
      }
