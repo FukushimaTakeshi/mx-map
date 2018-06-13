@@ -25,7 +25,7 @@ module GoogleApi
     def photo(photo_reference)
       params = { photoreference: photo_reference, maxheight: 1000 }.merge(api_key)
       response = http_get(Settings.apis.google.place.photo, params)
-      parse_response(response)
+      response.headers[:location]
     end
 
     private

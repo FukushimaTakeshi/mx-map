@@ -68,3 +68,7 @@ OffRoadCircuit.find_or_create_by(id: 2, name: 'オフロードビレッジ', add
 OffRoadCircuit.find_or_create_by(id: 3, name: '成田MXパーク', address: '東京都新宿区', url: 'http://hogehoge3.com', place_id: 'ChIJo0TcyLz1ImARbek38pmlVYg', prefecture_id: 13, region_id: 3)
 
 Plan.find_or_create_by(id: 1, date: Date.today, attendance: 6, off_road_circuit_id: 1)
+Plan.find_or_create_by(id: 2, date: Date.today, attendance: 2, off_road_circuit_id: 2)
+Plan.find_or_create_by(id: 3, date: Date.today, attendance: 15, off_road_circuit_id: 3)
+
+Photo.find_or_create_by(id: 1, url: 'https://lh3.googleusercontent.com/p/AF1QipMOEn0csegkEVxm2e1E-vhcVVVYonBwN4MYdpBP=s1600-h1000', off_road_circuit_id: 1)
