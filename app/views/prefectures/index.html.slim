@@ -1,5 +1,6 @@
 script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"
-= javascript_pack_tag 'plans/form'
+/ = javascript_pack_tag 'plans/form'
+= javascript_pack_tag 'plans/carousel'
 
 section.section
   div class="container grid"
@@ -28,32 +29,35 @@ section.section
         / | {{ output[1].attendance }}
       / | {{ plans[2].attendance }}
       / | {{ plans[3].attendance }}
-      - @off_road_circuits.each do |circuit|
-        - place_id = circuit.place_id.to_sym
-        a class="panel-block" href="http://hoge"
-          article.media
-            div.media-left
-              - circuit.photo.each do |photo|
+      div id="form"
+        - @off_road_circuits.each do |circuit|
+          - photos = circuit.photo.map{ |photo| photo.url }
+
+          - place_id = circuit.place_id.to_sym
+
+          a class="panel-block" href="http://hoge"
+            article.media
+              div.media-left
                 figure class="image is-128x128"
-                  = image_tag photo.url
+                  carousel :img-list="#{photos}"
 
-            div.media-content
-              div.content
-                h6 = circuit.name
+              div.media-content
+                div.content
+                  h6 = circuit.name
 
-                nav class="level is-mobile"
-                  div.level-left
-                    div class="has-text-success"
-                      = @details[place_id][:rating]
-                    - @details[place_id][:rating].to_i.times do |i|
-                      span class="icon mdi-18px has-text-success"
-                        i class="fas fa-star"
+                  nav class="level is-mobile"
+                    div.level-left
+                      div class="has-text-success"
+                        = @details[place_id][:rating]
+                      - @details[place_id][:rating].to_i.times do |i|
+                        span class="icon mdi-18px has-text-success"
+                          i class="fas fa-star"
 
-                small
-                  div class="level is-mobile"
-                    div class="level-left"
-                      i class="fas fa-map-marker-alt icon is-small"
-                      = @details[place_id][:vicinity]
+                  small
+                    div class="level is-mobile"
+                      div class="level-left"
+                        i class="fas fa-map-marker-alt icon is-small"
+                        = @details[place_id][:vicinity]
 
         / plan
         / span class="icon mdi-18px" v-on:click.once="putAttendance(#{circuit.id})"
