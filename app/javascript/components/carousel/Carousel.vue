@@ -19,7 +19,7 @@
       }
     },
     mounted: function() {
-      this.onTimer();
+      this.onTimer()
     },
     methods:{
       next: function() {
@@ -27,8 +27,8 @@
       },
       onTimer: function () {
         setInterval(() => {
-          this.next();
-        }, 2000)
+          this.next()
+        }, 3000)
       }
     }
   }
@@ -45,23 +45,28 @@
   transform: translateX(-300px);
 }
 
-.carousel{
-  // width:100%;
 
-  &__slider{
-    overflow: hidden;
-    position: relative;
-    margin:0 auto;
-      background:white;
+.carousel{
+  &__img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
   }
 
-  &__img{
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    height:128px;
-    width:128px;
+  &__slider{
+    position: relative;
+    width: 156px;
+    height: 128px;
+    border: 1px solid lightgray;
+    img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
   }
 }
 </style>

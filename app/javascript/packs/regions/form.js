@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import TurbolinksAdapter from 'vue-turbolinks'
+Vue.use(TurbolinksAdapter)
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
     el: "#prefectures",
     data: {
