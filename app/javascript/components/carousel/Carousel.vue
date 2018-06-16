@@ -56,8 +56,8 @@
 
   &__slider{
     position: relative;
-    width: 156px;
-    height: 128px;
+    width: 130px;
+    height: 120px;
     border: 1px solid lightgray;
     img {
       position: absolute;

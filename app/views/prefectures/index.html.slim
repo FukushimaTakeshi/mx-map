@@ -1,66 +1,59 @@
 script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"
-/ = javascript_pack_tag 'plans/form'
-= javascript_pack_tag 'plans/carousel'
+= javascript_pack_tag 'prefectures/form'
 
-section.section
-  div class="container grid"
-  div id="map"
-    / | {{ putAttendance(1) }}
-    / div id="map"
-    /   plan
-    /     | <child-component :fuga=fuga></child-component>
+div class="container grid"
 
-    h1.title Prefectures#index
+  h1.title Prefectures#index
 
-    nav class="panel"
-      p class="panel-heading"
-        = "#{@prefecture.name}のモトクロスコース"
+  nav class="panel"
+    p class="panel-heading"
+      = "#{@prefecture.name}のモトクロスコース"
 
-      / test-component :user-id="#{@off_road_circuits.pluck(:id)}"
-      / span v-if="testfunc"
-      /   | {{ testfunc }}
-      /
-      / child-component val="message"
-      / span v-if="getAttendance(#{@off_road_circuits.pluck(:id)})"
+    div id="form"
+      - @off_road_circuits.each do |circuit|
+        - place_id = circuit.place_id.to_sym
+
+        a class="panel-block" href="http://hoge"
+          article.media
+            div.media-left
+              carousel :img-list="#{circuit.photo.map(&:url)}"
+
+            div.media-content
+              div.content
+                h6 = circuit.name
+
+                nav class="level is-mobile"
+                  div.level-left
+                    div class="has-text-success"
+                      = @details[place_id][:rating]
+                    - @details[place_id][:rating].to_i.times do |i|
+                      span class="icon mdi-18px has-text-success"
+                        i class="fas fa-star"
+
+                small
+                  div class="level is-mobile"
+                    div class="level-left"
+                      i class="fas fa-map-marker-alt icon is-small"
+                      = @details[place_id][:vicinity]
+
+        div.notification.is-dange
+          nav.level.is-mobile
+            div.level-item.has-text-centered
+              div
+                p.heading mm/dd(土)に走るよ！
+                p.title-em.icon.mdi-18px.has-text-link
+                  i.fas.fa-heart
+                  plan :circuit-id="#{circuit.id}"
+
+            div.level-item.has-text-centered
+              div
+                p.heading mm/dd(土)に走るよ！
+                p.title-em.icon.mdi-18px.has-text-link
+                  i.fas.fa-heart
+                  plan :circuit-id="#{circuit.id}"
 
 
-      / span v-if="output"
-      /   li v-for="val in output"{{ val.attendance }}
-        / | {{ output[1].attendance }}
-      / | {{ plans[2].attendance }}
-      / | {{ plans[3].attendance }}
-      div id="form"
-        - @off_road_circuits.each do |circuit|
-          - photos = circuit.photo.map{ |photo| photo.url }
-
-          - place_id = circuit.place_id.to_sym
-
-          a class="panel-block" href="http://hoge"
-            article.media
-              div.media-left
-                carousel :img-list="#{photos}"
-
-              div.media-content
-                div.content
-                  h6 = circuit.name
-
-                  nav class="level is-mobile"
-                    div.level-left
-                      div class="has-text-success"
-                        = @details[place_id][:rating]
-                      - @details[place_id][:rating].to_i.times do |i|
-                        span class="icon mdi-18px has-text-success"
-                          i class="fas fa-star"
-
-                  small
-                    div class="level is-mobile"
-                      div class="level-left"
-                        i class="fas fa-map-marker-alt icon is-small"
-                        = @details[place_id][:vicinity]
-
-        / plan
-        / span class="icon mdi-18px" v-on:click.once="putAttendance(#{circuit.id})"
-        /   i class="fas fa-heart"
-        / | {{ plans[2].attendance }}
-        / li v-for="val in plans"{{ val.attendance }}
-        / | {{plans}}
+footer.footer
+  div.container
+    div.content.has-text-right
+      = image_tag 'powered_by_google_on_white.png', size: '85x85'
