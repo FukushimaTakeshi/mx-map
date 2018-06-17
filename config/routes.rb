@@ -8,5 +8,5 @@ Rails.application.routes.draw do
 
   resources :place_details_search, param: :place_id, only: [:show]
 
-  resources :plans, only: [:show]
+  resources :plans, only: [:index, :create, :destroy]
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_13_115920) do
+ActiveRecord::Schema.define(version: 2018_06_17_120554) do
 
   create_table "off_road_circuits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -35,10 +35,11 @@ ActiveRecord::Schema.define(version: 2018_06_13_115920) do
 
   create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "date"
-    t.integer "attendance"
     t.bigint "off_road_circuit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uuid"
+    t.index ["date", "uuid", "off_road_circuit_id"], name: "unique_date_uuid_circuit", unique: true
     t.index ["off_road_circuit_id"], name: "index_plans_on_off_road_circuit_id"
   end
 
