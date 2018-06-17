@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      planId: 0,
+      planId: null,
       attendance: 0,
       exists: false
     }
@@ -38,8 +38,13 @@ export default {
         process.exit()
       }
       this.attendance = res.data.plans
-      this.exists = res.data.exists
-      this.planId = res.data.id
+
+      if (res.data.id == null) {
+        this.exists = false
+      } else {
+        this.exists = true
+        this.planId = res.data.id
+      }
     },
 
     createAttendance: async function() {
