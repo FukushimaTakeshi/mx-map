@@ -54,6 +54,7 @@ export default {
         process.exit()
       }
       this.getAttendance()
+      console.log(holidayThisWeek())
     },
 
     deleteAttendance: async function() {
@@ -63,7 +64,30 @@ export default {
         process.exit()
       }
       this.getAttendance()
-    }
+    },
   }
+}
+
+function holidayThisWeek() {
+  const today = new Date()
+
+  if (today.getDay() !== 1) {
+    today.setDate(today.getDate() - today.getDay() + 1)
+  } else if (today.getDay() == 0) {
+    today.setDate(today.getDate() - 6)
+  }
+
+  const holidays = JapaneseHolidays.getHolidaysOf(today.getFullYear())
+
+  var holidayList = holidays.filter(
+    function (holiday) {
+      return(
+        (today.getMonth()+1) == holiday.month &&
+          (today.getDate() <= holiday.date) && (today.getDate() > (holiday.date - 5))
+      )
+    }
+  )
+  return holidayList
+
 }
 </script>
