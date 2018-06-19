@@ -32,14 +32,10 @@ export default {
   props: ['circuitId'],
   data() {
     return {
-      planId: null,
-      attendance: 0,
-      exists: false,
       holidayList: []
     }
   },
   mounted: function() {
-
     const today = new Date()
     let saturday = new Date()
     let sunday = new Date()
@@ -67,7 +63,6 @@ export default {
         attendance: 0
       }
     ]
-    // holidayThisWeek()
   },
   methods: {
     getAttendance: async function(date, index) {
