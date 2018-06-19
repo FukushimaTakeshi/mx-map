@@ -1,7 +1,7 @@
 class PlansController < ActionController::Base
   def index
-    plans = Plan.where(off_road_circuit_id: params[:off_road_circuit_id]).count
-    id = Plan.find_by(off_road_circuit_id: params[:off_road_circuit_id], uuid: session['session_id'])&.id
+    plans = Plan.where(date: params[:date], off_road_circuit_id: params[:off_road_circuit_id]).count
+    id = Plan.find_by(date: params[:date], off_road_circuit_id: params[:off_road_circuit_id], uuid: session['session_id'])&.id
 
     render json: {
       plans: plans,

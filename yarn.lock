@@ -3341,6 +3341,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+japanese-holidays@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/japanese-holidays/-/japanese-holidays-1.0.6.tgz#27c1c25b0443a33eafc780a38a80d0ecf9ff45bc"
+
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
