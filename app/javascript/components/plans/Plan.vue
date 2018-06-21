@@ -1,21 +1,21 @@
 <template>
   <span class="plan">
-    <div class="vue-carousel">
-      <div @click="back()" :disabled="visible_content == 0" class="vue-carousel__back">
+    <div class="vue-slide">
+      <div @click="back()" :disabled="visible_content == 0" class="vue-slide__back">
         <p class="icon is-medium mdi-18px">
           <i class="fas fa-angle-left"></i>
         </p>
       </div>
 
       <transition :name="transition_name">
-        <div class="vue-carousel__body"
+        <div class="vue-slide__body"
           :key="index"
           v-for="(dateList, index) in dateList"
           v-if="visible_content == index">
 
-          <div class="vue-carousel__days">
+          <div class="vue-slide__days">
             <div v-for="(holiday, index) in holidayList" :key="holiday.id" class="has-text-centered">
-              <div class="vue-carousel__day">
+              <div class="vue-slide__day">
                 <p class="heading">
                   {{ holiday.date}}{{ holiday.day, getAttendance(holiday.date, index) }}に走るよ！
                 </p>
@@ -35,7 +35,7 @@
         </div>
       </transition>
 
-      <div @click="next()" :disabled="visible_content == dateList.length - 1" class="vue-carousel__next">
+      <div @click="next()" :disabled="visible_content == dateList.length - 1" class="vue-slide__next">
         <p class="icon is-medium mdi-18px">
           <i class="fas fa-angle-right"></i>
         </p>
@@ -200,7 +200,7 @@ function holidayThisWeek() {
   transform: translateX(-100%);
 }
 
-.vue-carousel{
+.vue-slide{
   display: flex;
   flex-wrap: nowrap;
   height: auto;
