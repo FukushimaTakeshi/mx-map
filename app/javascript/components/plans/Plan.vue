@@ -1,16 +1,21 @@
 <template>
   <span class="plan">
-    <nav class="level is-mobile">
-      <!-- スライドする部分。keyを持たせることで、それぞれが個別の要素であることを示す。 -->
+    <div class="vue-carousel">
+      <div @click="back()" :disabled="visible_content == 0" class="vue-carousel__back">
+        <p class="icon is-medium mdi-18px">
+          <i class="fas fa-angle-left"></i>
+        </p>
+      </div>
+
       <transition :name="transition_name">
-        <div class="vue-carousel_body"
+        <div class="vue-carousel__body"
           :key="index"
           v-for="(dateList, index) in dateList"
           v-if="visible_content == index">
-          <!-- :style="{backgroundColor: content.bg_color}"> -->
-          <nav class="level is-mobile">
-            <div v-for="(holiday, index) in holidayList" :key="holiday.id" class="level-item has-text-centered">
-              <div>
+
+          <div class="vue-carousel__days">
+            <div v-for="(holiday, index) in holidayList" :key="holiday.id" class="has-text-centered">
+              <div class="vue-carousel__day">
                 <p class="heading">
                   {{ holiday.date}}{{ holiday.day, getAttendance(holiday.date, index) }}に走るよ！
                 </p>
@@ -25,43 +30,17 @@
                 </p>
               </div>
             </div>
-          </nav>
+          </div>
 
         </div>
       </transition>
 
-      <!-- 「PREV」「NEXT」と現在地のドット -->
-      <div class="vue-carousel_footer">
-        <div @click="back()" :disabled="visible_content == 0">
-          <i class="fas fa-angle-left"></i>
-        </div>
-        <!-- <button @click="back()" :disabled="visible_content == 0">今週</button> -->
-        <!-- <div class="vue-carousel_footer_dot"
-          v-for="(dateList, index) in dateList"
-          :class="{'is-visible' : visible_content == index}"></div> -->
-        <div @click="next()" :disabled="visible_content == dateList.length - 1">
+      <div @click="next()" :disabled="visible_content == dateList.length - 1" class="vue-carousel__next">
+        <p class="icon is-medium mdi-18px">
           <i class="fas fa-angle-right"></i>
-        </div>
-        <!-- <button @click="next()" :disabled="visible_content == dateList.length - 1">来週</button> -->
+        </p>
       </div>
-
-      <!-- <div v-for="(holiday, index) in holidayList" :key="holiday.id" class="level-item has-text-centered">
-        <div>
-          <p class="heading">
-            {{ holiday.date}}{{ holiday.day, getAttendance(holiday.date, index) }}に走るよ！
-          </p>
-
-          <p v-if="holiday.exists" class="title-em icon mdi-18px has-text-link">
-            <i class="fas fa-heart"></i>
-            <span v-on:click="deleteAttendance(holiday.date, index)">{{ holiday.attendance }}</span>
-          </p>
-          <p v-else class="title-em icon mdi-18px">
-            <i class="fas fa-heart"></i>
-            <span v-on:click="createAttendance(holiday.date, index)">{{ holiday.attendance }}</span>
-          </p>
-        </div>
-      </div> -->
-    </nav>
+    </div>
   </span>
 </template>
 
@@ -208,3 +187,42 @@ function holidayThisWeek() {
 
 }
 </script>
+
+<style lang="scss">
+.show-next-enter-active, .show-next-leave-active,
+.show-prev-enter-active, .show-prev-leave-active  {
+  transition: all .1s;
+}
+.show-next-enter, .show-prev-leave-to {
+  transform: translateX(100%);
+}
+.show-next-leave-to, .show-prev-enter {
+  transform: translateX(-100%);
+}
+
+.vue-carousel{
+  display: flex;
+  flex-wrap: nowrap;
+  height: auto;
+  align-content: space-between;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid #dbdbdb;
+  border-left: 1px solid #dbdbdb;
+  border-right: 1px solid #dbdbdb;
+
+  &__body {
+  }
+  &__days {
+    display: flex;
+  }
+  &__day {
+    margin: 3px 2px;
+  }
+  &__back {
+  }
+  &__next {
+  }
+}
+</style>
