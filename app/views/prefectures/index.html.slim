@@ -10,33 +10,43 @@ div.container.grid
   nav.panel
 
     div#form
-      - @off_road_circuits.each do |circuit|
-        - place_id = circuit.place_id.to_sym
 
-        = link_to circuit.url, class: 'panel-block'
-          article.media
-            div.media-left
-              carousel :img-list="#{circuit.photo.map(&:url)}"
+      - if @off_road_circuits.blank?
+        article.message.is-danger
+          div.message-body
+            | ごめんね。
+            p
+              | まだ#{@prefecture.name}のコースが登録されていません。
 
-            div.media-content
-              div.content
-                h6 = circuit.name
+      - else
 
-                nav.level.is-mobile
-                  div.level-left
-                    div.has-text-success
-                      = @details[place_id][:rating]
-                    - @details[place_id][:rating].to_i.times do |i|
-                      span.icon.mdi-18px.has-text-success
-                        i.fas.fa-star
+        - @off_road_circuits.each do |circuit|
+          - place_id = circuit.place_id.to_sym
 
-                small
-                  div.level.is-mobile
+          = link_to circuit.url, class: 'panel-block'
+            article.media
+              div.media-left
+                carousel :img-list="#{circuit.photo.map(&:url)}"
+
+              div.media-content
+                div.content
+                  h6 = circuit.name
+
+                  nav.level.is-mobile
                     div.level-left
-                      i.fas.fa-map-marker-alt.icon.is-small
-                      = @details[place_id][:vicinity]
+                      div.has-text-success
+                        = @details[place_id][:rating]
+                      - @details[place_id][:rating].to_i.times do |i|
+                        span.icon.mdi-18px.has-text-success
+                          i.fas.fa-star
 
-        plan :circuit-id="#{circuit.id}"
+                  small
+                    div.level.is-mobile
+                      div.level-left
+                        i.fas.fa-map-marker-alt.icon.is-small
+                        = @details[place_id][:vicinity]
+
+          plan :circuit-id="#{circuit.id}"
 
 footer.footer
   div.container
