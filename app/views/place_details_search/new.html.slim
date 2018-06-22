@@ -1,0 +1,27 @@
+
+= form_for(@off_road_circuit, url: place_details_search_index_path) do |f|
+
+  / - if @user.errors.any?
+  /
+  /     ul
+  /     - @user.errors.full_messages.each do |msg|
+  /       li= msg
+
+  div class="input-field"
+    = f.label :name
+    = f.text_field :name
+
+    = f.label :address
+    = f.text_field :address
+
+    = f.label :place_id
+    = f.text_field :place_id
+
+    = f.label :prefecture_id
+    = f.text_field :prefecture_id
+
+    = f.label :region_id
+    = f.text_field :region_id
+
+
+    = f.submit "登 録"
