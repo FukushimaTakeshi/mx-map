@@ -1,15 +1,19 @@
-
-/ section class="hero is-info is-medium"
+section.hero.is-dark.welcome.is-small
+  div.hero-body
+    div.container
+      h1.title.is-4.is-spaced
+        | 全国のモトクロスコース
+      h2.subtitle.is-6
+        | 都道府県から探す
 
 div.container
-  h1.title Regions#index
   div#prefectures
-    div class="menu is-mobile is-multiline is-centered"
+    div.menu.is-mobile.is-multiline.is-centered
       - @regions.each_with_index do |region, index|
 
-        ul class="menu-list"
+        ul.menu-list
           li
-            a class="is-active" v-on:click="setArea('#{index}')"
+            a.is-active @click="setArea('#{index}')"
               = region.name
 
             transition name="bounce"
@@ -35,4 +39,4 @@ div.container
     japanese-map
 
 = javascript_pack_tag 'regions/form'
-= javascript_pack_tag 'maps/japanese_map'
+/ = javascript_pack_tag 'maps/japanese_map'

@@ -1,13 +1,16 @@
 script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"
 = javascript_pack_tag 'prefectures/form'
 
+section.hero.is-dark.welcome.is-small
+  div.hero-body
+    div.container
+      h1.title.is-6
+        = "#{@prefecture.name}のモトクロスコース一覧"
+
 div class="container grid"
-
-  h1.title Prefectures#index
-
   nav class="panel"
-    p class="panel-heading"
-      = "#{@prefecture.name}のモトクロスコース"
+    / p class="panel-heading"
+    /   = "#{@prefecture.name}のモトクロスコース一覧"
 
     div id="form"
       - @off_road_circuits.each do |circuit|

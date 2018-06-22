@@ -10,5 +10,44 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
+
+
+    / <nav class="navbar" role="navigation" aria-label="main navigation">
+    /   <div class="navbar-brand">
+    /     <a class="navbar-item" href="https://bulma.io">
+    /       <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+    /     </a>
+    /
+    /     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+    /       <span aria-hidden="true"></span>
+    /       <span aria-hidden="true"></span>
+    /       <span aria-hidden="true"></span>
+    /     </a>
+    /   </div>
+    / </nav>
+
+
   body
+    nav.navbar.is-white role="navigation" aria-label="main navigation"
+      div.container
+        div.navbar-brand
+          a.navbar-item.brand-text href="../"
+            img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28"
+
+          div.navbar-burger.burger data-target="navMenu"
+            span aria-hidden="true"
+            span aria-hidden="true"
+            span aria-hidden="true"
+
+        div.navbar-menu id="navMenu"
+          div.navbar-start
+            a.navbar-item href="admin.html"
+              | Home
+            a.navbar-item href="admin.html"
+              | Home
+            a.navbar-item href="admin.html"
+              | Home
+            a.navbar-item href="admin.html"
+              | Home
+
     = yield

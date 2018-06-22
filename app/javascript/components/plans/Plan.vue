@@ -22,12 +22,13 @@
 
                 <p v-if="holiday.exists" class="title-em icon mdi-18px has-text-link">
                   <i class="fas fa-heart"></i>
-                  <span v-on:click="deleteAttendance(holiday.date, index)">{{ holiday.attendance }}</span>
+                  <span class="attendance" @click="deleteAttendance(holiday.date, index)">{{ holiday.attendance }}</span>
                 </p>
                 <p v-else class="title-em icon mdi-18px">
                   <i class="fas fa-heart"></i>
-                  <span v-on:click="createAttendance(holiday.date, index)">{{ holiday.attendance }}</span>
+                  <span class="attendance" @click="createAttendance(holiday.date, index)">{{ holiday.attendance }}</span>
                 </p>
+                <span class="is-units">人</span>
               </div>
             </div>
           </div>
@@ -65,10 +66,10 @@ export default {
     let saturday = new Date()
     let sunday = new Date()
     saturday.setDate(today.getDate() + 6 - today.getDay())
-    saturday = `${saturday.getFullYear()}-${saturday.getMonth()}-${saturday.getDate()}`
+    saturday = `${saturday.getFullYear()}-${saturday.getMonth() + 1}-${saturday.getDate()}`
 
     sunday.setDate(today.getDate() + 7 - today.getDay())
-    sunday = `${sunday.getFullYear()}-${sunday.getMonth()}-${sunday.getDate()}`
+    sunday = `${sunday.getFullYear()}-${sunday.getMonth() + 1}-${sunday.getDate()}`
 
     this.holidayList = [
       {
@@ -101,10 +102,10 @@ export default {
       let saturday = new Date()
       let sunday = new Date()
       saturday.setDate(today.getDate() + 6 - today.getDay())
-      saturday = `${saturday.getFullYear()}-${saturday.getMonth()}-${saturday.getDate()}`
+      saturday = `${saturday.getFullYear()}-${saturday.getMonth() + 1}-${saturday.getDate()}`
 
       sunday.setDate(today.getDate() + 7 - today.getDay())
-      sunday = `${sunday.getFullYear()}-${sunday.getMonth()}-${sunday.getDate()}`
+      sunday = `${sunday.getFullYear()}-${sunday.getMonth() + 1}-${sunday.getDate()}`
 
       this.holidayList[0].date = saturday
       this.holidayList[1].date = sunday
@@ -119,10 +120,10 @@ export default {
       let saturday = new Date()
       let sunday = new Date()
       saturday.setDate(today.getDate() + 6 - today.getDay() + 7)
-      saturday = `${saturday.getFullYear()}-${saturday.getMonth()}-${saturday.getDate()}`
+      saturday = `${saturday.getFullYear()}-${saturday.getMonth() + 1}-${saturday.getDate()}`
 
       sunday.setDate(today.getDate() + 7 - today.getDay() + 7)
-      sunday = `${sunday.getFullYear()}-${sunday.getMonth()}-${sunday.getDate()}`
+      sunday = `${sunday.getFullYear()}-${sunday.getMonth() + 1}-${sunday.getDate()}`
 
       this.holidayList[0].date = saturday
       this.holidayList[1].date = sunday
@@ -224,5 +225,14 @@ function holidayThisWeek() {
   }
   &__next {
   }
+}
+
+.attendance {
+  margin: 1px 4px;
+}
+
+.is-units {
+  font-size: xx-small;
+  margin: 1px 1px;
 }
 </style>

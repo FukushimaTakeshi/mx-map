@@ -28,7 +28,7 @@
       onTimer: function () {
         setInterval(() => {
           this.next()
-        }, 3000)
+        }, 5000)
       }
     }
   }
@@ -36,13 +36,13 @@
 
 <style lang="scss">
 .slide-enter-active, .slide-leave-active {
-  transition: transform .1s
+  transition: opacity .9s;
 }
 .slide-enter {
-  transform: translateX(300px)
+  opacity: 0;
 }
 .slide-leave-active {
-  transform: translateX(-300px);
+  opacity: 0;
 }
 
 
@@ -56,8 +56,8 @@
 
   &__slider{
     position: relative;
-    width: 130px;
-    height: 120px;
+    width: 143px;
+    height: 115px;
     border: 1px solid lightgray;
     img {
       position: absolute;
