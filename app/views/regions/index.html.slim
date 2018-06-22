@@ -26,17 +26,4 @@ div.container
                     - else
                       a = "#{pref.name} (-)"
 
-
-    / div.tile
-      div class="tile is-mobile is-vertical is-multiline is-centered"
-        - @regions.each_with_index do |region, index|
-          div class="tile is-child notification is-white" v-on:click="getPref('#{region.name}', $event)" data-v="#{index}"
-            = region.name
-
-      | {{selected_prefs}}
-
-  div#map
-    japanese-map
-
 = javascript_pack_tag 'regions/form'
-/ = javascript_pack_tag 'maps/japanese_map'

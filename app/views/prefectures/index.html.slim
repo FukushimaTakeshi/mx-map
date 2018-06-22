@@ -1,4 +1,3 @@
-script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"
 = javascript_pack_tag 'prefectures/form'
 
 section.hero.is-dark.welcome.is-small
@@ -7,16 +6,14 @@ section.hero.is-dark.welcome.is-small
       h1.title.is-6
         = "#{@prefecture.name}のモトクロスコース一覧"
 
-div class="container grid"
-  nav class="panel"
-    / p class="panel-heading"
-    /   = "#{@prefecture.name}のモトクロスコース一覧"
+div.container.grid
+  nav.panel
 
-    div id="form"
+    div#form
       - @off_road_circuits.each do |circuit|
         - place_id = circuit.place_id.to_sym
 
-        a class="panel-block" href="http://hoge"
+        = link_to circuit.url, class: 'panel-block'
           article.media
             div.media-left
               carousel :img-list="#{circuit.photo.map(&:url)}"
@@ -25,18 +22,18 @@ div class="container grid"
               div.content
                 h6 = circuit.name
 
-                nav class="level is-mobile"
+                nav.level.is-mobile
                   div.level-left
-                    div class="has-text-success"
+                    div.has-text-success
                       = @details[place_id][:rating]
                     - @details[place_id][:rating].to_i.times do |i|
-                      span class="icon mdi-18px has-text-success"
-                        i class="fas fa-star"
+                      span.icon.mdi-18px.has-text-success
+                        i.fas.fa-star
 
                 small
-                  div class="level is-mobile"
-                    div class="level-left"
-                      i class="fas fa-map-marker-alt icon is-small"
+                  div.level.is-mobile
+                    div.level-left
+                      i.fas.fa-map-marker-alt.icon.is-small
                       = @details[place_id][:vicinity]
 
         plan :circuit-id="#{circuit.id}"
