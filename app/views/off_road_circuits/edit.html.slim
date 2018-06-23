@@ -8,9 +8,8 @@ p Find me in app/views/off_road_circuits/edit.html.slim
   - if @off_road_circuit.errors.any?
     div id="error_explanation"
       div class="alert alert-danger"
-        | The form contains
-        | = pluralize(@off_road_circuit.errors.count, "error")
-        | .
+        | The form contains #{pluralize(@off_road_circuit.errors.count, "error")}.
+
       ul
       - @off_road_circuit.errors.full_messages.each do |msg|
         li = msg
