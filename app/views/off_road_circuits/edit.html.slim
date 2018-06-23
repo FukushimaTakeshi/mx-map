@@ -1,0 +1,34 @@
+h1 OffRoadCircuits#edit
+p Find me in app/views/off_road_circuits/edit.html.slim
+
+= @off_road_circuit.name
+
+= form_with model: @off_road_circuit, local: true do |f|
+
+  - if @off_road_circuit.errors.any?
+    div id="error_explanation"
+      div class="alert alert-danger"
+        | The form contains
+        | = pluralize(@off_road_circuit.errors.count, "error")
+        | .
+      ul
+      - @off_road_circuit.errors.full_messages.each do |msg|
+        li = msg
+
+  = f.label :name
+  = f.text_field :name
+
+  = f.label :address
+  = f.text_field :address
+
+  = f.label :place_id
+  = f.text_field :place_id
+
+  = f.label :prefecture_id
+  = f.collection_select :prefecture_id, Prefecture.all, :id, :name
+
+  = f.label :region_id
+  = f.collection_select :region_id, Region.all, :id, :name
+
+
+  = f.submit "更 新"

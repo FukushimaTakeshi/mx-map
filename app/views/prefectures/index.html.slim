@@ -23,7 +23,7 @@ div.container.grid
         - @off_road_circuits.each do |circuit|
           - place_id = circuit.place_id.to_sym
 
-          = link_to circuit.url, class: 'panel-block'
+          = link_to circuit, method: :get, class: 'panel-block'
             article.media
               div.media-left
                 carousel :img-list="#{circuit.photo.map(&:url)}"

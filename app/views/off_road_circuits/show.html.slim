@@ -1,0 +1,10 @@
+h1 OffRoadCircuits#show
+p Find me in app/views/off_road_circuits/show.html.slim
+
+= @off_road_circuit.name
+p
+= link_to "#{@off_road_circuit.name}を編集", edit_off_road_circuit_path(@off_road_circuit)
+p
+= link_to "#{@off_road_circuit.name}を削除", @off_road_circuit, method: :delete, data: { confirm: '削除してよろしいですか？' }
+p
+= link_to '一覧に戻る', region_prefectures_path(@off_road_circuit.prefecture_id), data: { turbolinks: false }
