@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     resources :prefectures, param: :id, only: [:index]
   end
 
-  resources :place_search, only: [:new, :create]
+  resources :place_search, only: [:index] do
+    collection do
+      get :search
+    end
+  end
 
   resources :place_details_search, param: :place_id, only: [:show]
 

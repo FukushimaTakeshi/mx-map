@@ -1,15 +1,10 @@
 class PlaceSearchController < ApplicationController
-  def new
+  def search
     @place_search = PlaceSearch.new
   end
 
-  def create
-    @place_search = PlaceSearch.new(place_search_params)
-    if @place_search.valid?
-      @place_search = @place_search.search
-    else
-      render :new
-    end
+  def index
+    @place_search = PlaceSearch.new(query: params[:q]).search
   end
 
   private

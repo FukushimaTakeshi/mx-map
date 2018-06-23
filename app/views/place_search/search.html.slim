@@ -1,0 +1,7 @@
+h1 PlaceSearch#search
+p Find me in app/views/place_search/search.html.slim
+
+= form_with(url: place_search_index_path, method: :get, local: true) do |f|
+
+  = f.text_field :q
+  = f.submit '検索', name: nil
