@@ -1,6 +1,5 @@
 class PlaceSearchController < ApplicationController
   def search
-    @place_search = PlaceSearch.new
   end
 
   def index
