@@ -18,10 +18,10 @@
     = f.text_field :place_id
 
     = f.label :prefecture_id
-    = f.text_field :prefecture_id
+    = f.collection_select :prefecture_id, Prefecture.all, :id, :name
 
     = f.label :region_id
-    = f.text_field :region_id
+    = f.collection_select :region_id, Region.all, :id, :name
 
 
     = f.submit "登 録"

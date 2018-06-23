@@ -40,11 +40,14 @@ div.container.grid
                         span.icon.mdi-18px.has-text-success
                           i.fas.fa-star
 
+                      - decimal_part = @details[place_id][:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
+                      = half_or_full_star(decimal_part)
+
                   small
                     div.level.is-mobile
                       div.level-left
                         i.fas.fa-map-marker-alt.icon.is-small
-                        = @details[place_id][:vicinity]
+                        = circuit.address || @details[place_id][:vicinity]
 
           plan :circuit-id="#{circuit.id}"
 

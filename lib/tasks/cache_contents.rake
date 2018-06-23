@@ -11,9 +11,10 @@ namespace :chache_contents do
   task place_image: :environment do
     OffRoadCircuit.all.find_each do |course|
       Photo.where(off_road_circuit_id: course.id).delete_all
-      
+
       details = Rails.cache.read(course.place_id)
-      details['result']['photos'].each do |photo|
+      details['result']['photos']&.each do |photo|
+        break if photo.nil?
         location = PlaceSearch.new(query: photo['photo_reference']).photo
         Photo.create(url: location, off_road_circuit_id: course.id)
       end

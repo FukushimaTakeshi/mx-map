@@ -22,6 +22,8 @@ class PlaceDetailsSearchController < ApplicationController
 
   def create
     OffRoadCircuit.create(off_road_circuit_params)
+    flash[:success] = "Off Road Circuit Created!!"
+    redirect_to root_url
   end
 
   private
