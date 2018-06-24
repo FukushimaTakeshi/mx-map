@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  devise_for :users
+  
   root 'regions#index'
 
   resources :regions, only: [:index, :show] do
