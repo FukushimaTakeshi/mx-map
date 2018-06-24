@@ -24,14 +24,13 @@ html
 
         div.navbar-menu id="navMenu"
           div.navbar-start
-            a.navbar-item href="admin.html"
-              | Home
-            a.navbar-item href="admin.html"
-              | Home
-            a.navbar-item href="admin.html"
-              | Home
-            a.navbar-item href="admin.html"
-              | Home
+            - if user_signed_in?
+              = link_to 'プロフィール変更', edit_user_registration_path, class: 'navbar-item'
+              = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'navbar-item'
+              a.navbar-item href="admin.html"
+                | Home
+              a.navbar-item href="admin.html"
+                | Home
 
     p.notice = notice
     p.alert = alert
