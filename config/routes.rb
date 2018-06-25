@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
-  devise_for :users
-  
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'omniauth_callbacks'
+  }
+
   root 'regions#index'
 
   resources :regions, only: [:index, :show] do
