@@ -1,4 +1,6 @@
 class PlaceDetailsSearchController < ApplicationController
+  before_action :admin_user
+
   def show
     @place_search = PlaceSearch.new(query: params[:place_id]).details
   end

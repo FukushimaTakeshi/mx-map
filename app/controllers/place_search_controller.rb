@@ -1,4 +1,6 @@
 class PlaceSearchController < ApplicationController
+  before_action :admin_user
+
   def search
   end
 
