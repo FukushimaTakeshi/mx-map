@@ -21,6 +21,7 @@
 #  provider                  :string
 #  uid                       :string
 #  username                  :string
+#  admin                     :boolean          default(FALSE), not null
 
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
