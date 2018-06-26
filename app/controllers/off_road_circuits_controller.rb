@@ -1,4 +1,6 @@
 class OffRoadCircuitsController < ApplicationController
+  before_action :admin_user, except: [:show]
+
   def show
     @off_road_circuit = OffRoadCircuit.find(params[:id])
   end
