@@ -1,14 +1,11 @@
 class PrefecturesController < ApplicationController
-  def index
-    @prefecture = Prefecture.find(params[:region_id])
-    @off_road_circuits = OffRoadCircuit.where(prefecture_id: params[:region_id])
+  def show
+    @prefecture = Prefecture.find(params[:id])
+    @off_road_circuits = OffRoadCircuit.where(prefecture_id: params[:id])
     @details = {}
     @off_road_circuits.each do |circuit|
       circuit_details(circuit.place_id.to_sym)
     end
-  end
-
-  def show
   end
 
   private

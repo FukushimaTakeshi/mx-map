@@ -4,8 +4,4 @@ class RegionsController < ApplicationController
     @regions = Region.all
     @prefectures_count = OffRoadCircuit.joins(:prefecture).group("prefectures.name").count
   end
-
-  def show
-    @prefecture = Prefecture.find(params[:id])
-  end
 end

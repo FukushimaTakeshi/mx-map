@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   root 'regions#index'
 
-  resources :regions, only: [:index, :show] do
-    resources :prefectures, param: :id, only: [:index]
+  resources :regions, only: [:index], shallow: true do
+    resources :prefectures, only: [:show]
   end
 
   resources :place_search, only: [:index] do

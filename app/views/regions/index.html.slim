@@ -23,7 +23,7 @@ div.container
               ul v-if="selectedArea === '#{index}'"
                 - @prefectures.where(region_id: region.id).each do |pref|
                   li
-                    = link_to region_prefectures_path(pref), data: { turbolinks: false }
+                    = link_to prefecture_path(pref), data: { turbolinks: false }
                       = "#{pref.name} (#{@prefectures_count[pref.name] || '-'})"
 
 = javascript_pack_tag 'regions/form'
