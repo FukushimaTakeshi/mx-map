@@ -130,7 +130,7 @@ export default {
     },
 
     getAttendance: async function(date, index) {
-      const res = await axios.get(`/plans/?off_road_circuit_id=${this.circuitId}&date=${date}`)
+      const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}`)
       if (res.status !== 200) {
         console.log("Error!!")
         process.exit()
@@ -146,7 +146,7 @@ export default {
     },
 
     createAttendance: async function(date, index) {
-      const res = await axios.post(`/plans/`, {date: date, off_road_circuit_id: this.circuitId })
+      const res = await axios.post(`/api/plans/`, {date: date, off_road_circuit_id: this.circuitId })
       if (res.status !== 200) {
         console.log("Error!!")
         process.exit()
@@ -155,7 +155,7 @@ export default {
     },
 
     deleteAttendance: async function(date, index) {
-      const res = await axios.delete(`/plans/${this.holidayList[index].planId}`)
+      const res = await axios.delete(`/api/plans/${this.holidayList[index].planId}`)
       if (res.status !== 200) {
         console.log("Error!!")
         process.exit()
