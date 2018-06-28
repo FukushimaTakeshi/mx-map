@@ -1,22 +1,39 @@
 h2 Log in
 
+
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  div class="field"
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email"
+  div.field.is-horizontal
 
-  div class="field"
-    = f.label :password
-    br
-    = f.password_field :password, autocomplete: "off"
+    div.field
+      = f.label :email, class: 'label'
+      div.control.has-icons-left.has-icons-right
+        = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'input is-danger', type: 'email'
+        span.icon.is-small.is-left
+          i.fas.fa-envelope
+        span.icon.is-small.is-right
+          i.fas.fa-exclamation-triangle
+      p.help.is-danger This email is invalid
 
-    - if devise_mapping.rememberable?
-      div class="field"
-        = f.check_box :remember_me
-        = f.label :remember_me
+    div.field
+      = f.label :password, class: 'label'
+      div.control.has-icons-left.has-icons-right
+        = f.password_field :password, autocomplete: 'off', placeholder: 'password', class: 'input is-success', type: 'password'
+        span.icon.is-small.is-left
+          i.fas.fa-lock
+        span.icon.is-small.is-right
+          i.fas.fa-exclamation-triangle
+      p.help.is-danger This email is invalid
 
-  div class="actions"
-    = f.submit "Log in"
+      - if devise_mapping.rememberable?
+        div.field
+          div.control
+            label.checkbox
+              = f.check_box :remember_me, class: 'checkbox', type: 'checkbox'
+              = f.label :remember_me, class: 'checkbox'
 
-= render "devise/shared/links"
+    div.field.is-grouped
+      div.control
+        = f.submit "Log in", class: 'button is-primary'
+
+
+  = render "devise/shared/links"

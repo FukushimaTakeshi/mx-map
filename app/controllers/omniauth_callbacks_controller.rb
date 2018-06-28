@@ -1,7 +1,12 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def twitter
-    provider = 'twitter'
+    callback_from :twitter
+  end
+
+  private
+
+  def callback_from(provider)
     @user = User.find_for_oauth(request.env["omniauth.auth"].except("extra"))
 
     if @user.persisted?

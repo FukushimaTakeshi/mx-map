@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     omniauth_callbacks: 'omniauth_callbacks'
   }
+  resources :users, only: [:index, :show]
 
   root 'regions#index'
 
@@ -18,7 +19,9 @@ Rails.application.routes.draw do
 
   resources :place_details_search, param: :place_id, only: [:show]
 
-  resources :off_road_circuits, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :off_road_circuits, only: [:show, :new, :create, :edit, :update, :destroy] do
+    resources :plans, only: [:index]
+  end
 
   namespace :api do
     resources :plans, only: [:index, :create, :destroy]

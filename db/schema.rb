@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_25_120704) do
+ActiveRecord::Schema.define(version: 2018_06_27_125819) do
 
   create_table "off_road_circuits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -39,8 +39,10 @@ ActiveRecord::Schema.define(version: 2018_06_25_120704) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uuid"
+    t.bigint "user_id"
     t.index ["date", "uuid", "off_road_circuit_id"], name: "unique_date_uuid_circuit", unique: true
     t.index ["off_road_circuit_id"], name: "index_plans_on_off_road_circuit_id"
+    t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
   create_table "prefectures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -85,5 +87,6 @@ ActiveRecord::Schema.define(version: 2018_06_25_120704) do
   add_foreign_key "off_road_circuits", "regions"
   add_foreign_key "photos", "off_road_circuits"
   add_foreign_key "plans", "off_road_circuits"
+  add_foreign_key "plans", "users"
   add_foreign_key "prefectures", "regions"
 end

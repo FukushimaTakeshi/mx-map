@@ -1,5 +1,3 @@
-h1 OffRoadCircuits#show
-p Find me in app/views/off_road_circuits/show.html.slim
 
 = @off_road_circuit.name
 
@@ -10,3 +8,5 @@ p Find me in app/views/off_road_circuits/show.html.slim
   = link_to "#{@off_road_circuit.name}を削除", @off_road_circuit, method: :delete, data: { confirm: '削除してよろしいですか？' }
 p
 = link_to '一覧に戻る', prefecture_path(@off_road_circuit.prefecture_id), data: { turbolinks: false }
+p
+= link_to '行く人', off_road_circuit_plans_path(@off_road_circuit)
