@@ -1,5 +1,10 @@
+= javascript_pack_tag 'off_road_circuits/form'
+
 
 = @off_road_circuit.name
+
+div#form
+  image-swipe :item-width="300" :images="#{@off_road_circuit.photo.map(&:url)}"
 
 - if current_user.try(:admin?)
   p
