@@ -1,0 +1,2 @@
+class MxHistory < ApplicationRecord
+end

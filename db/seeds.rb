@@ -74,3 +74,14 @@ Plan.find_or_create_by(id: 4, date: Date.today, off_road_circuit_id: 2, uuid: Se
 Plan.find_or_create_by(id: 5, date: Date.today, off_road_circuit_id: 3, uuid: SecureRandom.uuid)
 
 Photo.find_or_create_by(id: 1, url: 'https://lh3.googleusercontent.com/p/AF1QipMOEn0csegkEVxm2e1E-vhcVVVYonBwN4MYdpBP=s1600-h1000', off_road_circuit_id: 1)
+
+License.find_or_create_by(id: 1, mx_class: '国内B級(NB)')
+License.find_or_create_by(id: 2, mx_class: '国内A級(NA)')
+License.find_or_create_by(id: 3, mx_class: '国際B級(IB)')
+License.find_or_create_by(id: 4, mx_class: '国際A級(IA)')
+
+MxHistory.find_or_create_by(id: 1, history: '1年未満')
+MxHistory.find_or_create_by(id: 2, history: '1年以上3年未満')
+MxHistory.find_or_create_by(id: 3, history: '3年以上10年未満')
+MxHistory.find_or_create_by(id: 4, history: '10年以上')
+MxHistory.find_or_create_by(id: 5, history: '20年以上')
