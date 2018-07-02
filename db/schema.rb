@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_02_121218) do
+ActiveRecord::Schema.define(version: 2018_07_02_123413) do
 
   create_table "licenses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "mx_class"
@@ -90,8 +90,12 @@ ActiveRecord::Schema.define(version: 2018_07_02_121218) do
     t.string "uid"
     t.string "username"
     t.boolean "admin", default: false, null: false
+    t.bigint "license_id"
+    t.bigint "mx_history_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["license_id"], name: "index_users_on_license_id"
+    t.index ["mx_history_id"], name: "index_users_on_mx_history_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -101,4 +105,6 @@ ActiveRecord::Schema.define(version: 2018_07_02_121218) do
   add_foreign_key "plans", "off_road_circuits"
   add_foreign_key "plans", "users"
   add_foreign_key "prefectures", "regions"
+  add_foreign_key "users", "licenses"
+  add_foreign_key "users", "mx_histories"
 end
