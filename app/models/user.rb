@@ -22,13 +22,10 @@
 #  uid                       :string
 #  username                  :string
 #  admin                     :boolean          default(FALSE), not null
-#  license_id                :bigint(8)
-#  mx_history_id             :bigint(8)
 
 class User < ApplicationRecord
   has_many :plan
-  has_one :license, dependent: :destroy
-  has_one :mx_history, dependent: :destroy
+  has_one :mx_profile, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

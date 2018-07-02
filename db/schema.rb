@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_02_123413) do
+ActiveRecord::Schema.define(version: 2018_07_02_131954) do
 
   create_table "licenses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "mx_class"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 2018_07_02_123413) do
     t.string "history"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "mx_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "mx_history_id"
+    t.bigint "license_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["license_id"], name: "index_mx_profiles_on_license_id"
+    t.index ["mx_history_id"], name: "index_mx_profiles_on_mx_history_id"
+    t.index ["user_id"], name: "index_mx_profiles_on_user_id"
   end
 
   create_table "off_road_circuits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -90,21 +101,18 @@ ActiveRecord::Schema.define(version: 2018_07_02_123413) do
     t.string "uid"
     t.string "username"
     t.boolean "admin", default: false, null: false
-    t.bigint "license_id"
-    t.bigint "mx_history_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["license_id"], name: "index_users_on_license_id"
-    t.index ["mx_history_id"], name: "index_users_on_mx_history_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "mx_profiles", "licenses"
+  add_foreign_key "mx_profiles", "mx_histories"
+  add_foreign_key "mx_profiles", "users"
   add_foreign_key "off_road_circuits", "prefectures"
   add_foreign_key "off_road_circuits", "regions"
   add_foreign_key "photos", "off_road_circuits"
   add_foreign_key "plans", "off_road_circuits"
   add_foreign_key "plans", "users"
   add_foreign_key "prefectures", "regions"
-  add_foreign_key "users", "licenses"
-  add_foreign_key "users", "mx_histories"
 end
