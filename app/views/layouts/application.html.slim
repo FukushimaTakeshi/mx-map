@@ -26,7 +26,8 @@ html
           div.navbar-start
             = link_to 'HOME', root_path, class: 'navbar-item', data: { turbolinks: false }
             - if user_signed_in?
-              = link_to 'プロフィール変更', edit_user_registration_path, class: 'navbar-item'
+              = link_to 'プロフィール変更', edit_user_path(current_user), class: 'navbar-item'
+              = link_to 'パスワード変更', edit_user_registration_path, class: 'navbar-item'
               = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'navbar-item'
             - else
               = link_to 'ログイン', new_user_session_path, class: 'navbar-item'

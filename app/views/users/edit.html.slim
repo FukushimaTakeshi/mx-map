@@ -1,0 +1,14 @@
+
+= form_for(@user, url: user_path(@user)) do |f|
+
+  = f.label :username
+  = f.text_field :username
+
+  = f.fields_for :mx_profile, @user.mx_profile || MxProfile.new do |profile|
+    = profile.label :mx_history
+    = profile.collection_select :mx_history_id, MxHistory.all, :id, :history
+
+    = profile.label :license
+    = profile.collection_select :license_id, License.all, :id, :mx_class
+
+  = f.submit "更 新"
