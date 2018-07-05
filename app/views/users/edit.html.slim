@@ -1,14 +1,41 @@
+section.hero.has-background-light.is-fullheight
+  div.hero-body
+    div.container.has-text-centered
+      div.column.is-4.is-offset-4
+        h3.title.has-text-grey プロフィールを変更
+        p.subtitle.has-text-grey Please login to proceed.
+        div.box
+          figure.avatar
+          img src="https://placehold.it/128x128"
 
-= form_for(@user, url: user_path(@user)) do |f|
+          = form_for(@user, url: user_path(@user)) do |f|
+            div.has-text-left
+              div.field
+                = f.label :username, class: 'label'
+                div.control
+                  = f.text_field :username, class: 'input is-medium', autofocus: ''
 
-  = f.label :username
-  = f.text_field :username
+                = f.fields_for :mx_profile, @user.mx_profile || MxProfile.new do |profile|
+                  div.field
+                    = profile.label :mx_history, class: 'label'
+                    div.control
+                      div.select.is-medium
+                        = profile.collection_select :mx_history_id, MxHistory.all, :id, :history, include_blank: true
 
-  = f.fields_for :mx_profile, @user.mx_profile || MxProfile.new do |profile|
-    = profile.label :mx_history
-    = profile.collection_select :mx_history_id, MxHistory.all, :id, :history
+                  div.field
+                    = profile.label :license, class: 'label'
+                    div.control
+                      div.select.is-medium
+                        = profile.collection_select :license_id, License.all, :id, :mx_class, include_blank: true
 
-    = profile.label :license
-    = profile.collection_select :license_id, License.all, :id, :mx_class
+              div.field
+                div.control
+                  = f.submit "更 新", class: 'button is-block is-info is-large is-fullwidth'
 
-  = f.submit "更 新"
+        p.has-text-grey
+            a href="../"
+              | Sign Up &nbsp;·&nbsp;
+            a href="../"
+              | Forgot Password &nbsp;·&nbsp;
+            a href="../"
+              | Need Help?
