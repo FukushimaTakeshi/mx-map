@@ -32,13 +32,18 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :omniauthable, omniauth_providers: [:twitter]
+         :confirmable, :omniauthable, omniauth_providers: [:twitter, :facebook]
 
   def self.find_for_oauth(auth)
     find_or_create_by(provider: auth['provider'], uid: auth['uid']) do |user|
       user.provider = auth['provider']
       user.uid      = auth['uid']
-      user.username = auth['info']['nickname']
+      case auth['provider']
+      when 'twitter'
+        user.username = auth['info']['nickname']
+      when 'facebook'
+        user.username = auth['info']['name']
+      end
     end
   end
 
