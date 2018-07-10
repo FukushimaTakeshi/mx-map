@@ -31,7 +31,7 @@ module GoogleApi
     private
 
     def api_key
-      { key: ENV['PLACES_API_KEY'] }
+      { key: Rails.application.credentials.apis[:google_places][:key] }
     end
 
     def http_get(url, params = {})

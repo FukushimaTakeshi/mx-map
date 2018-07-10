@@ -11,7 +11,8 @@ RUN apt-get update -qq && \
     build-essential \
     libpq-dev \
     sqlite \
-    mysql-client
+    mysql-client \
+    vim
 
 # install node.js
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
