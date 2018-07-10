@@ -39,6 +39,7 @@ gem 'config'
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'

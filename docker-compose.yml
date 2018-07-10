@@ -19,12 +19,13 @@ services:
     depends_on:
       - db
     environment:
-      - PLACES_API_KEY=
-      - TWITTER_API_KEY=
-      - TWITTER_API_SECRET=
-      - FACEBOOK_API_KEY=
-      - FACEBOOK_API_SECRET=
-
+      PLACES_API_KEY:
+      TWITTER_API_KEY:
+      TWITTER_API_SECRET:
+      FACEBOOK_API_KEY:
+      FACEBOOK_API_SECRET:
+      GOOGLE_API_KEY:
+      GOOGLE_API_SECRET:
 
   db:
     image: mysql:5.7.10
