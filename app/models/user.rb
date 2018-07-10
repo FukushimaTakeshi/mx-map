@@ -35,14 +35,14 @@ class User < ApplicationRecord
          :confirmable, :omniauthable, omniauth_providers: [:twitter, :facebook]
 
   def self.find_for_oauth(auth)
-    find_or_create_by(provider: auth['provider'], uid: auth['uid']) do |user|
-      user.provider = auth['provider']
-      user.uid      = auth['uid']
-      case auth['provider']
+    find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+      user.provider = auth.provider
+      user.uid      = auth.uid
+      case auth.provider
       when 'twitter'
-        user.username = auth['info']['nickname']
+        user.username = auth.info.nickname
       when 'facebook'
-        user.username = auth['info']['name']
+        user.username = auth.info.name
       end
     end
   end
