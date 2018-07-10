@@ -1,39 +1,41 @@
-h2 Log in
+section.hero.has-background-light.is-fullheight
+  div.hero-body
+    div.container.has-text-centered
+      div class="columns is-mobile is-centered"
+        div.column.is-four-fifths.is-narrow
+          h3.title.has-text-grey ログイン
+          p.subtitle.has-text-grey Please login to proceed.
 
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            div.has-text-left
+              div.columns
+                div.column.is-6
+                  div.field
+                    div.control
+                      - if devise_mapping.omniauthable?
+                        - resource_class.omniauth_providers.each do |provider|
+                          = oauth_content(provider, :login)
 
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  div.field.is-horizontal
+                hr class="hr" style="border-top: 1px solid #7a7a7a;"
 
-    div.field
-      = f.label :email, class: 'label'
-      div.control.has-icons-left.has-icons-right
-        = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'input is-danger', type: 'email'
-        span.icon.is-small.is-left
-          i.fas.fa-envelope
-        span.icon.is-small.is-right
-          i.fas.fa-exclamation-triangle
-      p.help.is-danger This email is invalid
+                div.column.is-6
 
-    div.field
-      = f.label :password, class: 'label'
-      div.control.has-icons-left.has-icons-right
-        = f.password_field :password, autocomplete: 'off', placeholder: 'password', class: 'input is-success', type: 'password'
-        span.icon.is-small.is-left
-          i.fas.fa-lock
-        span.icon.is-small.is-right
-          i.fas.fa-exclamation-triangle
-      p.help.is-danger This email is invalid
+                  div.field
+                    div.control
+                      = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'input is-medium', type: 'email'
 
-      - if devise_mapping.rememberable?
-        div.field
-          div.control
-            label.checkbox
-              = f.check_box :remember_me, class: 'checkbox', type: 'checkbox'
-              = f.label :remember_me, class: 'checkbox'
+                  div.field
+                    div.control
+                      = f.password_field :password, autocomplete: 'off', placeholder: 'password', class: 'input is-medium', type: 'password'
 
-    div.field.is-grouped
-      div.control
-        = f.submit "Log in", class: 'button is-primary'
+                    - if devise_mapping.rememberable?
+                      div.field
+                        div.control
+                          label.checkbox
+                            = f.check_box :remember_me, class: 'checkbox', type: 'checkbox'
+                            = f.label :remember_me, class: 'checkbox'
 
+                  div.actions
+                    = f.submit 'ログイン', class: 'button is-primary is-medium is-fullwidth'
 
-  = render "devise/shared/links"
+              = render "devise/shared/links"
