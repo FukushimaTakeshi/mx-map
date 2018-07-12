@@ -1,53 +1,46 @@
-h2
-  | Edit
-  = resource_name.to_s.humanize
 
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-  = devise_error_messages!
+section.hero.has-background-light.is-fullheight
+  div.hero-body
+    div.container.has-text-centered
+      div.columns.is-mobile.is-centered
+        div.column.is-four-fifths.is-narrow
+          h3.title.has-text-grey メールアドレス・パスワード変更
+          p.subtitle.has-text-grey Please login to proceed.
 
-  div.field
-    = f.label :username
-    br
-    = f.text_field :username
+          = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+            = devise_error_messages!
 
-  div class="field"
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email"
+            div.field
+              div.control
+                = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'input is-medium'
 
-    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-      div Currently waiting confirmation for:
-        = resource.unconfirmed_email
+                - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+                  div Currently waiting confirmation for:
+                    = resource.unconfirmed_email
 
-  div class="field"
-    = f.label :password
-    i leave blank if you don't want to change it)
-    br
-    = f.password_field :password, autocomplete: "off"
-    - if @minimum_password_length
-      br
-      em
-        | #{@minimum_password_length} characters minimum
+            div.field
+              i 変更しない場合は空欄にしてください
+              div.control
+                = f.password_field :password, autocomplete: 'off', placeholder: :password, class: 'input is-medium'
+                - if @minimum_password_length
+                  br
+                  em
+                    | #{@minimum_password_length} characters minimum
 
-  div class="field"
-    = f.label :password_confirmation
-    br
-    = f.password_field :password_confirmation, autocomplete: "off"
+            div.field
+              div.control
+                = f.password_field :password_confirmation, autocomplete: 'off', placeholder: :password_confirmation, class: 'input is-medium'
 
-  div class="field"
-    = f.label :current_password
-    i
-      | (we need your current password to confirm your changes
-    br
-    = f.password_field :current_password, autocomplete: "off"
+            div.field
+              em
+                | (現在のパスワードを入力してください)
+              div.control
+                = f.password_field :current_password, autocomplete: 'off', placeholder: :current_password, class: 'input is-medium'
 
-  div class="actions"
-    = f.submit "Update"
+            div.actions
+              = f.submit '更新', class: 'button is-primary is-medium is-fullwidth'
 
-h3 ancel my account
+          br
+            = button_to 'アカウントを削除する', registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'button is-text'
 
-p
-  | Unhappy?
-  = button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete
-
-= link_to "Back", :back
+          = link_to "Back", :back

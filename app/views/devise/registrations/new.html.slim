@@ -3,25 +3,28 @@ section.hero.has-background-light.is-fullheight
     div.container.has-text-centered
       div class="columns is-mobile is-centered"
         div.column.is-four-fifths.is-narrow
-          h3.title.has-text-grey ユーザー登録
-          p.subtitle.has-text-grey Please signup to proceed.
+          h3.title.has-text-grey
+            = resource.provider.blank? ? 'ユーザー登録' : 'ようこそ！'
+          p.subtitle.has-text-grey
+            = resource.provider.blank? ? 'Please signup to proceed.' : '登録して利用を開始しましょう。'
 
           = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
             div.has-text-left
               div.columns
-                div.column.is-6
-                  div.field
-                    div.control
-                      - if devise_mapping.omniauthable?
-                        - resource_class.omniauth_providers.each do |provider|
-                          = oauth_content(provider, :signup)
+                - if resource.provider.blank?
+                  div.column.is-6
+                    div.field
+                      div.control
+                        - if devise_mapping.omniauthable?
+                          - resource_class.omniauth_providers.each do |provider|
+                            = oauth_content(provider, :signup)
 
                 hr class="hr" style="border-top: 1px solid #7a7a7a;"
 
                 div.column.is-6
                   = devise_error_messages!
 
-                  | またはメールアドレスで登録
+                  = 'またはメールアドレスで登録' if resource.provider.blank?
 
                   div.field
                     div.control
@@ -37,7 +40,7 @@ section.hero.has-background-light.is-fullheight
 
                   div.field
                     div.control
-                    = f.password_field :password_confirmation, autocomplete: 'off', placeholder: :password_confirmation, class: 'input is-medium'
+                      = f.password_field :password_confirmation, autocomplete: 'off', placeholder: :password_confirmation, class: 'input is-medium'
 
                   div.actions
                     = f.submit '登録', class: 'button is-primary is-medium is-fullwidth'
