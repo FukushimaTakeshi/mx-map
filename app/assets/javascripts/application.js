@@ -5,6 +5,7 @@
 //= require @fortawesome/fontawesome-free-solid
 //= require @fortawesome/fontawesome-free-regular
 //= require @fortawesome/fontawesome-free-brands
+//= require fontawesome-init
 //= require_tree .
 
 document.addEventListener('turbolinks:load', function () {
