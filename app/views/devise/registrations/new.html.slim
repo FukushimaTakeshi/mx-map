@@ -2,7 +2,7 @@ section.hero.has-background-light.is-fullheight
   div.hero-body
     div.container.has-text-centered
       div class="columns is-mobile is-centered"
-        div.column.is-four-fifths.is-narrow
+        div.column
           h3.title.has-text-grey
             = resource.provider.blank? ? 'ユーザー登録' : 'ようこそ！'
           p.subtitle.has-text-grey
@@ -28,21 +28,21 @@ section.hero.has-background-light.is-fullheight
 
                   div.field
                     div.control
-                      = f.text_field :username, placeholder: :username, class: 'input is-medium', type: 'name'
+                      = f.text_field :username, placeholder: true, class: 'input', type: 'name'
 
                   div.field
                     div.control
-                      = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: :email, class: 'input is-medium'
+                      = f.email_field :email, autocomplete: 'email', placeholder: true, class: 'input'
 
                   div.field
                     div.control
-                      = f.password_field :password, autocomplete: 'off', placeholder: :password, class: 'input is-medium'
+                      = f.password_field :password, autocomplete: 'off', placeholder: true, class: 'input'
 
                   div.field
                     div.control
-                      = f.password_field :password_confirmation, autocomplete: 'off', placeholder: :password_confirmation, class: 'input is-medium'
+                      = f.password_field :password_confirmation, autocomplete: 'off', placeholder: true, class: 'input'
 
                   div.actions
-                    = f.submit '登録', class: 'button is-primary is-medium is-fullwidth'
+                    = f.submit '登録', class: 'button is-primary is-fullwidth'
 
           = render "devise/shared/links"

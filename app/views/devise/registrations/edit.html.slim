@@ -3,7 +3,7 @@ section.hero.has-background-light.is-fullheight
   div.hero-body
     div.container.has-text-centered
       div.columns.is-mobile.is-centered
-        div.column.is-four-fifths.is-narrow
+        div.column
           h3.title.has-text-grey メールアドレス・パスワード変更
           p.subtitle.has-text-grey Please login to proceed.
 
@@ -12,33 +12,28 @@ section.hero.has-background-light.is-fullheight
 
             div.field
               div.control
-                = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'input is-medium'
+                = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: true, class: 'input'
 
                 - if devise_mapping.confirmable? && resource.pending_reconfirmation?
                   div Currently waiting confirmation for:
                     = resource.unconfirmed_email
 
             div.field
-              i 変更しない場合は空欄にしてください
+              | 変更しない場合は空欄のままにしてください
               div.control
-                = f.password_field :password, autocomplete: 'off', placeholder: :password, class: 'input is-medium'
-                - if @minimum_password_length
-                  br
-                  em
-                    | #{@minimum_password_length} characters minimum
+                = f.password_field :password, autocomplete: 'off', placeholder: true, class: 'input'
 
             div.field
               div.control
-                = f.password_field :password_confirmation, autocomplete: 'off', placeholder: :password_confirmation, class: 'input is-medium'
+                = f.password_field :password_confirmation, autocomplete: 'off', placeholder: true, class: 'input'
 
             div.field
-              em
-                | (現在のパスワードを入力してください)
+              | 現在のパスワードを入力してください
               div.control
-                = f.password_field :current_password, autocomplete: 'off', placeholder: :current_password, class: 'input is-medium'
+                = f.password_field :current_password, autocomplete: 'off', placeholder: true, class: 'input'
 
             div.actions
-              = f.submit '更新', class: 'button is-primary is-medium is-fullwidth'
+              = f.submit '更新', class: 'button is-primary is-fullwidth'
 
           br
             = button_to 'アカウントを削除する', registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'button is-text'

@@ -1,0 +1,18 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        username: ユーザー名
+        password: パスワード
+        password_confirmation: パスワード確認
+        email: メールアドレス
+        remember_me: 次回からパスワード入力を省く
+
+  helpers:
+    placeholder:
+      user:
+        username: ユーザー名
+        password: パスワード
+        password_confirmation: パスワード確認
+        current_password: 現在のパスワード
+        email: メールアドレス

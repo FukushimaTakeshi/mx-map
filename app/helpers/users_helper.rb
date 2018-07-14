@@ -12,7 +12,7 @@ module UsersHelper
 
     content_tag(:div, '', class: 'field') do
       link_to omniauth_authorize_path(resource_name, provider),
-        class: "button is-block is-#{button_color} is-medium is-fullwidth has-text-left" do
+        class: "button is-block is-#{button_color} is-fullwidth has-text-left" do
         concat(
           content_tag(:span, '', class: 'icon') do
             content_tag(:i, '', class: "fab fa-#{provider_name || provider}")

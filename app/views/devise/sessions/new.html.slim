@@ -1,8 +1,8 @@
 section.hero.has-background-light.is-fullheight
   div.hero-body
     div.container.has-text-centered
-      div class="columns is-mobile is-centered"
-        div.column.is-four-fifths.is-narrow
+      div.columns.is-mobile.is-centered
+        div.column
           h3.title.has-text-grey ログイン
           p.subtitle.has-text-grey Please login to proceed.
 
@@ -22,11 +22,11 @@ section.hero.has-background-light.is-fullheight
 
                   div.field
                     div.control
-                      = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'input is-medium', type: 'email'
+                      = f.email_field :email, autocomplete: 'email', placeholder: true, class: 'input', type: 'email'
 
                   div.field
                     div.control
-                      = f.password_field :password, autocomplete: 'off', placeholder: 'password', class: 'input is-medium', type: 'password'
+                      = f.password_field :password, autocomplete: 'off', placeholder: true, class: 'input', type: 'password'
 
                     - if devise_mapping.rememberable?
                       div.field
@@ -36,6 +36,6 @@ section.hero.has-background-light.is-fullheight
                             = f.label :remember_me, class: 'checkbox'
 
                   div.actions
-                    = f.submit 'ログイン', class: 'button is-primary is-medium is-fullwidth'
+                    = f.submit 'ログイン', class: 'button is-primary is-fullwidth'
 
               = render "devise/shared/links"
