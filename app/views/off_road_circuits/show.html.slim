@@ -1,5 +1,12 @@
-= javascript_pack_tag 'off_road_circuits/form'
+div.swiper-container
+  div.swiper-wrapper
+    - @off_road_circuit.photo.each do |photo|
+      div.swiper-slide
+        = image_tag photo.url
+  div.swiper-pagination
 
+  div.swiper-button-prev
+  div.swiper-button-next
 
 = @off_road_circuit.name
 

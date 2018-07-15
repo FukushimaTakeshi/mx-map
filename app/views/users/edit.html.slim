@@ -13,19 +13,19 @@ section.hero.has-background-light.is-fullheight
               div.field
                 = f.label :username, class: 'label'
                 div.control
-                  = f.text_field :username, class: 'input is-medium', autofocus: ''
+                  = f.text_field :username, class: 'input'
 
                 = f.fields_for :mx_profile, @user.mx_profile || MxProfile.new do |profile|
                   div.field
-                    = profile.label :mx_history, class: 'label'
+                    = profile.label :history, class: 'label'
                     div.control
-                      div.select.is-medium
+                      div.select.is-fullwidth
                         = profile.collection_select :mx_history_id, MxHistory.all, :id, :history, include_blank: true
 
                   div.field
                     = profile.label :license, class: 'label'
                     div.control
-                      div.select.is-medium
+                      div.select.is-fullwidth
                         = profile.collection_select :license_id, License.all, :id, :mx_class, include_blank: true
 
               div.field

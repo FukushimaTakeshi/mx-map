@@ -18,7 +18,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_for_oauth(request.env["omniauth.auth"].except("extra"))
 
     if @user.persisted?
-      flash[:notice] = "#{provider}でのログインが完了しました。"
+      flash[:notice] = "#{provider}アカウントでのログインが完了しました。"
       sign_in_and_redirect @user
     else
       # session["devise.#{provider}_data"] = request.env['omniauth.auth']
