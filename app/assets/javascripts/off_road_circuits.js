@@ -1,4 +1,4 @@
-// = require swiper/dist/js/swiper
+//= require swiper/dist/js/swiper
 
 window.addEventListener('DOMContentLoaded', function() {
   var mySwiper = new Swiper ('.swiper-container', {
