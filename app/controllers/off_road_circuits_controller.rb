@@ -3,6 +3,7 @@ class OffRoadCircuitsController < ApplicationController
 
   def show
     @off_road_circuit = OffRoadCircuit.find(params[:id])
+    @detail = circuit_details(@off_road_circuit.place_id.to_sym)
   end
 
   def new
@@ -60,5 +61,15 @@ class OffRoadCircuitsController < ApplicationController
       :prefecture_id,
       :region_id
     )
+  end
+
+  def circuit_details(place_id)
+    details = Rails.cache.fetch(place_id, expired_in: 10.days) do
+      PlaceSearch.new(query: place_id).details
+    end
+    {
+      rating: details['result']['rating'],
+      vicinity: details['result']['vicinity']
+     }
   end
 end

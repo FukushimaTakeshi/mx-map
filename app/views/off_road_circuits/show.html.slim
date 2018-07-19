@@ -8,7 +8,52 @@ div.swiper-container
   div.swiper-button-prev
   div.swiper-button-next
 
-= @off_road_circuit.name
+section.hero.is-info.is-bold
+  div.hero-head
+
+  div.hero-body
+    div.container.has-text-centered
+      h1.title
+        = @off_road_circuit.name
+      h2.subtitle
+        = @detail[:rating]
+        - @detail[:rating].to_i.times do |i|
+          span.icon.mdi-18px.has-text-success
+            i.fas.fa-star
+
+        - decimal_part = @detail[:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
+        = half_or_full_star(decimal_part)
+      h3.subtitle
+        = @off_road_circuit.address || @detail[:vicinity]
+
+  nav.tabs.is-boxed.is-centered.main-menu.is-fullwidth#nav
+    div.container
+      ul
+        li.is-active#1 data-target="pane-1"
+          a
+            span
+             | Article
+        li#2 data-target="pane-2"
+          a
+            span
+             | Article
+        li#3 data-target="pane-3"
+          a
+            span
+             | Article
+
+  div.tab-content
+    div.tab-pane#pane-1 style="display: block;"
+      figure
+        img src="https://source.unsplash.com/0_xMuEbpFAQ/400x400" alt="" class="cent"
+    div.tab-pane#pane-2 style="display: none;"
+      p
+        strong
+          | Dominic Ipsum
+    div.tab-pane#pane-3 style="display: none;"
+      p
+        strong
+          | Dominic Ipsum
 
 div#form
   image-swipe :item-width="300" :images="#{@off_road_circuit.photo.map(&:url)}"
