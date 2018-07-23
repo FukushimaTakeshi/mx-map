@@ -1,6 +1,18 @@
 //= require swiper/dist/js/swiper
+//= require bulma-calendar/dist/js/bulma-calendar.min.js
 
 window.addEventListener('DOMContentLoaded', function() {
+  var datePickers = bulmaCalendar.attach('[type="date"]', {
+    // overlay: true,
+    closeOnOverlayClick: false,
+    closeOnSelect: false,
+    dateFormat: 'yyyy-m-dd',
+    minDate: '2018-01-01',
+    maxDate: '2018-12-31'
+  });
+  console.log(datePickers);
+  // datePickers now contains an Array of all datePicker instances
+
   const mySwiper = new Swiper ('.swiper-container', {
     autoHeight: true,
     loop: true,

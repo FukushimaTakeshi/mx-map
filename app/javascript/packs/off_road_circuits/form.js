@@ -2,6 +2,7 @@ import 'babel-polyfill'
 import Vue from 'vue'
 
 import ImageSwipe from '../../components/carousel/ImageSwipe.vue'
+import Plan from '../../components/plans/PlanIndex.vue'
 
 import TurbolinksAdapter from 'vue-turbolinks'
 Vue.use(TurbolinksAdapter)
@@ -15,7 +16,8 @@ document.addEventListener('turbolinks:load', () => {
     new Vue({
       el: '#form',
       components: {
-        'image-swipe': ImageSwipe
+        // 'image-swipe': ImageSwipe,
+        'plan': Plan
       }
     })
   }

@@ -2,7 +2,11 @@ module Api
   class PlansController < ActionController::Base
     def index
       plans = Plan.where(date: params[:date], off_road_circuit_id: params[:off_road_circuit_id]).count
-      id = Plan.find_by(date: params[:date], off_road_circuit_id: params[:off_road_circuit_id], uuid: session['session_id'])&.id
+      id = if current_user
+             Plan.find_by(date: params[:date], off_road_circuit_id: params[:off_road_circuit_id], user_id: current_user.id)&.id
+           else
+             Plan.find_by(date: params[:date], off_road_circuit_id: params[:off_road_circuit_id], uuid: session['session_id'])&.id
+           end
 
       render json: {
         plans: plans,
@@ -11,7 +15,7 @@ module Api
     end
 
     def create
-      Plan.create(plan_params.merge(uuid: session['session_id']))
+      Plan.create(plan_params.merge(uuid: session['session_id'], user_id: current_user&.id))
       head :ok
     end
 

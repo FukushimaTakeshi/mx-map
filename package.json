@@ -10,6 +10,8 @@
     "@rails/webpacker": "3.5",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "bulma-calendar": "^4.0.1",
+    "bulma-carousel": "^3.0.0",
     "d3": "~4.9.0",
     "japanese-holidays": "^1.0.6",
     "rails-ujs": "^5.2.0",

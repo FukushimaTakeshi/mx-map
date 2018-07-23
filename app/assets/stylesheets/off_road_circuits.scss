@@ -3,40 +3,61 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 /*
  *= require swiper
+ *= require bulma-calendar/dist/css/bulma-calendar.min.css
  */
- .c-container {
-   position: relative;
-   margin-left: auto;
-   margin-right: auto;
-   max-width: 1000px;
-   padding: 0 15px;
- }
 
- .tabs {
- margin-bottom: -1px !important;
- position: relative;
- }
- .tab-content {padding: 60px;top: 197px;color: #000;background-color: white;}
- .tab-pane {
- display: none;
- }
- .tab-pane.is-active {
- display: block;
- width: 50%;
- position: relative;
- left: 50%;
- transform: translateX(-50%);
- }
- .is-active {
- display: initial;
- }
+// .swiper-slide {
+//   width: 100%;  /* トリミングしたい幅 */
+//   padding-top: 65%;/*　トリミングしたい枠の高さ（固定にしたい場合はサイズを入力）　*/
+//   overflow: hidden;
+//   position: relative;
+// }
+//
+// .swiper-slide img {
+//   position: absolute;
+//   top: 1%;
+//   left: 1%;
+//   width: auto;
+//   height: auto;
+//   max-width: 150%;
+//   max-height: 150%;
+// }
 
- .cent{
- display: block;
- margin: 10px auto;
- padding: 5px;
- border: 1px solid #ccc}
+.c-container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+  padding: 0 15px;
+}
 
- .video
- {display: block;
- margin: 0 auto;}
+.tabs {
+  margin-bottom: -1px !important;
+  position: relative;
+}
+.tab-content {padding: 60px;top: 197px;color: #000;background-color: white;}
+.tab-pane {
+  display: none;
+}
+.tab-pane.is-active {
+  display: block;
+  width: 50%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.is-active {
+  display: initial;
+}
+
+.cent {
+  display: block;
+  margin: 10px auto;
+  padding: 5px;
+  border: 1px solid #ccc
+}
+
+.video {
+  display: block;
+  margin: 0 auto;
+}
