@@ -1,5 +1,6 @@
 <template>
   <span class="plan">
+    <Modal v-if="isOpen" :text="testTxt" @close="closeModal()"></Modal>
     <div class="calendar">
       <div class="calendar-nav">
         <div @click="prev()" class="calendar-nav-previous-month">
@@ -9,7 +10,7 @@
             </svg>
           </button>
         </div>
-        <div class="calendar-month">{{ currentYear }}年{{ currentMonth }}月</div>
+        <div @click="openModal()" class="calendar-month">{{ currentYear }}年{{ currentMonth }}月</div>
         <div @click="next()" class="calendar-nav-next-month">
           <button class="button is-small is-text">
             <svg viewBox="0 0 50 80" xml:space="preserve">
@@ -30,7 +31,8 @@
         </div>
         <div class="calendar-body">
           <div v-for="(day, index) in calendarData" class="calendar-date" v-bind:class="{ 'is-disabled': day.isDisabled }">
-            <button class="date-item" v-bind:class="{ 'is-today': day.isToday }">
+            <button class="date-item" v-bind:class="{ 'is-today': day.isToday, 'is-danger': day.isActive }">
+
               {{ day.day }}
             </button>
           </div>
@@ -45,11 +47,17 @@ import axios from 'axios'
 import JapaneseHolidays from 'japanese-holidays'
 import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
+import Modal from './Modal.vue'
 
 export default {
   props: ['circuitId'],
+  components: {
+    Modal
+  },
   data() {
     return {
+      testTxt : 'テストです',
+      isOpen : false,
       calendarData: [],
       currentYear: 0,
       currentMonth: 0,
@@ -67,6 +75,12 @@ export default {
   },
 
   methods: {
+    openModal : function(){
+      this.isOpen = true;
+    },
+    closeModal : function(){
+      this.isOpen = false;
+    },
     next: function() {
       if (this.currentMonth == 12) {
         this.currentMonth = 1
@@ -84,6 +98,10 @@ export default {
         this.currentMonth--
       }
       this.calendarData = get_month_calendar(this.currentYear, this.currentMonth)
+    },
+    showPlan: function() {
+
+
     },
     getAttendance: async function(date, index) {
       const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}`)
@@ -135,7 +153,8 @@ function get_month_calendar(year, month) {
         day: currentLastDay - weekdayCount + i + 1,
         idToday: false,
         isDisabled: true,
-        weekdayCount: weekdayCount
+        weekdayCount: weekdayCount,
+        isActive: false
       }
     )
   }
@@ -145,7 +164,8 @@ function get_month_calendar(year, month) {
         day: i + 1,
         isToday: today.getDate() == i+1 ? true : false,
         isDisabled: false,
-        weekdayCount: weekdayCount
+        weekdayCount: weekdayCount,
+        isActive: (weekdayCount == 0 || weekdayCount == 6) ? true : false
       }
     )
     // 曜日のカウントが6(土曜日)まできたら0(日曜日)に戻す
