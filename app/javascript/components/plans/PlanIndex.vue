@@ -1,6 +1,5 @@
 <template>
   <span class="plan">
-    <Modal v-if="isOpen" :text="testTxt" @close="closeModal()"></Modal>
     <div class="calendar">
       <div class="calendar-nav">
         <div @click="prev()" class="calendar-nav-previous-month">
@@ -10,7 +9,7 @@
             </svg>
           </button>
         </div>
-        <div @click="openModal()" class="calendar-month">{{ currentYear }}年{{ currentMonth }}月</div>
+        <div class="calendar-month">{{ currentYear }}年{{ currentMonth }}月</div>
         <div @click="next()" class="calendar-nav-next-month">
           <button class="button is-small is-text">
             <svg viewBox="0 0 50 80" xml:space="preserve">
@@ -21,21 +20,22 @@
       </div>
       <div class="calendar-container">
         <div class="calendar-header">
-          <div class="calendar-date">Sun</div>
+          <div class="calendar-date" style="color:#FA6964;">Sun</div>
           <div class="calendar-date">Mon</div>
           <div class="calendar-date">Tue</div>
           <div class="calendar-date">Wed</div>
           <div class="calendar-date">Thu</div>
           <div class="calendar-date">Fri</div>
-          <div class="calendar-date">Sat</div>
+          <div class="calendar-date" style="color:#4987F2;">Sat</div>
         </div>
         <div class="calendar-body">
           <div v-for="(day, index) in calendarData" class="calendar-date" v-bind:class="{ 'is-disabled': day.isDisabled }">
-            <button class="date-item" v-bind:class="{ 'is-today': day.isToday, 'is-danger': day.isActive }">
-
+            <button @click="openModal(day.day)" class="date-item" v-bind:class="{ 'is-today': day.isToday, 'is-danger': day.isActive }">
               {{ day.day }}
             </button>
           </div>
+          <!-- modal component -->
+          <Modal :circuitId="circuitId"></Modal>
         </div>
       </div>
     </div>
@@ -47,7 +47,9 @@ import axios from 'axios'
 import JapaneseHolidays from 'japanese-holidays'
 import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
+
 import Modal from './Modal.vue'
+import ModalEvent from '../../packs/off_road_circuits/form.js'
 
 export default {
   props: ['circuitId'],
@@ -56,15 +58,10 @@ export default {
   },
   data() {
     return {
-      testTxt : 'テストです',
       isOpen : false,
       calendarData: [],
       currentYear: 0,
-      currentMonth: 0,
-      holidayList: [],
-      transition_name: 'show-next',
-      dateList: [1, 2],
-      visible_content: 0,
+      currentMonth: 0
     }
   },
   mounted: function() {
@@ -75,11 +72,9 @@ export default {
   },
 
   methods: {
-    openModal : function(){
-      this.isOpen = true;
-    },
-    closeModal : function(){
-      this.isOpen = false;
+    openModal: function(day){
+      const date = `${this.currentYear}-${this.currentMonth}-${day}`
+      ModalEvent.$emit('open-modal', date)
     },
     next: function() {
       if (this.currentMonth == 12) {
@@ -100,8 +95,6 @@ export default {
       this.calendarData = get_month_calendar(this.currentYear, this.currentMonth)
     },
     showPlan: function() {
-
-
     },
     getAttendance: async function(date, index) {
       const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}`)
@@ -182,12 +175,12 @@ function get_month_calendar(year, month) {
           day: i + 1,
           idToday: false,
           isDisabled: true,
-          weekdayCount: weekdayCount
+          weekdayCount: weekdayCount,
+          isActive: false
         }
       )
     }
   }
-  console.log(calendarData)
   return calendarData
 }
 
