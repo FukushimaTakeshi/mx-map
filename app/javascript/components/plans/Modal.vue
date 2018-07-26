@@ -55,13 +55,6 @@ export default {
       this.isOpen = true
       this.date = date
       getAttendance(this.circuitId, date).then(result => {
-        // let userId = result.map(function(element, index, array) {
-        //   if (element.user_id == null) {
-        //     return "ゲストユーザ"
-        //   } else {
-        //     return element.user_id
-        //   }
-        // })
         this.plan = result.plans.length
         this.users = result.users
       })
@@ -76,13 +69,6 @@ export default {
         process.exit()
       }
       getAttendance(this.circuitId, this.date).then(result => {
-        // let userId = result.users.map(function(element, index, array) {
-        //   if (element.user_id == null) {
-        //     return "ゲストユーザ"
-        //   } else {
-        //     return element.user_id
-        //   }
-        // })
         this.plan = result.plans.length
         this.users = result.users
       })
