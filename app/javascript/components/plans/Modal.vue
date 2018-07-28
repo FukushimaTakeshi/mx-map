@@ -1,5 +1,6 @@
 <template>
   <transition name="modal">
+    <div class="column is-9 is-offset-3">
     <div v-show="isOpen" class="modal is-active">
       <div class="modal-background" @click.self="close()"></div>
       <div class="modal-card">
@@ -12,17 +13,36 @@
           <button @click.self="close()" class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-          <div class="modal-body">
-            <p v-for="user in users">
-              <a v-if="user.id !== null" :href="'/users/' + user.id">{{ user.username }}</a>
-              <a v-else>{{ user.username }}</a>
-            </p>
-          </div>
+          <span v-if="!users.length" v-show="!loading">まだ予定がありません(´・ω・｀)</span>
+					<article v-for="user in users" v-show="!loading" class="post">
+						<div class="media">
+							<div class="media-left">
+								<p class="image is-32x32">
+									<img src="http://bulma.io/images/placeholders/128x128.png">
+								</p>
+							</div>
+							<div class="media-content">
+								<div class="content">
+									<p>
+                    <a v-if="user.id !== null" :href="'/users/' + user.id">{{ user.username }}</a>
+                    <a v-else>{{ user.username }}</a>
+									</p>
+								</div>
+							</div>
+							<div class="media-right">
+								<span class="has-text-grey-light"><i class="fa fa-comments"></i> 1</span>
+							</div>
+						</div>
+					</article>
+          <!-- loading component -->
+          <Loading v-if="loading"></Loading>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success" @click.self="createAttendance()">走りに行く！</button>
+          <button v-if="!isAlreadyPlan" :disabled="loading" class="button is-success" @click.self="createAttendance()">走りに行く！</button>
+          <button v-else :disabled="loading" class="button is-warning" @click.self="deleteAttendance()">やっぱやめとく！</button>
         </footer>
       </div>
+    </div>
     </div>
   </transition>
 </template>
@@ -33,8 +53,10 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
 
 import ModalEvent from '../../packs/off_road_circuits/form.js'
+import Loading from '../load/LoadContent.vue'
 
 export default {
+  components: { Loading },
   name: 'App',
   props: [
     'circuitId'
@@ -44,7 +66,9 @@ export default {
       date: "",
       plan: 0,
       users: [],
-      isOpen: false
+      isAlreadyPlan: false,
+      isOpen: false,
+      loading: false
     }
   },
   mounted: function() {
@@ -54,23 +78,44 @@ export default {
     open: function(date) {
       this.isOpen = true
       this.date = date
-      getAttendance(this.circuitId, date).then(result => {
-        this.plan = result.plans.length
-        this.users = result.users
-      })
+      this.loading = true
+      this.isAlreadyPlan = false
+      this.setPlans()
     },
     close: function() {
       this.isOpen = false
     },
     createAttendance: async function() {
+      this.loading = true
       const res = await axios.post(`/api/plans/`, {date: this.date, off_road_circuit_id: this.circuitId })
       if (res.status !== 200) {
         console.log("Error!!")
         process.exit()
       }
+      this.setPlans()
+    },
+    deleteAttendance: async function(date, index) {
+      this.loading = true
+      const res = await axios.delete(`/api/plans/${this.planId}`)
+      if (res.status !== 200) {
+        console.log("Error!!")
+        process.exit()
+      }
+      this.setPlans()
+    },
+    setPlans: function() {
       getAttendance(this.circuitId, this.date).then(result => {
-        this.plan = result.plans.length
-        this.users = result.users
+        setTimeout(() => {
+          this.plan = result.plans.length
+          this.users = result.users
+          if (result.id == null) {
+            this.isAlreadyPlan = false
+          } else {
+            this.isAlreadyPlan = true
+            this.planId = result.id
+          }
+          this.loading = false
+        }, 1000)
       })
     }
   }
@@ -82,73 +127,18 @@ async function getAttendance(circuitId, date) {
     console.log("Error!!")
     process.exit()
   }
-  console.log(res.data)
   return res.data
 }
 </script>
 
 <style lang="scss">
-// .modal-mask {
-//   position: fixed;
-//   z-index: 9998;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background-color: rgba(0, 0, 0, .5);
-//   display: table;
-//   transition: opacity .3s ease;
-// }
-//
-// .modal-wrapper {
-//   display: table-cell;
-//   vertical-align: middle;
-// }
-//
-// .modal-container {
-//   width: 300px;
-//   margin: 0px auto;
-//   padding: 20px 30px;
-//   background-color: #fff;
-//   border-radius: 2px;
-//   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-//   transition: all .3s ease;
-//   font-family: Helvetica, Arial, sans-serif;
-// }
-//
-// .modal-header h3 {
-//   margin-top: 0;
-//   color: #42b983;
-// }
-//
-// .modal-body {
-//   margin: 20px 0;
-// }
-//
-// .modal-default-button {
-//   float: right;
-// }
-//
-// /*
-//  * The following styles are auto-applied to elements with
-//  * transition="modal" when their visibility is toggled
-//  * by Vue.js.
-//  *
-//  * You can easily play with the modal transition by editing
-//  * these styles.
-//  */
-//
-// .modal-enter {
-//   opacity: 0;
-// }
-//
-// .modal-leave-active {
-//   opacity: 0;
-// }
-//
-// .modal-enter .modal-container,
-// .modal-leave-active .modal-container {
-//   -webkit-transform: scale(1.1);
-//   transform: scale(1.1);
-// }
+article.post {
+  margin: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #E6EAEE;
+}
+article.post:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
 </style>

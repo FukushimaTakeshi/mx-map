@@ -130,7 +130,7 @@ export default {
     },
 
     getAttendance: async function(date, index) {
-      const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}`)
+      const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}&all=1`)
       if (res.status !== 200) {
         console.log("Error!!")
         process.exit()

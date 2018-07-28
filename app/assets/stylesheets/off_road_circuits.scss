@@ -35,7 +35,13 @@
   margin-bottom: -1px !important;
   position: relative;
 }
-.tab-content {padding: 60px;top: 197px;color: #000;background-color: white;}
+.tab-content {
+  padding-top: 5px;
+  top: 197px;
+  color: #000;
+  background-color: white;
+}
+
 .tab-pane {
   display: none;
 }

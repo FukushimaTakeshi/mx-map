@@ -255,4 +255,8 @@ function holidayThisWeek() {
   font-size: xx-small;
   margin: 1px 1px;
 }
+
+.calendar {
+  max-width: initial;
+}
 </style>

@@ -40,7 +40,7 @@ section.hero.is-info.is-bold
         li#3 data-target="pane-3"
           a
             span
-             | 口コミ(Google)
+             | 口コミ
         li#4 data-target="pane-4"
           a
             span
@@ -51,8 +51,9 @@ section.hero.is-info.is-bold
       figure
         img src="https://source.unsplash.com/0_xMuEbpFAQ/400x400" alt="" class="cent"
     div.tab-pane#pane-2 style="display: none;"
-      div#form
-        plan :circuit-id="#{@off_road_circuit.id}"
+      div class="container"
+        div#calendar
+          plan :circuit-id="#{@off_road_circuit.id}"
     div.tab-pane#pane-3 style="display: none;"
       p
         strong
