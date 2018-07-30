@@ -3,3 +3,7 @@
  *= require_self
  */
  @import "bulma";
+
+.navbar-item img {
+  max-height: 3rem;
+}
