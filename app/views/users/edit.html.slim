@@ -6,7 +6,7 @@ section.hero.has-background-light.is-fullheight
         p.subtitle.has-text-grey Please login to proceed.
         div.box
           figure.avatar
-          img src="https://placehold.it/128x128"
+            =image_tag(@user.avatar, size: '80x80')
 
           = form_for(@user, url: user_path(@user)) do |f|
             div.has-text-left

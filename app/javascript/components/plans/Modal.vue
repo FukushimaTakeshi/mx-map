@@ -18,7 +18,7 @@
 						<div class="media">
 							<div class="media-left">
 								<p class="image is-32x32">
-									<img src="http://bulma.io/images/placeholders/128x128.png">
+									<img :src="user.avatar">
 								</p>
 							</div>
 							<div class="media-content">

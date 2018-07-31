@@ -22,6 +22,7 @@
 #  uid                       :string
 #  username                  :string
 #  admin                     :boolean          default(FALSE), not null
+#  avatar                    :string
 
 class User < ApplicationRecord
   has_many :plan
@@ -42,8 +43,10 @@ class User < ApplicationRecord
       case auth.provider
       when 'twitter'
         user.username = auth.info.nickname
+        user.avatar = auth.info.image
       when 'facebook', 'google_oauth2'
         user.username = auth.info.name
+        user.avatar = auth.info.image
       end
     end
   end

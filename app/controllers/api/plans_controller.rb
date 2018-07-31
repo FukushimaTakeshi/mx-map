@@ -11,7 +11,7 @@ module Api
                 )
         users = plans.map do |plan|
           if plan.user.present?
-            { id: plan.user.id, username: plan.user.username }
+            { id: plan.user.id, username: plan.user.username, avatar: plan.user.avatar }
           else
             { id: nil, username: "ゲストユーザ" }
           end
