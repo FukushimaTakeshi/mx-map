@@ -41,6 +41,9 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 
+gem 'carrierwave'
+gem 'mini_magick'
+
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 end

@@ -23,6 +23,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       # session["devise.#{provider}_data"] = request.env['omniauth.auth']
       session["devise.user_attributes"] = @user.attributes
+      session["devise.user_attributes"]['avatar'] = @user.remote_avatar_url
       redirect_to new_user_registration_url
     end
   end

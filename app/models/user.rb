@@ -35,6 +35,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :omniauthable, omniauth_providers: [:twitter, :facebook, :google_oauth2]
 
+  mount_uploader :avatar, AvatarUploader
+
   def self.find_for_oauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.provider = auth.provider
@@ -43,10 +45,10 @@ class User < ApplicationRecord
       case auth.provider
       when 'twitter'
         user.username = auth.info.nickname
-        user.avatar = auth.info.image
+        user.remote_avatar_url = auth.info.image
       when 'facebook', 'google_oauth2'
         user.username = auth.info.name
-        user.avatar = auth.info.image
+        user.remote_avatar_url = auth.info.image
       end
     end
   end
@@ -55,6 +57,7 @@ class User < ApplicationRecord
     if session['devise.user_attributes']
       new(session['devise.user_attributes']) do |user|
         user.attributes = params
+        user.remote_avatar_url = session['devise.user_attributes']['avatar']
       end
     else
       super

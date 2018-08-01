@@ -29,6 +29,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :username,
+      :avatar,
       mx_profile_attributes: [:mx_history_id, :license_id, :_destroy, :id]
     )
   end
