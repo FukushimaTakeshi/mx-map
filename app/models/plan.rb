@@ -14,9 +14,16 @@ class Plan < ApplicationRecord
   belongs_to :user, optional: true
 
   scope :with_user, -> { includes(:user).references(:user) }
-  scope :search_circuit_id, lambda { |id| where(off_road_circuit_id: id) }
+  scope :search_circuit_id, lambda { |id|
+    where(off_road_circuit_id: id) if id.present?
+  }
   scope :search_date, lambda { |date|
-    where(date: date) if date.present?
+    return if date.blank?
+    if date.is_a?(String)
+      where(date: date)
+    elsif date.is_a?(Array)
+      where(date: date[0]..date[1])
+    end
   }
   scope :search_user_id, lambda { |user_id|
     where(user_id: user_id) if user_id.present?

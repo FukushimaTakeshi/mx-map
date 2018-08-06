@@ -6,4 +6,5 @@ p Find me in app/views/users/show.html.slim
 = @user.username
 
 div#form
-  app
+  bar-app :user-id="#{@user.id}"
+  pie-app :user-id="#{@user.id}"

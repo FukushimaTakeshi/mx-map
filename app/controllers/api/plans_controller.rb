@@ -6,16 +6,17 @@ module Api
       else
         plans = Plan.with_user.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id])
         users = user_list(plans)
+        off_road_circuits = off_road_circuit_list(plans)
       end
       id = if current_user
              Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(user_id: current_user.id)&.id
            else
              Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(uuid: session['session_id'])&.id
            end
-
       render json: {
         plans: plans,
         users: users,
+        off_road_circuits: off_road_circuits,
         id: id
       }
     end
@@ -47,6 +48,15 @@ module Api
           { id: nil, username: "ゲストユーザ" }
         end
       end
+    end
+
+    def off_road_circuit_list(plans)
+      circuits = plans.map do |plan|
+        { id: plan.off_road_circuit.id, name: plan.off_road_circuit.name }
+      end
+      circuits.group_by do |circuit|
+        circuit[:id]
+      end.values
     end
   end
 end
