@@ -19,17 +19,26 @@ export default {
       chartMonthData: []
     }
   },
+  mounted: function() {
+    EventBus.$on('change-pie-chart', this.fetchMonthData)
+  },
   created() {
     this.fetchMonthData()
   },
   methods: {
-    fetchMonthData: async function() {
-      // 月初
-      let from = new Date()
-      from.setDate(1)
+    fetchMonthData: async function(yearMonth) {
+      let from // 月初
+      let to // 月末
 
-      // 月末
-      let to = new Date()
+      if (yearMonth) {
+        const arr = yearMonth.split('-')
+        from = new Date(arr[0], arr[1] - 1, 1)
+        to = new Date(arr[0], arr[1] - 1, 1)
+      } else {
+        from = new Date()
+        from.setDate(1)
+        to = new Date()
+      }
       to.setDate(1)
       to.setMonth(to.getMonth() + 1)
       to.setDate(0)
@@ -54,7 +63,8 @@ export default {
         count.push(value.length)
         name.push(value[0].name)
       })
-      EventBus.$emit('open-pie-chart', count, name)
+      let currentYearMonth = yearMonth || `${from.getFullYear()}-${from.getMonth()+1}`
+      EventBus.$emit('open-pie-chart', count, name, currentYearMonth)
     }
   }
 }

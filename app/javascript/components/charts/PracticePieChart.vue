@@ -11,16 +11,19 @@ export default {
     EventBus.$on('open-pie-chart', this.open)
   },
   methods: {
-    open: function(count, name) {
+    open: function(count, name, currentYearMonth) {
       this.renderChart({
         labels: name,
         datasets: [
           {
             label: '内訳',
             backgroundColor: [
-               'rgba(255, 100, 130, 0.2)',
-               'rgba(100, 130, 255, 0.2)',
-               'rgba(130, 255, 100, 0.2)'
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56",
+              "#339900",
+              "#ff6633",
+              "#cc0099"
             ],
             data: count
           }
@@ -28,7 +31,7 @@ export default {
       }, {
         title: {
           display: true,
-          text: '内訳'
+          text: `${currentYearMonth} の内訳`
         },
         legend: {
           display: true

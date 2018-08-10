@@ -41,7 +41,14 @@ export default {
           display: true
         },
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        onClick: function (evt, item) {
+          if (item.length != 0) {
+            EventBus.$emit('change-pie-chart', item[0]['_model'].label)
+          } else {
+            // あとで
+          }
+        }
       })
     }
   }
