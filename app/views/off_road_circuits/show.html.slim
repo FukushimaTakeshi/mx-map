@@ -63,111 +63,6 @@ section.hero.is-info.is-bold
         strong
           | 準備中：関連動画
 
-/ div class="calendar is-large"
-  div class="calendar-nav"
-    div class="calendar-nav-previous-month"
-      button class="button is-small is-text"
-        svg viewBox="0 0 50 80" xml:space="preserve"
-          polyline fill="none" stroke-width=".5em" stroke-linecap="round" stroke-linejoin="round" points="45.63,75.8 0.375,38.087 45.63,0.375 "
-
-    div class="calendar-month"
-      | March 2017
-    div class="calendar-nav-next-month"
-      button class="button is-small is-text"
-        svg viewBox="0 0 50 80" xml:space="preserve"
-          polyline fill="none" stroke-width=".5em" stroke-linecap="round" stroke-linejoin="round" points="0.375,0.375 45.63,38.087 0.375,75.8 "
-
-
-
-  div class="calendar-container"
-    div class="calendar-header"
-      div class="calendar-date" | Sun
-      div class="calendar-date" | Mon
-      div class="calendar-date" | Tue
-      div class="calendar-date" | Wed
-      div class="calendar-date" | Thu
-      div class="calendar-date" | Fri
-      div class="calendar-date" | Sat
-
-    div class="calendar-body"
-      div class="calendar-date is-disabled"
-        button class="date-item" | 26
-      div class="calendar-date is-disabled"
-        button class="date-item" | 27
-      div class="calendar-date is-disabled"
-        button class="date-item" | 28
-      div class="calendar-date"
-        button class="date-item" | 1
-      div class="calendar-date"
-        button class="date-item" | 2
-      div class="calendar-date"
-        button class="date-item" | 3
-      div class="calendar-date tooltip" data-tooltip="Today"
-        button class="date-item is-today" | 4
-      div class="calendar-date tooltip" data-tooltip="Not available" disabled=""
-        button class="date-item" |5
-      div class="calendar-date"
-        button class="date-item" | 6
-      div class="calendar-date"
-        button class="date-item" | 7
-      div class="calendar-date tooltip" data-tooltip="You have appointments"
-        button class="date-item" | 8
-      div class="calendar-date"
-        button class="date-item" | 9
-      div class="calendar-date"
-        button class="date-item" | 10
-      div class="calendar-date"
-        button class="date-item" | 11
-      div class="calendar-date"
-        button class="date-item" | 12
-      div class="calendar-date"
-        button class="date-item" | 13
-      div class="calendar-date"
-        button class="date-item" | 14
-      div class="calendar-date"
-        button class="date-item" | 15
-      div class="calendar-date calendar-range calendar-range-start"
-        button class="date-item is-active" | 16
-      div class="calendar-date calendar-range"
-        button class="date-item" | 17
-      div class="calendar-date calendar-range"
-        button class="date-item" | 18
-      div class="calendar-date calendar-range"
-        button class="date-item" | 19
-      div class="calendar-date calendar-range calendar-range-end"
-        button class="date-item is-active" | 20
-      div class="calendar-date"
-        button class="date-item" | 21
-      div class="calendar-date"
-        button class="date-item" | 22
-      div class="calendar-date"
-        button class="date-item" | 23
-      div class="calendar-date"
-        button class="date-item" | 24
-      div class="calendar-date"
-        button class="date-item" | 25
-      div class="calendar-date"
-        button class="date-item" | 26
-      div class="calendar-date"
-        button class="date-item" | 27
-      div class="calendar-date"
-        button class="date-item" | 27
-      div class="calendar-date"
-        button class="date-item" | 28
-      div class="calendar-date"
-        button class="date-item" | 28
-      div class="calendar-date"
-        button class="date-item" | 29
-      div class="calendar-date"
-        button class="date-item" | 30
-      div class="calendar-date"
-        button class="date-item" | 31
-      div class="calendar-date is-disabled"
-        button class="date-item"
-          | 1
-
-
-  / image-swipe :item-width="300" :images="#{@off_road_circuit.photo.map(&:url)}"
 
 - if current_user.try(:admin?)
   p
@@ -176,7 +71,5 @@ section.hero.is-info.is-bold
   = link_to "#{@off_road_circuit.name}を削除", @off_road_circuit, method: :delete, data: { confirm: '削除してよろしいですか？' }
 p
 = link_to '一覧に戻る', prefecture_path(@off_road_circuit.prefecture_id), data: { turbolinks: false }
-p
-= link_to '行く人', off_road_circuit_plans_path(@off_road_circuit)
 
 = javascript_pack_tag 'off_road_circuits/form'

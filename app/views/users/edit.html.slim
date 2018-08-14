@@ -7,8 +7,8 @@ section.hero.has-background-light.is-fullheight
         div.box
           = form_for(@user, url: user_path(@user)) do |f|
             figure.avatar
-              - if current_user.avatar.url.present?
-                = image_tag(current_user.avatar.url, size: '70x70')
+              - if @user.avatar.url.present?
+                = image_tag(@user.avatar.url, size: '70x70')
               - else
                 = image_tag('no_image.png', size: '70x70')
 
