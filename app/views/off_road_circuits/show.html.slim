@@ -73,3 +73,7 @@ p
 = link_to '一覧に戻る', prefecture_path(@off_road_circuit.prefecture_id), data: { turbolinks: false }
 
 = javascript_pack_tag 'off_road_circuits/form'
+
+- content_for :footer
+  div.content.has-text-right
+    = image_tag 'powered_by_google_on_white.png', size: '85x85'

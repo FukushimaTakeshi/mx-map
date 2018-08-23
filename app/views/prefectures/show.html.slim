@@ -51,7 +51,6 @@ div.container.grid
 
           plan :circuit-id="#{circuit.id}"
 
-footer.footer
-  div.container
-    div.content.has-text-right
-      = image_tag 'powered_by_google_on_white.png', size: '85x85'
+- content_for :footer
+  div.content.has-text-right
+    = image_tag 'powered_by_google_on_white.png', size: '85x85'

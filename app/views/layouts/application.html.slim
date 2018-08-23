@@ -37,3 +37,16 @@ html
     p.alert = alert
 
     = yield
+
+    footer.footer
+      .container
+        = yield :footer
+        nav.level
+          p.level-item
+            | © 2018 dirt awesome
+          p.level-item
+            = link_to '利用規約', terms_path, class: 'link is-info'
+          p.level-item
+            = link_to 'プライバシーポリシー', privacy_path, class: 'link is-info'
+          p.level-item
+            = link_to 'お問い合わせ', '/', class: 'link is-info'
