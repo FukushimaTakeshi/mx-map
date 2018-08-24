@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  
   get '/terms', to: 'static_pages#terms'
   get '/privacy', to: 'static_pages#privacy'
 
@@ -25,6 +25,13 @@ Rails.application.routes.draw do
 
   resources :off_road_circuits, only: [:show, :new, :create, :edit, :update, :destroy] do
     resources :plans, only: [:index]
+  end
+  
+  resource :inquiry, only: [:new, :create], path_names: { new: '' } do
+    collection do
+      post :confirm
+      get :complete
+    end
   end
 
   namespace :api do

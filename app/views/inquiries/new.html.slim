@@ -1,0 +1,33 @@
+.hero-body.has-background-light
+  .container.has-text-centered
+    .column.is-6.is-offset-3
+      h1.title お問い合わせ
+    
+      = form_for @inquiry, url: confirm_inquiry_path do |f|
+        .field.has-text-left
+
+          - if @inquiry.errors.any?
+            div
+              strong 入力内容にエラーがあります
+              ul.help.is-danger
+                - @inquiry.errors.full_messages.each do |msg|
+                  li = msg
+
+          label.label
+            = f.label :title
+          .control
+            = f.text_field :title, class: 'input'
+
+          label.label
+            = f.label :email
+          .control
+            = f.text_field :email, class: 'input', placeholder: 'e.g. example@gmail.com'
+            
+          label.label
+            = f.label :message
+          .control
+            = f.text_area :message, class: 'textarea'
+
+        .field
+          .control
+            = f.submit '確認', class: 'button is-block is-info is-fullwidth'
