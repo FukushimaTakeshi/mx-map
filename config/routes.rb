@@ -37,4 +37,8 @@ Rails.application.routes.draw do
   namespace :api do
     resources :plans, only: [:index, :create, :destroy]
   end
+  
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+  end
 end
