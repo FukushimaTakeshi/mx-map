@@ -1,12 +1,32 @@
 ja:
+  activemodel:
+    attributes:
+      inquiry:
+        title: タイトル
+        email: メールアドレス
+        message: メッセージ
+    errors:
+      format: '%{attribute} %{message}'
+      messages:
+        blank: を入力して下さい。
+        too_long: は%{count}文字以内で入力して下さい。
+        invalid: は不正な値です。
+
   activerecord:
     attributes:
       user:
         username: ユーザー名
         password: パスワード
+        current_password: 現在のパスワード
         password_confirmation: パスワード確認
         email: メールアドレス
         remember_me: 次回からパスワード入力を省く
+    errors:
+      format: '%{attribute} %{message}'
+      messages:
+        blank: を入力して下さい。
+        too_long: は%{count}文字以内で入力して下さい。
+        invalid: は不正な値です。
 
   helpers:
     placeholder:

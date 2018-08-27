@@ -7,7 +7,8 @@ section.hero.has-background-light.is-fullheight
           p.subtitle.has-text-grey Please login to proceed.
 
           = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-            = devise_error_messages!
+            div.field.has-text-left
+              = devise_error_messages!
 
             div.field
               div.control
@@ -17,16 +18,16 @@ section.hero.has-background-light.is-fullheight
                   div Currently waiting confirmation for:
                     = resource.unconfirmed_email
 
-            div.field
+            div.field.has-text-left
               | 変更しない場合は空欄のままにしてください
               div.control
-                = f.password_field :password, autocomplete: 'off', placeholder: true, class: 'input'
+                = f.password_field :password, autocomplete: 'off', placeholder: '新しいパスワード', class: 'input'
 
             div.field
               div.control
                 = f.password_field :password_confirmation, autocomplete: 'off', placeholder: true, class: 'input'
 
-            div.field
+            div.field.has-text-left
               | 現在のパスワードを入力してください
               div.control
                 = f.password_field :current_password, autocomplete: 'off', placeholder: true, class: 'input'
