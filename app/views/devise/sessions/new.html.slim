@@ -35,7 +35,8 @@ section.hero.has-background-light.is-fullheight
                             = f.check_box :remember_me, class: 'checkbox', type: 'checkbox'
                             = f.label :remember_me, class: 'checkbox'
 
+                    - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+                      = link_to "パスワードを忘れた場合", new_password_path(resource_name)
+
                   div.actions
                     = f.submit 'ログイン', class: 'button is-primary is-fullwidth'
-
-              = render "devise/shared/links"

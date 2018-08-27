@@ -1,25 +1,21 @@
-h2 Change your password
+.hero-body.has-background-light
+  .container.has-text-centered
+    .column.is-6.is-offset-3
+      h1.title.has-text-grey パスワード再設定
 
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  = devise_error_messages!
-  = f.hidden_field :reset_password_token
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+        .field.has-text-left
+          = devise_error_messages!
+          = f.hidden_field :reset_password_token
 
-  div class="field"
-    = f.label :password, "New password"
-    br
-    - if @minimum_password_length
-      em
-        | (#{@minimum_password_length} characters minimum)
-      br
-    = f.password_field :password, autofocus: true, autocomplete: "off"
+          .field
+            .control
+              = f.password_field :password, autofocus: true, autocomplete: 'off', placeholder: '新しいパスワード', class: 'input'
 
-  div class="field"
-    = f.label :password_confirmation, "Confirm new password"
-    br
-    = f.password_field :password_confirmation, autocomplete: "off"
+          .field
+            .control
+              = f.password_field :password_confirmation, autocomplete: 'off', placeholder: true, class: 'input'
 
-  div class="actions"
-    = f.submit "Change my password"
-
-
-= render "devise/shared/links"
+        .field
+          .control
+            = f.submit 'パスワードを変更', class: 'button is-link is-fullwidth'

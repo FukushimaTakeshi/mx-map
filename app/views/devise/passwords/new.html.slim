@@ -1,15 +1,15 @@
-h2 Forgot your password?
+.hero-body.has-background-light
+  .container.has-text-centered
+    .column.is-6.is-offset-3
+      h1.title.has-text-grey パスワード再設定メールを送信する
+        
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+        .field.has-text-left
+          = devise_error_messages!
 
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  = devise_error_messages!
+          .control
+            = f.email_field :email, placeholder: true, class: 'input'
 
-  div class="field"
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-
-  div class="actions"
-    = f.submit "Send me reset password instructions"
-
-
-= render "devise/shared/links"
+        .field
+          .control
+            = f.submit '送信', class: 'button is-link is-fullwidth'
