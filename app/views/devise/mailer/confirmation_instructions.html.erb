@@ -1,4 +1,4 @@
-<p>こんにちは <%= @username || @email %>さん!</p>
+<p>こんにちは <%= @username.presence || @email %>さん!</p>
 
 <p>Dirt awesome にご登録いただいたメールアドレスを確認します。</p>
 <p>下記のリンクへアクセスし、登録を完了してください。</p>
