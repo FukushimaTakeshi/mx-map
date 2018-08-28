@@ -32,9 +32,11 @@ html
                 = link_to "ユーザー登録", new_user_registration_path, class: 'button is-inverted is-outlined'
               pan.navbar-item
                 = link_to 'ログイン', new_user_session_path, class: 'button is-white'
-
-    p.notice = notice
-    p.alert = alert
+    
+    - if notice
+      .notification.is-primary = notice
+    - if alert
+      .notification.is-danger = alert
 
     = yield
 

@@ -1,14 +1,16 @@
-h2 Resend confirmation instructions
+.hero-body.has-background-light
+  .container.has-text-centered
+    .column.is-6.is-offset-3
+      h1.title.is-4.has-text-grey 確認メールを再送信する
 
-= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
-  = devise_error_messages!
+      = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+        .field.has-text-left
+          = devise_error_messages!
 
-  div class="field"
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
+        .field
+          .control
+            = f.email_field :email, placeholder: true, autofocus: true, autocomplete: 'email', class: 'input', value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
 
-  div class="actions"
-    = f.submit "Resend confirmation instructions"
-
-= render "devise/shared/links"
+        .field
+          .control
+            = f.submit '確認メールを再送信する', class: 'button is-link is-fullwidth'
