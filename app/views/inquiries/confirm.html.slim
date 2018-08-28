@@ -1,2 +1,37 @@
-h1 Inquiry#confirm
-p Find me in app/views/inquiry/confirm.html.slim
+.hero-body.has-background-light
+  .container.has-text-centered
+    .column.is-6.is-offset-3
+      h1.title お問い合わせ内容確認
+    
+      = form_for @inquiry, url: inquiry_path do |f|
+        .field.has-text-left
+
+          - if @inquiry.errors.any?
+            .notification
+              strong 入力内容にエラーがあります
+              ul.help.is-danger
+                - @inquiry.errors.full_messages.each do |msg|
+                  li = msg
+
+          label.label
+            = f.label :email
+            .control
+              p = @inquiry.email
+
+          label.label
+            = f.label :title
+            .control
+              p = @inquiry.title
+            
+          label.label
+            = f.label :message
+            .control
+              p = @inquiry.message
+        
+        - @inquiry.instance_values.each do |k, _v|
+          - next if k == 'errors' || k == 'validation_context'
+          = f.hidden_field k 
+
+        .field
+          .control
+            = f.submit '送信', class: 'button is-block is-info is-fullwidth'

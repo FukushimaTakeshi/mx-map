@@ -7,26 +7,26 @@
         .field.has-text-left
 
           - if @inquiry.errors.any?
-            div
+            .notification
               strong 入力内容にエラーがあります
               ul.help.is-danger
                 - @inquiry.errors.full_messages.each do |msg|
                   li = msg
 
           label.label
-            = f.label :title
-          .control
-            = f.text_field :title, class: 'input'
+            = f.label :email
+            .control
+              = f.text_field :email, class: 'input', placeholder: 'e.g. example@gmail.com'
 
           label.label
-            = f.label :email
-          .control
-            = f.text_field :email, class: 'input', placeholder: 'e.g. example@gmail.com'
+            = f.label :title
+            .control
+              = f.text_field :title, class: 'input'
             
           label.label
             = f.label :message
-          .control
-            = f.text_area :message, class: 'textarea'
+            .control
+              = f.text_area :message, class: 'textarea'
 
         .field
           .control
