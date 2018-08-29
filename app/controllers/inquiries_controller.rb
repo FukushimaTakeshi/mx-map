@@ -17,7 +17,6 @@ class InquiriesController < ApplicationController
     end
   end
 
-  
   private
   
   def inquiry_params
