@@ -30,7 +30,6 @@ Rails.application.routes.draw do
   resource :inquiry, only: [:new, :create], path_names: { new: '' } do
     collection do
       post :confirm
-      get :complete
     end
   end
 

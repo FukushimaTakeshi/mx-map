@@ -6,7 +6,4 @@ class Inquiry
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, if: -> { email.present? }
   validates :message, presence: true,  length: { maximum: 2000 }
-  
-  def save
-  end
 end

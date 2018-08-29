@@ -10,11 +10,13 @@ class InquiriesController < ApplicationController
 
   def create
     @inquiry = Inquiry.new(inquiry_params)
-    @inquiry.save
+    if @inquiry.valid?
+      InquiryMailer.received_email(@inquiry).deliver
+    else
+      raise
+    end
   end
-  
-  def complete
-  end
+
   
   private
   
