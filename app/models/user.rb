@@ -25,7 +25,7 @@
 #  avatar                    :string
 
 class User < ApplicationRecord
-  has_many :plan
+  has_many :plan, dependent: :delete_all
   has_one :mx_profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :mx_profile
 
