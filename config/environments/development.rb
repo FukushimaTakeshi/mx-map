@@ -19,6 +19,12 @@ Rails.application.configure do
 
   config.action_controller.perform_caching = true
   config.cache_store = :redis_store, 'redis://redis:6379/1'
+  
+  config.session_store :redis_store,
+    servers: ["redis://redis:6379/0/session"],
+    expire_after: 90.minutes,
+    key: "_#{Rails.application.class.parent_name.downcase}_session",
+    threadsafe: false
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local

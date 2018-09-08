@@ -63,6 +63,12 @@ Rails.application.configure do
     db: 1
   }
 
+  config.session_store :redis_store,
+    servers: ["redis://localhost:6379/0/session"],
+    expire_after: 90.minutes,
+    key: "_#{Rails.application.class.parent_name.downcase}_session",
+    threadsafe: false
+
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "app_#{Rails.env}"
