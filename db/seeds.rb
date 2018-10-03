@@ -85,3 +85,4 @@ MxHistory.find_or_create_by(id: 2, history: '1年以上3年未満')
 MxHistory.find_or_create_by(id: 3, history: '3年以上10年未満')
 MxHistory.find_or_create_by(id: 4, history: '10年以上')
 MxHistory.find_or_create_by(id: 5, history: '20年以上')
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
