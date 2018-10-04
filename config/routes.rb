@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'omniauth_callbacks'
   }
 
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: [:show, :edit, :update]
 
   root 'regions#index'
 
