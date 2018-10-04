@@ -63,18 +63,6 @@ Prefecture.find_or_create_by(id: 45, region_id: 8, name: '宮崎県')
 Prefecture.find_or_create_by(id: 46, region_id: 8, name: '鹿児島県')
 Prefecture.find_or_create_by(id: 47, region_id: 8, name: '沖縄県')
 
-OffRoadCircuit.find_or_create_by(id: 1, name: 'モトクロスビレッジ', address: '東京都中央区', url: 'http://hogehoge.com', place_id: 'ChIJFTp7UfXZGGAR3AR4Xt9TtK8', prefecture_id: 13, region_id: 3)
-OffRoadCircuit.find_or_create_by(id: 2, name: 'オフロードビレッジ', address: '東京都千代田区', url: 'http://hogehoge2.com', place_id: 'ChIJY2AuvznFGGARFSvH8kg1AeE', prefecture_id: 13, region_id: 3)
-OffRoadCircuit.find_or_create_by(id: 3, name: '成田MXパーク', address: '東京都新宿区', url: 'http://hogehoge3.com', place_id: 'ChIJo0TcyLz1ImARbek38pmlVYg', prefecture_id: 13, region_id: 3)
-
-Plan.find_or_create_by(id: 1, date: Date.today, off_road_circuit_id: 1, uuid: SecureRandom.uuid)
-Plan.find_or_create_by(id: 2, date: Date.today, off_road_circuit_id: 1, uuid: SecureRandom.uuid)
-Plan.find_or_create_by(id: 3, date: Date.today, off_road_circuit_id: 1, uuid: SecureRandom.uuid)
-Plan.find_or_create_by(id: 4, date: Date.today, off_road_circuit_id: 2, uuid: SecureRandom.uuid)
-Plan.find_or_create_by(id: 5, date: Date.today, off_road_circuit_id: 3, uuid: SecureRandom.uuid)
-
-Photo.find_or_create_by(id: 1, url: 'https://lh3.googleusercontent.com/p/AF1QipMOEn0csegkEVxm2e1E-vhcVVVYonBwN4MYdpBP=s1600-h1000', off_road_circuit_id: 1)
-
 License.find_or_create_by(id: 1, mx_class: '国内B級(NB)')
 License.find_or_create_by(id: 2, mx_class: '国内A級(NA)')
 License.find_or_create_by(id: 3, mx_class: '国際B級(IB)')
@@ -85,4 +73,19 @@ MxHistory.find_or_create_by(id: 2, history: '1年以上3年未満')
 MxHistory.find_or_create_by(id: 3, history: '3年以上10年未満')
 MxHistory.find_or_create_by(id: 4, history: '10年以上')
 MxHistory.find_or_create_by(id: 5, history: '20年以上')
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+if Rails.env.development?
+  OffRoadCircuit.find_or_create_by(id: 1, name: 'モトクロスビレッジ', address: '東京都中央区', url: 'http://hogehoge.com', place_id: 'ChIJFTp7UfXZGGAR3AR4Xt9TtK8', prefecture_id: 13, region_id: 3)
+  OffRoadCircuit.find_or_create_by(id: 2, name: 'オフロードビレッジ', address: '東京都千代田区', url: 'http://hogehoge2.com', place_id: 'ChIJY2AuvznFGGARFSvH8kg1AeE', prefecture_id: 13, region_id: 3)
+  OffRoadCircuit.find_or_create_by(id: 3, name: '成田MXパーク', address: '東京都新宿区', url: 'http://hogehoge3.com', place_id: 'ChIJo0TcyLz1ImARbek38pmlVYg', prefecture_id: 13, region_id: 3)
+
+  Plan.find_or_create_by(id: 1, date: Date.today, off_road_circuit_id: 1, uuid: SecureRandom.uuid)
+  Plan.find_or_create_by(id: 2, date: Date.today, off_road_circuit_id: 1, uuid: SecureRandom.uuid)
+  Plan.find_or_create_by(id: 3, date: Date.today, off_road_circuit_id: 1, uuid: SecureRandom.uuid)
+  Plan.find_or_create_by(id: 4, date: Date.today, off_road_circuit_id: 2, uuid: SecureRandom.uuid)
+  Plan.find_or_create_by(id: 5, date: Date.today, off_road_circuit_id: 3, uuid: SecureRandom.uuid)
+
+  Photo.find_or_create_by(id: 1, url: 'https://lh3.googleusercontent.com/p/AF1QipMOEn0csegkEVxm2e1E-vhcVVVYonBwN4MYdpBP=s1600-h1000', off_road_circuit_id: 1)
+
+  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+end
