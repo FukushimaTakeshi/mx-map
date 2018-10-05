@@ -75,7 +75,7 @@ Rails.application.configure do
 
   # E-mails
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = host: Rails.application.credentials.domain
+  config.action_mailer.default_url_options = { host: Rails.application.credentials.domain }
   
   config.action_mailer.smtp_settings = {
     user_name: Rails.application.credentials.smtp[:user_name],
