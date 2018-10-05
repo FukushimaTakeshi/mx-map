@@ -37,6 +37,7 @@ gem 'redcarpet'
 
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'
+  gem 'google-analytics-rails'
 end
 
 group :development, :test do
