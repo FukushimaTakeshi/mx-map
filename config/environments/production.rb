@@ -73,8 +73,19 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "app_#{Rails.env}"
 
+  # E-mails
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = host: '13.113.162.140'
+  config.action_mailer.default_url_options = host: Rails.application.credentials.domain
+  
+  config.action_mailer.smtp_settings = {
+    user_name: Rails.application.credentials.smtp[:user_name],
+    password: Rails.application.credentials.smtp[:password],
+    domain: Rails.application.credentials.domain,
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
