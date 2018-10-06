@@ -35,6 +35,13 @@ gem 'mini_magick'
 
 gem 'redcarpet'
 
+# deploy tools
+gem 'capistrano'
+gem 'capistrano-rails'
+gem 'capistrano-bundler'
+gem 'capistrano3-puma'
+gem 'capistrano-rbenv'
+
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'
   gem 'google-analytics-rails'
