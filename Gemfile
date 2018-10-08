@@ -35,13 +35,6 @@ gem 'mini_magick'
 
 gem 'redcarpet'
 
-# deploy tools
-gem 'capistrano'
-gem 'capistrano-rails'
-gem 'capistrano-bundler'
-gem 'capistrano3-puma'
-gem 'capistrano-rbenv'
-
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'
   gem 'google-analytics-rails'
@@ -63,4 +56,12 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'letter_opener'
   gem 'letter_opener_web'
+
+  # deploy tools
+  gem 'capistrano', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-yarn', require: false
+  gem 'capistrano3-puma', require: false
+  gem 'capistrano-rbenv', require: false
 end
