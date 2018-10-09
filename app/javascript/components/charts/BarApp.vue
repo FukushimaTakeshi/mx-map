@@ -24,20 +24,15 @@ export default {
   },
   methods: {
     fetchFullYearData: async function() {
-      for (let i = 0; i < 12; i++) {
-        // 月初
-        let from = new Date()
-        from.setDate(1)
-        from.setMonth(from.getMonth() -i + 1)
+      const toDay = new Date();
+      let calenderData = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
+    
+      for (let i = 0; i+7 <= calenderData.length; i+=7) {
+        const calenderFrom = calenderData[i]
+        const from = `${toDay.getFullYear()}-${calenderFrom.month}-${calenderFrom.day}`
+        const calenderTo = calenderData[i+6]
+        const to = `${toDay.getFullYear()}-${calenderTo.month}-${calenderTo.day}`
 
-        // 月末
-        let to = new Date()
-        to.setDate(1)
-        to.setMonth(to.getMonth() - i + 1)
-        to.setMonth(to.getMonth() + 1)
-        to.setDate(0)
-
-        // 過去12ヶ月分のデータを取得
         const res = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
         if (res.status !== 200) {
           console.log("Error!!")
@@ -45,18 +40,11 @@ export default {
         }
         this.chartFullYearData.push(
           {
-            date : `${from.getFullYear()}-${from.getMonth()+1}`,
+            date : `${calenderFrom.month}/${calenderFrom.day}`,
             count: res.data.plans.length
           }
         )
       }
-      // 日付順(昇順)に並び替え
-      this.chartFullYearData.sort(function(a,b){
-        if(a.date < b.date) return -1
-        if(a.date > b.date) return 1
-        return 0
-      })
-
       let date = []
       for(let val in this.chartFullYearData){
         date.push(this.chartFullYearData[val].date)
@@ -68,14 +56,5 @@ export default {
       EventBus.$emit('open-bar-chart', date, count)
     }
   }
-}
-
-async function getAttendance(userId, from, to) {
-  const res = await axios.get(`/api/plans/?user_id=${userId}&date[]=${from}&date[]=${to}`)
-  if (res.status !== 200) {
-    console.log("Error!!")
-    process.exit()
-  }
-  return res.data
 }
 </script>

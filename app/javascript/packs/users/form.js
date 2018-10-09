@@ -10,6 +10,9 @@ Vue.use(TurbolinksAdapter)
 import ModalEvent from '../EventBus.js'
 export default ModalEvent
 
+import calender from '../../mixin/calendar.js'
+Vue.mixin(calender)
+
 document.addEventListener('turbolinks:load', () => {
   if (document.getElementById('form')) {
     new Vue({
