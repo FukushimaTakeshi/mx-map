@@ -16,12 +16,15 @@ export default {
         labels: date,
         datasets: [
           {
-            label: '練習回数',
             backgroundColor: '#f87979',
             data: count
           }
         ]
       }, {
+        title: {
+          display: true,
+          text: '今月の練習回数'
+        },
         scales: {
           yAxes: [{
             display: false,
@@ -39,15 +42,16 @@ export default {
           }]
         },
         legend: {
-          display: true
+          display: false
         },
         responsive: true,
         maintainAspectRatio: false,
         onClick: function (evt, item) {
           if (item.length != 0) {
-            EventBus.$emit('change-pie-chart', item[0]['_model'].label)
+            const toDay = new Date()
+            EventBus.$emit('change-pie-chart', `${toDay.getFullYear()}/${item[0]['_model'].label}`)
           } else {
-            // あとで
+            EventBus.$emit('change-pie-chart', null)
           }
         }
       })

@@ -26,22 +26,23 @@ export default {
     this.fetchMonthData()
   },
   methods: {
-    fetchMonthData: async function(yearMonth) {
+    fetchMonthData: async function(MonthAndDate) {
       let from // 月初
       let to // 月末
 
-      if (yearMonth) {
-        const arr = yearMonth.split('-')
-        from = new Date(arr[0], arr[1] - 1, 1)
-        to = new Date(arr[0], arr[1] - 1, 1)
+      if (MonthAndDate) {
+        const arr = MonthAndDate.split('/')
+        from = new Date(MonthAndDate)
+        let tmpDate = new Date(MonthAndDate)
+        to = new Date(tmpDate.setDate(tmpDate.getDate() + 6))
       } else {
         from = new Date()
         from.setDate(1)
         to = new Date()
+        to.setDate(1)
+        to.setMonth(to.getMonth() + 1)
+        to.setDate(0)
       }
-      to.setDate(1)
-      to.setMonth(to.getMonth() + 1)
-      to.setDate(0)
 
       // 1ヶ月分のデータを取得
       const res = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
@@ -63,8 +64,11 @@ export default {
         count.push(value.length)
         name.push(value[0].name)
       })
-      let currentYearMonth = yearMonth || `${from.getFullYear()}-${from.getMonth()+1}`
-      EventBus.$emit('open-pie-chart', count, name, currentYearMonth)
+      if (MonthAndDate) {
+        MonthAndDate = `${MonthAndDate}週`
+      }
+      let currentMonthAndDate = MonthAndDate || `${from.getFullYear()}/${from.getMonth()+1}`
+      EventBus.$emit('open-pie-chart', count, name, currentMonthAndDate)
     }
   }
 }

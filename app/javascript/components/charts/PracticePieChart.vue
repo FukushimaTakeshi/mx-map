@@ -11,7 +11,7 @@ export default {
     EventBus.$on('open-pie-chart', this.open)
   },
   methods: {
-    open: function(count, name, currentYearMonth) {
+    open: function(count, name, currentMonthDate) {
       this.renderChart({
         labels: name,
         datasets: [
@@ -31,7 +31,7 @@ export default {
       }, {
         title: {
           display: true,
-          text: `${currentYearMonth} の内訳`
+          text: `${currentMonthDate} の内訳`
         },
         legend: {
           display: true
