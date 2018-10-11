@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -36,10 +35,13 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :api do
+  namespace :api, { format: 'json' } do
+    resources :users, only: [:index] do
+      resources :off_road_circuits, only: [:index]
+    end
     resources :plans, only: [:index, :create, :destroy]
   end
-  
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: '/letter_opener'
   end
