@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
   namespace :api, { format: 'json' } do
     resources :users, only: [:index] do
-      resources :off_road_circuits, only: [:index]
+      resources :favarite_courses, only: [:index, :create, :destroy]
     end
     resources :plans, only: [:index, :create, :destroy]
   end
