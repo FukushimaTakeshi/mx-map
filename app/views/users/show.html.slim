@@ -15,5 +15,16 @@ section.hero.is-small.is-light
 
 section
   div#form
-    bar-app :user-id="#{@user.id}"
-    pie-app :user-id="#{@user.id}"
+    div.container.has-text-centered
+      div.columns.is-gapless.is-multiline.is-mobile
+        div.column.is-half
+          bar-app :user-id="#{@user.id}"
+
+        div.column.is-half
+          pie-app :user-id="#{@user.id}"
+
+section
+  div#form
+    div.container.has-text-centered
+      div.columns.is-gapless.is-multiline.is-mobile
+        | hoge
