@@ -4,7 +4,7 @@ class OffRoadCircuit < ApplicationRecord
   has_many :photo, dependent: :destroy
   has_many :plan, dependent: :destroy
   
-  has_many :favorite_courses
+  has_many :favorite_courses, dependent: :delete_all
   has_many :users, through: :favorite_courses
 
   validates :name, presence: true

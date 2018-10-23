@@ -1,238 +1,35 @@
 <template>
   <span class="list">
-    <div class="vue-slide">
-      <div @click="back()" :disabled="visible_content == 0" class="vue-slide__back">
-        <p class="icon is-medium mdi-18px">
-          <i class="fas fa-angle-left"></i>
-        </p>
-      </div>
-
-      <transition :name="transition_name">
-        <div class="vue-slide__body"
-          :key="index"
-          v-for="(dateList, index) in dateList"
-          v-if="visible_content == index">
-
-          <div class="vue-slide__days">
-            <div v-for="(holiday, index) in holidayList" :key="holiday.id" class="has-text-centered">
-              <div class="vue-slide__day">
-                <p class="heading">
-                  {{ holiday.date}}{{ holiday.day, getAttendance(holiday.date, index) }}に走るよ！
-                </p>
-
-                <p v-if="holiday.exists" class="title-em icon mdi-18px has-text-link">
-                  <i class="fas fa-heart"></i>
-                  <span class="attendance" @click="deleteAttendance(holiday.date, index)">{{ holiday.attendance }}</span>
-                </p>
-                <p v-else class="title-em icon mdi-18px">
-                  <i class="fas fa-heart"></i>
-                  <span class="attendance" @click="createAttendance(holiday.date, index)">{{ holiday.attendance }}</span>
-                </p>
-                <span class="is-units">人</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </transition>
-
-      <div @click="next()" :disabled="visible_content == dateList.length - 1" class="vue-slide__next">
-        <p class="icon is-medium mdi-18px">
-          <i class="fas fa-angle-right"></i>
-        </p>
-      </div>
+    <div @click="fetchFavoriteCourses()">click</div>
+    <div v-for="item in this.favoriteCourses" :key="item.id">
+      {{ item.off_road_circuit_id }}
+      {{ item.name }}
     </div>
   </span>
 </template>
 
 <script>
 import axios from 'axios'
-import JapaneseHolidays from 'japanese-holidays'
-import { csrfToken } from 'rails-ujs'
-axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
 
 export default {
-  props: ['circuitId'],
+  props: ['userId'],
   data() {
     return {
-      holidayList: [],
-      transition_name: 'show-next',
-      dateList: [1, 2],
-      visible_content: 0,
+      favoriteCourses: []
     }
-  },
-  mounted: function() {
-    const today = new Date()
-    let saturday = new Date()
-    let sunday = new Date()
-    saturday.setDate(today.getDate() + 6 - today.getDay())
-    saturday = `${saturday.getFullYear()}-${saturday.getMonth() + 1}-${saturday.getDate()}`
-
-    sunday.setDate(today.getDate() + 7 - today.getDay())
-    sunday = `${sunday.getFullYear()}-${sunday.getMonth() + 1}-${sunday.getDate()}`
-
-    this.holidayList = [
-      {
-        id: 0,
-        planId: 0,
-        date: saturday,
-        day: '(土)',
-        exists: false,
-        attendance: 0
-      },
-      {
-        id: 1,
-        planId: 0,
-        date: sunday,
-        day: '(日)',
-        exists: false,
-        attendance: 0
-      }
-    ]
   },
   methods: {
-
-    back: function() {
-      if (this.visible_content == 0) {
-        return false
-      }
-      this.transition_name = 'show-prev'
-      this.visible_content--
-      const today = new Date()
-      let saturday = new Date()
-      let sunday = new Date()
-      saturday.setDate(today.getDate() + 6 - today.getDay())
-      saturday = `${saturday.getFullYear()}-${saturday.getMonth() + 1}-${saturday.getDate()}`
-
-      sunday.setDate(today.getDate() + 7 - today.getDay())
-      sunday = `${sunday.getFullYear()}-${sunday.getMonth() + 1}-${sunday.getDate()}`
-
-      this.holidayList[0].date = saturday
-      this.holidayList[1].date = sunday
-    },
-    next: function() {
-      if (this.visible_content == 1) {
-        return false
-      }
-      this.transition_name = 'show-next'
-      this.visible_content++
-      const today = new Date()
-      let saturday = new Date()
-      let sunday = new Date()
-      saturday.setDate(today.getDate() + 6 - today.getDay() + 7)
-      saturday = `${saturday.getFullYear()}-${saturday.getMonth() + 1}-${saturday.getDate()}`
-
-      sunday.setDate(today.getDate() + 7 - today.getDay() + 7)
-      sunday = `${sunday.getFullYear()}-${sunday.getMonth() + 1}-${sunday.getDate()}`
-
-      this.holidayList[0].date = saturday
-      this.holidayList[1].date = sunday
-    },
-
-    getAttendance: async function(date, index) {
-      const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}&all=1`)
+    fetchFavoriteCourses: async function(MonthAndDate) {
+      const res = await axios.get(`/api/users/${this.userId}/favorite_courses`)
       if (res.status !== 200) {
         console.log("Error!!")
         process.exit()
       }
-      this.holidayList[index].attendance = res.data.plans
-
-      if (res.data.id == null) {
-        this.holidayList[index].exists = false
-      } else {
-        this.holidayList[index].exists = true
-        this.holidayList[index].planId = res.data.id
-      }
-    },
-
-    createAttendance: async function(date, index) {
-      const res = await axios.post(`/api/plans/`, {date: date, off_road_circuit_id: this.circuitId })
-      if (res.status !== 200) {
-        console.log("Error!!")
-        process.exit()
-      }
-      this.getAttendance(date, index)
-    },
-
-    deleteAttendance: async function(date, index) {
-      const res = await axios.delete(`/api/plans/${this.holidayList[index].planId}`)
-      if (res.status !== 200) {
-        console.log("Error!!")
-        process.exit()
-      }
-      this.getAttendance(date, index)
-    },
-  }
-}
-
-function holidayThisWeek() {
-  let today = new Date()
-
-  if (today.getDay() !== 1) {
-    today.setDate(today.getDate() - today.getDay() + 1)
-  } else if (today.getDay() == 0) {
-    today.setDate(today.getDate() - 6)
-  }
-
-  const holidays = JapaneseHolidays.getHolidaysOf(today.getFullYear())
-
-  var holidayList = holidays.filter(
-    function (holiday) {
-      return(
-        (today.getMonth()+1) == holiday.month &&
-          (today.getDate() <= holiday.date) && (today.getDate() > (holiday.date - 5))
-      )
+      this.favoriteCourses = res.data.favorite_courses
     }
-  )
-  return holidayList
-
+  }
 }
 </script>
 
 <style lang="scss">
-.show-next-enter-active, .show-next-leave-active,
-.show-prev-enter-active, .show-prev-leave-active  {
-  transition: all .1s;
-}
-.show-next-enter, .show-prev-leave-to {
-  transform: translateX(100%);
-}
-.show-next-leave-to, .show-prev-enter {
-  transform: translateX(-100%);
-}
-
-.vue-slide{
-  display: flex;
-  flex-wrap: nowrap;
-  height: auto;
-  align-content: space-between;
-  justify-content: space-between;
-  align-items: center;
-
-  border-bottom: 1px solid #dbdbdb;
-  border-left: 1px solid #dbdbdb;
-  border-right: 1px solid #dbdbdb;
-
-  &__body {
-  }
-  &__days {
-    display: flex;
-  }
-  &__day {
-    margin: 3px 2px;
-  }
-  &__back {
-  }
-  &__next {
-  }
-}
-
-.attendance {
-  margin: 1px 4px;
-}
-
-.is-units {
-  font-size: xx-small;
-  margin: 1px 1px;
-}
 </style>

@@ -1,4 +1,5 @@
 = javascript_pack_tag 'users/form'
+= javascript_pack_tag 'my_off_road_circuits/form'
 
 section.hero.is-small.is-light
   div.hero-body
@@ -24,7 +25,7 @@ section
           pie-app :user-id="#{@user.id}"
 
 section
-  div#form
+  div#form2
     div.container.has-text-centered
       div.columns.is-gapless.is-multiline.is-mobile
-        | hoge
+        list :iser-id="#{@user.id}"
