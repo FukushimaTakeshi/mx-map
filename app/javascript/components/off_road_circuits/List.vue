@@ -1,10 +1,29 @@
 <template>
-  <span class="list">
-    <div @click="fetchFavoriteCourses()">click</div>
-    <div v-for="item in this.favoriteCourses" :key="item.id">
-      {{ item.off_road_circuit_id }}
-      {{ item.name }}
-    </div>
+  <span>
+    <article v-for="item in this.favoriteCourses" :key="item.id" class="media">
+      <div class="media-left">
+        <figure class="image is-96x96">
+          <img :src="item.photo_url || 'http://hoge'" alt="Image">
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong>{{ item.name }}</strong>
+            <br>
+            </p>
+        </div>
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <a class="level-item" aria-label="reply">
+              <span class="icon is-small">
+                <i class="fas fa-reply" aria-hidden="true"></i>
+              </span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </article>
   </span>
 </template>
 
@@ -18,15 +37,12 @@ export default {
       favoriteCourses: []
     }
   },
-  methods: {
-    fetchFavoriteCourses: async function(MonthAndDate) {
-      const res = await axios.get(`/api/users/${this.userId}/favorite_courses`)
-      if (res.status !== 200) {
-        console.log("Error!!")
-        process.exit()
-      }
-      this.favoriteCourses = res.data.favorite_courses
+  mounted: async function() {
+    const res = await axios.get(`/api/users/${this.userId}/favorite_courses`)
+    if (res.status !== 200) {
+      process.exit()
     }
+    this.favoriteCourses = res.data.favorite_courses
   }
 }
 </script>

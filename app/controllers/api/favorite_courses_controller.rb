@@ -6,7 +6,8 @@ class Api::FavoriteCoursesController < ApplicationController
         { 
           id: favorite_course.id,
           off_road_circuit_id: favorite_course.off_road_circuit.id,
-          name: favorite_course.off_road_circuit.name
+          name: favorite_course.off_road_circuit.name,
+          photo_url: favorite_course.off_road_circuit.photo[0]&.url
         }
       end
     }

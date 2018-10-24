@@ -14,18 +14,16 @@ section.hero.is-small.is-light
             div
               = @user.username
 
-section
-  div#form
     div.container.has-text-centered
-      div.columns.is-gapless.is-multiline.is-mobile
-        div.column.is-half
-          bar-app :user-id="#{@user.id}"
+      div.box#form
+        div.columns.is-gapless.is-multiline.is-mobile
+          div.column.is-half
+            bar-app :user-id="#{@user.id}"
 
-        div.column.is-half
-          pie-app :user-id="#{@user.id}"
+          div.column.is-half
+            pie-app :user-id="#{@user.id}"
 
-section
-  div#form2
-    div.container.has-text-centered
-      div.columns.is-gapless.is-multiline.is-mobile
+      div.box#form2
+        div.columns.is-gapless.is-multiline.is-mobile
+          | お気に入り
         list :iser-id="#{@user.id}"
