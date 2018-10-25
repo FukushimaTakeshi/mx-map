@@ -3,7 +3,7 @@
     <article v-for="item in this.favoriteCourses" :key="item.id" class="media">
       <div class="media-left">
         <figure class="image is-96x96">
-          <img :src="item.photo_url || 'http://hoge'" alt="Image">
+          <img :src="item.photo_url || 'http://placehold.it/100/?text=no-image'" alt="Image">
         </figure>
       </div>
       <div class="media-content">
