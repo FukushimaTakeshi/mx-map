@@ -39,6 +39,9 @@ Rails.application.routes.draw do
     resources :users, only: [:index] do
       resources :favorite_courses, only: [:index, :create, :destroy]
     end
+
+    resources :regions, only: [:index]
+
     resources :plans, only: [:index, :create, :destroy]
   end
 

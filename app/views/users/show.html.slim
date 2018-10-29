@@ -1,5 +1,4 @@
-= javascript_pack_tag 'users/form'
-= javascript_pack_tag 'my_off_road_circuits/form'
+= javascript_pack_tag 'router/index'
 
 section.hero.is-small.is-light
   div.hero-body
@@ -14,7 +13,15 @@ section.hero.is-small.is-light
             div
               = @user.username
 
-    div.container.has-text-centered
+    div.container.has-text-centered#app
+      / user-navgation-bar
+
+      / <!-- ルートアウトレット -->
+      / <!-- ルートとマッチしたコンポーネントがここへ描画されます -->
+      router-view :user-id="#{@user.id}"
+  
+
+    / div.container.has-text-centered
       div.box#form
         charts :user-id="#{@user.id}"
 
