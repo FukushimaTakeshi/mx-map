@@ -14,8 +14,18 @@ class Api::FavoriteCoursesController < ApplicationController
   end
 
   def create
+    FavoriteCourse.create(favorite_course_params.merge(user_id: params[:user_id]))
+    head :ok
   end
 
   def destroy
+  end
+  
+  private
+  
+  def favorite_course_params
+    params.require(:favorite_course).permit(
+      :off_road_circuit_id
+    )
   end
 end

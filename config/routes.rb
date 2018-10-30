@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     end
 
     resources :regions, only: [:index]
+    
+    resources :off_road_circuits, only: [:index]
 
     resources :plans, only: [:index, :create, :destroy]
   end

@@ -2,8 +2,6 @@ import 'babel-polyfill'
 import Vue from 'vue'
 
 import UserNavgationBar from '../../components/navigation_bar/UserNavgationBar.vue'
-import UserNavgationList from '../../components/navigation_bar/UserNavgationList.vue'
-
 import UserStatusList from '../../components/users/UserStatusList.vue'
 
 import Charts from '../../components/charts/Charts.vue'

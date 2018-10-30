@@ -27,7 +27,7 @@
     </div>
     
     <router-view :user-id="this.userId" />
-    <router-view name="list" />
+    <router-view name="list" :user-id="this.userId" />
 
   </div>
 </template>
