@@ -1,15 +1,13 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 
-const Foo = { template: '<div>foo</div>' }
-const Bar = { template: '<div>bar</div>' }
-
 import UserNavgationBar from '../../components/navigation_bar/UserNavgationBar.vue'
 import UserNavgationList from '../../components/navigation_bar/UserNavgationList.vue'
 
 import UserStatusList from '../../components/users/UserStatusList.vue'
 
 import Charts from '../../components/charts/Charts.vue'
+import FavoriteList from '../../components/off_road_circuits/FavoriteList.vue'
 import List from '../../components/off_road_circuits/List.vue'
 
 import ModalEvent from '../EventBus.js'
@@ -33,24 +31,24 @@ document.addEventListener('turbolinks:load', () => {
           { 
             path: '/',
             component: UserNavgationBar,
-            props: true,
             children: [
               {
                 path: '',
                 component: UserStatusList,
-                props: true,
                 children: [
                   {
                     path: '',
                     components: { 
-                      charts: Charts,
-                      list: List
+                      'charts': Charts,
+                      'favorite-list': FavoriteList
                     }
                   }
                 ]
               },
-              { path: 'foo', component: Foo },
-              { path: 'bar', component: Bar }
+              {
+                path: 'list',
+                component: List
+              }
             ]
           }
         ],

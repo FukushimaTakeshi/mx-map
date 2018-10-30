@@ -6,7 +6,7 @@
 
     <div class="box">
       <div class="columns is-gapless is-multiline is-mobile">お気に入り</div>
-      <router-view name="list" :user-id="this.userId" />
+      <router-view name="favorite-list" :user-id="this.userId" />
     </div>
   </span>
 </template>
