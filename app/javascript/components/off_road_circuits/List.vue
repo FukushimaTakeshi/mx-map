@@ -1,51 +1,62 @@
 <template>
   <div>
-    <div class="menu is-multiline is-centered">
-      <div v-for="region in this.regionList" :key="region.id">
-        <ul class="menu-list">
-          <li>
-            <a class="is-active" @click="setArea(region.id)">
-              {{ region.name }}
-            </a>
+    <div class="column">
+      <div class="columns">
 
-            <transition name="bounce">
-              <ul v-if="selectedArea === region.id">
-                <div v-for="prefecture in region.prefectures" :key="prefecture.id">
-                  <li @click="findByCircuits(prefecture.id)">
-                    {{ prefecture.name }}
-                  </li>
-                </div>
+        <div class="column is-fullheight is-centered">
+          <div class="menu is-multiline is-centered">
+            <div v-for="region in this.regionList" :key="region.id">
+              <ul class="menu-list">
+                <li>
+                  <a class="has-text-left" @click="setArea(region.id)">
+                    {{ region.name }}
+                  </a>
+
+                  <transition name="bounce">
+                    <ul v-if="selectedArea === region.id">
+                      <div v-for="prefecture in region.prefectures" :key="prefecture.id">
+                        <li class="has-text-left" @click="findByCircuits(prefecture.id)">
+                          {{ prefecture.name }}
+                        </li>
+                      </div>
+                    </ul>
+                  </transition>
+                </li>
               </ul>
-            </transition>
-          </li>
-        </ul>
+            </div>
+          </div>
+        </div>
+      
+        <div v-if="this.OffRoadCircuitList.length > 0" class="column is-three-quarters is-fullheight is-centered">
+          <div class="card events-card">
+            <header class="card-header">
+              <p class="card-header-title">コース一覧</p>
+            </header>
+            <div class="card-table">
+              <div class="content">
+                <table class="table is-fullwidth is-hoverable">
+                  <tbody>
+                    <tr v-for="circuit in this.OffRoadCircuitList">
+                      <td width="5%">
+                        <figure class="image is-32x32">
+                          <img :src="circuit.photo_url || 'http://placehold.it/32/?text=no-image'" alt="Image">
+                        </figure>
+                      </td>
+                      <td>{{ circuit.name }}</td>
+                      <td>
+                        <button @click="registerFavoriteCircuit(circuit.id)" class="button is-small is-primary" href="#">
+                          お気に入り
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <article v-for="circuit in this.OffRoadCircuitList" class="media">
-      <div class="media-left">
-        <figure class="image is-96x96">
-          <img :src="circuit.photo_url || 'http://placehold.it/100/?text=no-image'" alt="Image">
-        </figure>
-      </div>
-      <div @click="registerFavoriteCircuit(circuit.id)" class="media-content">
-        <div class="content">
-          <p>
-            <strong>{{ circuit.name }}</strong>
-            <br>
-            </p>
-        </div>
-        <nav class="level is-mobile">
-          <div class="level-left">
-            <a class="level-item" aria-label="reply">
-              <span class="icon is-small">
-                <i class="fas fa-reply" aria-hidden="true"></i>
-              </span>
-            </a>
-          </div>
-        </nav>
-      </div>
-    </article>
   </div>
 
 </template>
@@ -95,3 +106,10 @@
     }
   }
 </script>
+
+<style>
+  .events-card .card-table {
+    max-height: 250px;
+    overflow-y: scroll;
+  }
+</style>

@@ -1,4 +1,6 @@
 class Api::FavoriteCoursesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     favorite_courses = current_user.favorite_courses
     render json: {
@@ -14,7 +16,7 @@ class Api::FavoriteCoursesController < ApplicationController
   end
 
   def create
-    FavoriteCourse.create(favorite_course_params.merge(user_id: params[:user_id]))
+    FavoriteCourse.find_or_create_by(favorite_course_params.merge(user_id: params[:user_id]))
     head :ok
   end
 
