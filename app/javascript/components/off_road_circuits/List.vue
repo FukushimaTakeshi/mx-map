@@ -1,72 +1,40 @@
 <template>
-  <div>
-    <div class="column">
-      <div class="columns">
-
-        <div class="column is-fullheight is-centered">
-          <div class="menu is-multiline is-centered">
-            <div v-for="region in this.regionList" :key="region.id">
-              <ul class="menu-list">
-                <li>
-                  <a class="has-text-left" @click="setArea(region.id)">
-                    {{ region.name }}
-                  </a>
-
-                  <transition name="bounce">
-                    <ul v-if="selectedArea === region.id">
-                      <div v-for="prefecture in region.prefectures" :key="prefecture.id">
-                        <li class="has-text-left" @click="findByCircuits(prefecture.id)">
-                          {{ prefecture.name }}
-                        </li>
-                      </div>
-                    </ul>
-                  </transition>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+  <div class="column">
+    <div class="box">
       
-        <div v-if="this.OffRoadCircuitList.length > 0" class="column is-three-quarters is-fullheight is-centered">
-          <div class="card events-card">
-            <header class="card-header">
-              <p class="card-header-title">コース一覧</p>
-            </header>
-            <div class="card-table">
-              <div class="content">
-                <table class="table is-fullwidth is-hoverable">
-                  <tbody>
-                    <tr v-for="circuit in this.OffRoadCircuitList">
-                      <td width="5%">
-                        <figure class="image is-32x32">
-                          <img :src="circuit.photo_url || 'http://placehold.it/32/?text=no-image'" alt="Image">
-                        </figure>
-                      </td>
-                      <td>{{ circuit.name }}</td>
-                      <td>
-                        <button @click="registerFavoriteCircuit(circuit.id)" class="button is-small is-primary" href="#">
-                          お気に入り
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+      <div class="column is-narrow">
+        <article v-for="region in regionList" :key="region.id" class="message is-primary" id="message">
+          <div @click="setArea(region.id)" class="message-header">
+            <p>{{ region.name }}</p>
+          </div>
+          
+          <transition name="">
+            <div v-if="selectedArea === region.id" class="message-body">
+              <div class="board-item">
+                <div v-for="prefecture in region.prefectures" :key="prefecture.id" class="board-item-content">
+                  <span @click="openCircuitsModal(prefecture.id)">{{ prefecture.name }}</span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </transition>
+        </article>
       </div>
+
+    <ModalList :userId="userId" />
     </div>
   </div>
-
 </template>
 
 <script>
+  import ModalList from './ModalList.vue'
+  import ModalEvent from '../../packs/router/index.js'
+
   import axios from 'axios'
   import { csrfToken } from 'rails-ujs'
   axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
 
   export default {
+    components: { ModalList },
     props: ['userId'],
     data() {
       return {
@@ -83,18 +51,8 @@
       this.regionList = res.data
     },
     methods: {
-      findByCircuits: async function(prefectureId) {
-        const res = await axios.get(`/api/off_road_circuits/?prefecture_id=${prefectureId}`)
-        if (res.status !== 200) {
-          process.exit()
-        }
-        this.OffRoadCircuitList = res.data.off_road_circuits
-      },
-      registerFavoriteCircuit: async function(circuitId) {
-        const res = await axios.post(`/api/users/${this.userId}/favorite_courses/`, { off_road_circuit_id: circuitId })
-        if (res.status !== 200) {
-          process.exit()
-        }
+      openCircuitsModal: function(prefectureId) {
+        ModalEvent.$emit('open-circuits-modal', prefectureId)
       },
       setArea: function(index) {
         if (this.selectedArea == index) {
@@ -108,8 +66,11 @@
 </script>
 
 <style>
-  .events-card .card-table {
-    max-height: 250px;
-    overflow-y: scroll;
-  }
+.events-card .card-table {
+  max-height: 250px;
+  overflow-y: scroll;
+}
+#message {
+  margin-bottom: 0.5rem;
+}
 </style>

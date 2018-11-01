@@ -105,17 +105,15 @@ export default {
     },
     setPlans: function() {
       getAttendance(this.circuitId, this.date).then(result => {
-        setTimeout(() => {
-          this.plan = result.plans.length
-          this.users = result.users
-          if (result.id == null) {
-            this.isAlreadyPlan = false
-          } else {
-            this.isAlreadyPlan = true
-            this.planId = result.id
-          }
-          this.loading = false
-        }, 1000)
+        this.plan = result.plans.length
+        this.users = result.users
+        if (result.id == null) {
+          this.isAlreadyPlan = false
+        } else {
+          this.isAlreadyPlan = true
+          this.planId = result.id
+        }
+        this.loading = false
       })
     }
   }

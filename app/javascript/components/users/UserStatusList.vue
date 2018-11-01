@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <div class="column">
     <div class="box">
       <router-view name="charts" :user-id="this.userId" />
     </div>
@@ -8,7 +8,7 @@
       <div class="columns is-gapless is-multiline is-mobile">お気に入り</div>
       <router-view name="favorite-list" :user-id="this.userId" />
     </div>
-  </span>
+  </div>
 </template>
 
 <script>
