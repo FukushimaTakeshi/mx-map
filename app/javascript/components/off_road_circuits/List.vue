@@ -2,7 +2,8 @@
   <div class="column">
     <div class="box">
       
-      <div class="column is-narrow">
+      <div class="columns is-centered has-text-left">
+      <div class="column is-two-thirds">
         <article v-for="region in regionList" :key="region.id" class="message is-primary" id="message">
           <div @click="setArea(region.id)" class="message-header">
             <p>{{ region.name }}</p>
@@ -10,14 +11,13 @@
           
           <transition name="">
             <div v-if="selectedArea === region.id" class="message-body">
-              <div class="board-item">
-                <div v-for="prefecture in region.prefectures" :key="prefecture.id" class="board-item-content">
-                  <span @click="openCircuitsModal(prefecture.id)">{{ prefecture.name }}</span>
-                </div>
+              <div v-for="prefecture in region.prefectures" :key="prefecture.id" class="subtitle is-6 is-marginless">
+                <p @click="openCircuitsModal(prefecture.id)">{{ prefecture.name }}</p>
               </div>
             </div>
           </transition>
         </article>
+      </div>
       </div>
 
     <ModalList :userId="userId" />
