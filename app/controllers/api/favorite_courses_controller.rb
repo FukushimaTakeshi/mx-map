@@ -21,6 +21,8 @@ class Api::FavoriteCoursesController < ApplicationController
   end
 
   def destroy
+    FavoriteCourse.find(params[:id]).destroy
+    head :ok
   end
   
   private

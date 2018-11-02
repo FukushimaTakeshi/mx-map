@@ -31,9 +31,8 @@
                         <a :href="offRoadCircuitsUrl(circuit.id)" data-turbolinks="false">{{ circuit.name }}</a>
                       </td>
                       <td>
-                        <button @click="registerFavoriteCircuit(circuit.id)" class="button is-small is-primary" href="#">
-                          お気に入り
-                        </button>
+                        <button v-if="!findFavoriteCourse(circuit.id)" @click="registerFavoriteCircuit(circuit.id)" class="button is-small is-primary">お気に入り</button>
+                        <button v-else @click="deleteFavoriteCircuit(circuit.id)" class="button is-info is-small is-outlined">登録済み</button>
                       </td>
                     </tr>
                   </tbody>
@@ -62,11 +61,15 @@ export default {
     return {
       isOpen: false,
       loading: true,
-      OffRoadCircuitList: []
+      OffRoadCircuitList: [],
+      favoriteCourseList: []
     }
   },
   mounted: function() {
     ModalEvent.$on('open-circuits-modal', this.open)
+    this.findAllFavoriteCourse().then(result => {
+      this.favoriteCourseList = result
+    })
   },
   methods: {
     open: function(prefectureId) {
@@ -87,11 +90,35 @@ export default {
       }
       return res.data.off_road_circuits
     },
-    registerFavoriteCircuit: async function(circuitId) {
-      const res = await axios.post(`/api/users/${this.userId}/favorite_courses/`, { off_road_circuit_id: circuitId })
+    findAllFavoriteCourse: async function() {
+      const res = await axios.get(`/api/users/${this.userId}/favorite_courses`)
       if (res.status !== 200) {
         process.exit()
       }
+      return res.data.favorite_courses
+    },
+    findFavoriteCourse: function(circuitId) {
+      const favoriteCircuit = this.favoriteCourseList.find((course) => {
+        return (course.off_road_circuit_id === circuitId)
+      })
+      return favoriteCircuit
+    },
+    registerFavoriteCircuit: async function(circuitId) {
+      const res = await axios.post(`/api/users/${this.userId}/favorite_courses`, { off_road_circuit_id: circuitId })
+      if (res.status !== 200) {
+        process.exit()
+      }
+      this.findAllFavoriteCourse().then(result => {
+        this.favoriteCourseList = result
+      })
+    },
+    deleteFavoriteCircuit: async function(circuitId) {
+      const favoriteCircuit = this.findFavoriteCourse(circuitId)
+      const res = await axios.delete(`/api/users/${this.userId}/favorite_courses/${favoriteCircuit.id}`)
+      if (res.status !== 200) {
+        process.exit()
+      }
+      this.favoriteCourseList = this.favoriteCourseList.filter(n => n.id !== favoriteCircuit.id)
     },
     offRoadCircuitsUrl: function(circuitId) {
       return `/off_road_circuits/${circuitId}/`
