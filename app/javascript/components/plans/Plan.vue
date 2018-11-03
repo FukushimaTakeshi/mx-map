@@ -209,10 +209,6 @@ function holidayThisWeek() {
   justify-content: space-between;
   align-items: center;
 
-  border-bottom: 1px solid #dbdbdb;
-  border-left: 1px solid #dbdbdb;
-  border-right: 1px solid #dbdbdb;
-
   &__body {
   }
   &__days {

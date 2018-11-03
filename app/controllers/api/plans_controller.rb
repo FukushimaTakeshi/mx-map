@@ -4,7 +4,7 @@ module Api
       if params[:all]
         plans = Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id]).count
       else
-        plans = Plan.with_user.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id])
+        plans = Plan.with_user.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id]).order('plans.date')
         users = user_list(plans)
         off_road_circuits = off_road_circuit_list(plans)
       end

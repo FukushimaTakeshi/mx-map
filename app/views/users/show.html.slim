@@ -1,4 +1,4 @@
-= javascript_pack_tag 'users/form'
+= javascript_pack_tag 'router/index'
 
 section.hero.is-small.is-light
   div.hero-body
@@ -13,7 +13,20 @@ section.hero.is-small.is-light
             div
               = @user.username
 
-section
-  div#form
-    bar-app :user-id="#{@user.id}"
-    pie-app :user-id="#{@user.id}"
+    div.container.has-text-centered#app
+      / user-navgation-bar
+
+      / <!-- ルートアウトレット -->
+      / <!-- ルートとマッチしたコンポーネントがここへ描画されます -->
+      router-view :user-id="#{@user.id}"
+  
+
+    / div.container.has-text-centered
+      div.box#form
+        charts :user-id="#{@user.id}"
+
+
+      div.box#form2
+        div.columns.is-gapless.is-multiline.is-mobile
+          | お気に入り
+        list :iser-id="#{@user.id}"

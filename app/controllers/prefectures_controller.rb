@@ -6,6 +6,7 @@ class PrefecturesController < ApplicationController
     @off_road_circuits.each do |circuit|
       circuit_details(circuit.place_id.to_sym)
     end
+    @favorite_courses = current_user.favorite_courses if user_signed_in?
   end
 
   private

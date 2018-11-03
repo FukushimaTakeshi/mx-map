@@ -1,8 +1,7 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 
-import BarApp from '../../components/charts/BarApp.vue'
-import PieApp from '../../components/charts/PieApp.vue'
+import Charts from '../../components/charts/Charts.vue'
 
 import TurbolinksAdapter from 'vue-turbolinks'
 Vue.use(TurbolinksAdapter)
@@ -18,8 +17,7 @@ document.addEventListener('turbolinks:load', () => {
     new Vue({
       el: '#form',
       components: {
-        'bar-app': BarApp,
-        'pie-app': PieApp
+        Charts
       }
     })
   }

@@ -26,6 +26,10 @@
 
 class User < ApplicationRecord
   has_many :plan, dependent: :delete_all
+  
+  has_many :favorite_courses, dependent: :delete_all
+  has_many :off_road_circuits, through: :favorite_courses
+
   has_one :mx_profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :mx_profile
 
