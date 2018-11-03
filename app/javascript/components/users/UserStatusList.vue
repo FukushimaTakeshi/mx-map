@@ -5,29 +5,19 @@
     </div>
 
     <div class="box">
-      <div class="columns is-gapless is-multiline is-mobile">お気に入り</div>
+      <div class="columns is-gapless is-mobile">お気に入り</div>
       <router-view name="favorite-list" :user-id="this.userId" />
+      <div class="columns is-gapless is-mobile">
+        <router-link to="/list" class="button is-small is-primary">
+          <span class="name">登録・編集</span>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    props: [
-      'userId'
-    ],
-    data() {
-      return {
-        agent: Object,
-        meta: Object,
-        isTopicsPath: false,
-        isSmartPhone: false
-      }
-    },
-    methods: {
-      hoge: function() {
-        console.log(this.userId)
-      }
-    }
-  }
+export default {
+  props: ['userId']
+}
 </script>

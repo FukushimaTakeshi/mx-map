@@ -1,6 +1,8 @@
 <template>
   <span>
-    <article v-for="item in this.favoriteCourses" :key="item.id" class="media">
+    <a v-for="item in this.favoriteCourses" :key="item.id"
+       :href="offRoadCircuitsUrl(item.off_road_circuit_id)" 
+       class="media" data-turbolinks="false">
       <div class="media-left">
         <figure class="image is-96x96">
           <img :src="item.photo_url || 'http://placehold.it/100/?text=no-image'" alt="Image">
@@ -11,19 +13,10 @@
           <p>
             <strong>{{ item.name }}</strong>
             <br>
-            </p>
+          </p>
         </div>
-        <nav class="level is-mobile">
-          <div class="level-left">
-            <a class="level-item" aria-label="reply">
-              <span class="icon is-small">
-                <i class="fas fa-reply" aria-hidden="true"></i>
-              </span>
-            </a>
-          </div>
-        </nav>
       </div>
-    </article>
+    </a>
   </span>
 </template>
 
@@ -43,9 +36,11 @@ export default {
       process.exit()
     }
     this.favoriteCourses = res.data.favorite_courses
+  },
+  methods: {
+    offRoadCircuitsUrl: function(circuitId) {
+      return `/off_road_circuits/${circuitId}/`
+    }
   }
 }
 </script>
-
-<style lang="scss">
-</style>

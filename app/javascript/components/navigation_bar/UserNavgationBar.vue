@@ -33,9 +33,7 @@
 </template>
 
 <script>
-  export default {
-    props: [
-      'userId'
-    ]
-  }
+export default {
+  props: ['userId']
+}
 </script>

@@ -26,43 +26,41 @@
 </template>
 
 <script>
-  import ModalList from './ModalList.vue'
-  import ModalEvent from '../../packs/router/index.js'
+import ModalList from './ModalList.vue'
+import ModalEvent from '../../packs/router/index.js'
 
-  import axios from 'axios'
-  import { csrfToken } from 'rails-ujs'
-  axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
+import axios from 'axios'
 
-  export default {
-    components: { ModalList },
-    props: ['userId'],
-    data() {
-      return {
-        regionList: [],
-        OffRoadCircuitList: [],
-        selectedArea: null
-      }
+export default {
+  components: { ModalList },
+  props: ['userId'],
+  data() {
+    return {
+      regionList: [],
+      OffRoadCircuitList: [],
+      selectedArea: null
+    }
+  },
+  mounted: async function() {
+    const res = await axios.get('/api/regions')
+    if (res.status !== 200) {
+      process.exit()
+    }
+    this.regionList = res.data
+  },
+  methods: {
+    openCircuitsModal: function(prefectureId) {
+      ModalEvent.$emit('open-circuits-modal', prefectureId)
     },
-    mounted: async function() {
-      const res = await axios.get('/api/regions')
-      if (res.status !== 200) {
-        process.exit()
-      }
-      this.regionList = res.data
-    },
-    methods: {
-      openCircuitsModal: function(prefectureId) {
-        ModalEvent.$emit('open-circuits-modal', prefectureId)
-      },
-      setArea: function(index) {
-        if (this.selectedArea == index) {
-          this.selectedArea = ""
-        } else {
-          this.selectedArea = index
-        }
+    setArea: function(index) {
+      if (this.selectedArea == index) {
+        this.selectedArea = ""
+      } else {
+        this.selectedArea = index
       }
     }
   }
+}
 </script>
 
 <style>
