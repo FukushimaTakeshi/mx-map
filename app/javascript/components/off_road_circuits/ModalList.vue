@@ -3,44 +3,43 @@
     <div v-show="isOpen" class="modal is-active">
       <div class="modal-background" @click.self="close()" />
       <div class="modal-card">
-        <section class="modal-card-body">
-          <div class="card events-card">
-            <header class="card-header">
-              <p class="card-header-title">コース一覧</p>
-            </header>
-            <div class="card-table">
-              <div class="content">
-                <Loading v-if="loading"></Loading>
-                <table class="table is-fullwidth is-hoverable">
-                  <tbody>
+        <header class="modal-card-head">
+          <p class="modal-card-title">コース一覧</p>
+        </header>
+        <section class="modal-card-body is-paddingless">
+          <div class="columns is-mobile is-multiline">
+            <Loading v-if="loading"></Loading>
 
-                    <article v-show="OffRoadCircuitList.length == 0 && !loading" class="message is-danger">
-                      <div class="message-body">
-                        ごめんね。
-                        <p>まだコースが登録されていません。</p>
-                      </div>
-                    </article>
-
-                    <tr v-for="circuit in OffRoadCircuitList" v-show="!loading">
-                      <td width="5%">
-                        <figure class="image is-32x32">
-                          <img :src="circuit.photo_url || 'http://placehold.it/32/?text=no-image'" alt="Image">
-                        </figure>
-                      </td>
-                      <td>
-                        <a :href="offRoadCircuitsUrl(circuit.id)" data-turbolinks="false">{{ circuit.name }}</a>
-                      </td>
-                      <td>
-                        <button v-if="!findFavoriteCourse(circuit.id)" @click="registerFavoriteCircuit(circuit.id)" class="button is-small is-primary">お気に入り</button>
-                        <button v-else @click="deleteFavoriteCircuit(circuit.id)" class="button is-info is-small is-outlined">登録済み</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            <article v-show="OffRoadCircuitList.length == 0 && !loading" class="message is-danger">
+              <div class="message-body">
+                ごめんね。
+                <p>まだコースが登録されていません。</p>
               </div>
+            </article>
+
+            <div v-for="circuit in OffRoadCircuitList" v-show="!loading" class="column post">
+              <span class="media">
+                <div class="media-left">
+                  <p class="image is-32x32">
+                    <img :src="circuit.photo_url || 'http://placehold.it/32/?text=no-image'" alt="Image">
+                  </p>
+                </div>
+                <div class="media-content">
+                  <a :href="offRoadCircuitsUrl(circuit.id)" data-turbolinks="false">
+                    <h4>{{ circuit.name }}</h4>
+                  </a>
+                </div>
+                <div class="medis-right">
+                  <button v-if="!findFavoriteCourse(circuit.id)" @click="registerFavoriteCircuit(circuit.id)" class="button is-small is-primary">お気に入り</button>
+                  <button v-else @click="deleteFavoriteCircuit(circuit.id)" class="button is-info is-small is-outlined">登録済み</button>
+                </div>
+              </span>
             </div>
           </div>
         </section>
+        <footer class="modal-card-foot">
+          <button class="button" @click.self="close()">閉じる</button>
+        </footer>
       </div>
     </div>
   </transition>
@@ -126,3 +125,22 @@ export default {
   }
 }
 </script>
+<style>
+.modal-card-body {
+  max-height: 300px;
+}
+div.post:first-of-type {
+  margin: 0.5rem;
+  padding-top: 2rem;
+  border-bottom: 1px solid #E6EAEE;
+}
+div.post {
+  margin: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #E6EAEE;
+}
+div.post:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+</style>

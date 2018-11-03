@@ -64,10 +64,6 @@ export default {
 </script>
 
 <style>
-.events-card .card-table {
-  max-height: 250px;
-  overflow-y: scroll;
-}
 #message {
   margin-bottom: 0.5rem;
 }
