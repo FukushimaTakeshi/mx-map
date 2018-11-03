@@ -6,48 +6,49 @@ section.hero.is-dark.welcome.is-small
       h1.title.is-6
         = "#{@prefecture.name}のモトクロスコース一覧"
 
-div.container.grid
-  nav.panel
+div#form.columns.is-mobile.is-multiline
 
-    div#form
+  - if @off_road_circuits.blank?
+    article.message.is-danger
+      div.message-body
+        | ごめんね。
+        p
+          | まだ#{@prefecture.name}のコースが登録されていません。
 
-      - if @off_road_circuits.blank?
-        article.message.is-danger
-          div.message-body
-            | ごめんね。
-            p
-              | まだ#{@prefecture.name}のコースが登録されていません。
+  - else
 
-      - else
+    - @off_road_circuits.shuffle.each do |circuit|
+      - place_id = circuit.place_id.to_sym
 
-        - @off_road_circuits.each do |circuit|
-          - place_id = circuit.place_id.to_sym
+      div.column.is-full.is-paddingless
+        article.box
+          span.media
+            div.media-left
+              carousel :img-list="#{circuit.photo.map(&:url)}"
 
-          = link_to circuit, method: :get, class: 'panel-block'
-            article.media
-              div.media-left
-                carousel :img-list="#{circuit.photo.map(&:url)}"
+            = link_to circuit, method: :get, class: 'media-content'
+              div.content
+                h6 = circuit.name
 
-              div.media-content
-                div.content
-                  h6 = circuit.name
+                nav.level.is-mobile
+                  div.level-left
+                    div.has-text-success
+                      = @details[place_id][:rating]
+                    - @details[place_id][:rating].to_i.times do |i|
+                      span.icon.mdi-18px.has-text-success
+                        i.fas.fa-star
 
-                  nav.level.is-mobile
+                    - decimal_part = @details[place_id][:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
+                    = half_or_full_star(decimal_part)
+
+                small
+                  div.level.is-mobile
                     div.level-left
-                      div.has-text-success
-                        = @details[place_id][:rating]
-                      - @details[place_id][:rating].to_i.times do |i|
-                        span.icon.mdi-18px.has-text-success
-                          i.fas.fa-star
+                      i.fas.fa-map-marker-alt.icon.is-small
+                      = circuit.address || @details[place_id][:vicinity]
 
-                      - decimal_part = @details[place_id][:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
-                      = half_or_full_star(decimal_part)
-
-                  small
-                    div.level.is-mobile
-                      div.level-left
-                        i.fas.fa-map-marker-alt.icon.is-small
-                        = circuit.address || @details[place_id][:vicinity]
+            div.media-right
+              favorite-icon :user-id="#{current_user.id}" :favorite-courses="#{@favorite_courses.to_json}" :circuit-id="#{circuit.id}"
 
           plan :circuit-id="#{circuit.id}"
 

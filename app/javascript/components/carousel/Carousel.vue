@@ -2,7 +2,7 @@
   <div class="carousel">
     <transition-group name="slide" tag="div" class="carousel__slider">
       <div v-for="number in [currentImg]" v-bind:key="number">
-        <img :src="imgList[Math.abs(currentImg) % imgList.length]" class="carousel__img"/>
+        <img :src="imgList[Math.abs(currentImg) % imgList.length] || 'http://placehold.it/150/?text=no-image'" class="carousel__img"/>
       </div>
     </transition-group>
   </div>
