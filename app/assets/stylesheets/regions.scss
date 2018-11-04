@@ -1,26 +1,15 @@
-// Place all the styles related to the prefectures controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-.bounce-enter-active {
-  animation: bounce-in .3s;
+#message {
+  margin-bottom: 0.5rem;
 }
-// .bounce-leave-active {
-//   animation: bounce-in .5s reverse;
-// }
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
+.message a:not(.button):not(.tag) {
+  text-decoration: none !important;
 }
 
-.menu-list {
-  margin: 0.1px;
-  padding: 1px;
+div.prefecture-post {
+  cursor: pointer;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #E6EAEE;
+}
+div.prefecture-post:last-child {
+  border-bottom: none;
 }

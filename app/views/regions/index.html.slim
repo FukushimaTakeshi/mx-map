@@ -7,19 +7,21 @@ section.hero.is-dark.welcome.is-small
         | 都道府県から探す
 
 div.container
-  div#prefectures
-    div.menu.is-mobile.is-multiline.is-centered
+  div#prefectures.columns.is-centered.has-text-left
+    div.column.is-two-thirds
       - @regions.each_with_index do |region, index|
 
-        ul.menu-list
-          li
-            a.is-active @click="setArea('#{index}')"
+        article.message.is-primary#message
+
+          div.message-header @click="setArea('#{index}')"
+            p
               = region.name
 
-            transition name="bounce"
-              ul v-if="selectedArea === '#{index}'"
+          transition
+            div.message-body v-if="selectedArea === '#{index}'"
+              div.columns.is-mobile.is-multiline.is-centered
                 - @prefectures.where(region_id: region.id).each do |pref|
-                  li
+                  div.column.is-four-fifths.prefecture-post
                     = link_to prefecture_path(pref), data: { turbolinks: false }
                       = "#{pref.name} (#{@prefectures_count[pref.name] || '-'})"
 

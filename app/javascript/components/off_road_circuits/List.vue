@@ -1,23 +1,25 @@
 <template>
   <div class="column">
     <div class="box">
-      
+
       <div class="columns is-centered has-text-left">
-      <div class="column is-two-thirds">
-        <article v-for="region in regionList" :key="region.id" class="message is-primary" id="message">
-          <div @click="setArea(region.id)" class="message-header">
-            <p>{{ region.name }}</p>
-          </div>
-          
-          <transition name="">
-            <div v-if="selectedArea === region.id" class="message-body">
-              <div v-for="prefecture in region.prefectures" :key="prefecture.id" class="subtitle is-6 is-marginless">
-                <p @click="openCircuitsModal(prefecture.id)">{{ prefecture.name }}</p>
-              </div>
+        <div class="column is-two-thirds">
+          <article v-for="region in regionList" :key="region.id" class="message is-primary" id="message">
+            <div @click="setArea(region.id)" class="message-header">
+              <p>{{ region.name }}</p>
             </div>
-          </transition>
-        </article>
-      </div>
+
+            <transition name="">
+              <div v-if="selectedArea === region.id" class="message-body">
+                <div class="columns is-mobile is-multiline is-centered">
+                  <div v-for="prefecture in region.prefectures" :key="prefecture.id" class="column is-four-fifths prefecture-post">
+                    <p @click="openCircuitsModal(prefecture.id)">{{ prefecture.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </transition>
+          </article>
+        </div>
       </div>
 
     <ModalList :userId="userId" />
@@ -66,5 +68,14 @@ export default {
 <style>
 #message {
   margin-bottom: 0.5rem;
+}
+
+div.prefecture-post {
+  cursor: pointer;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #E6EAEE;
+}
+div.prefecture-post:last-child {
+  border-bottom: none;
 }
 </style>
