@@ -89,7 +89,6 @@ export default {
       this.loading = true
       const res = await axios.post(`/api/plans/`, {date: this.date, off_road_circuit_id: this.circuitId })
       if (res.status !== 200) {
-        console.log("Error!!")
         process.exit()
       }
       this.setPlans()
@@ -98,7 +97,6 @@ export default {
       this.loading = true
       const res = await axios.delete(`/api/plans/${this.planId}`)
       if (res.status !== 200) {
-        console.log("Error!!")
         process.exit()
       }
       this.setPlans()
@@ -122,7 +120,6 @@ export default {
 async function getAttendance(circuitId, date) {
   const res = await axios.get(`/api/plans/?off_road_circuit_id=${circuitId}&date=${date}`)
   if (res.status !== 200) {
-    console.log("Error!!")
     process.exit()
   }
   return res.data

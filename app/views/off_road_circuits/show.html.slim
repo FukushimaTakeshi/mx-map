@@ -1,3 +1,7 @@
+- set_meta_tags title: @off_road_circuit.name
+- set_meta_tags description: "#{@off_road_circuit.name}のモトクロスコース情報。#{default_meta_tags[:description]}"
+- set_meta_tags keywords: "#{@off_road_circuit.name},#{default_meta_tags[:keywords]}"
+
 div.swiper-container
   div.swiper-wrapper
     - @off_road_circuit.photo.each do |photo|

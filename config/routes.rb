@@ -25,9 +25,7 @@ Rails.application.routes.draw do
 
   resources :place_details_search, param: :place_id, only: [:show]
 
-  resources :off_road_circuits, only: [:show, :new, :create, :edit, :update, :destroy] do
-    resources :plans, only: [:index]
-  end
+  resources :off_road_circuits, only: [:show, :new, :create, :edit, :update, :destroy]
   
   resource :inquiry, only: [:new, :create], path_names: { new: '' } do
     collection do

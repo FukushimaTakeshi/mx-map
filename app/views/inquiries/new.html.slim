@@ -1,3 +1,5 @@
+- set_meta_tags noindex: true, follow: false, nofollow: true
+
 .hero-body.has-background-light
   .container.has-text-centered
     .column.is-6.is-offset-3
@@ -16,17 +18,17 @@
           label.label
             = f.label :email
             .control
-              = f.text_field :email, class: 'input', placeholder: 'e.g. example@gmail.com'
+              = f.text_field :email, class: 'input', placeholder: 'e.g. example@gmail.com', type: 'email', pattern: "[\w+_-.]+@[a-z\d_-]+\.[a-z\d._-]+"
 
           label.label
             = f.label :title
             .control
-              = f.text_field :title, class: 'input'
+              = f.text_field :title, class: 'input', type: 'text', required: true
             
           label.label
             = f.label :message
             .control
-              = f.text_area :message, class: 'textarea'
+              = f.text_area :message, class: 'textarea', required: true
 
         .field
           .control

@@ -10,7 +10,6 @@ window.addEventListener('DOMContentLoaded', function() {
     minDate: '2018-01-01',
     maxDate: '2018-12-31'
   });
-  console.log(datePickers);
   // datePickers now contains an Array of all datePicker instances
 
   const mySwiper = new Swiper ('.swiper-container', {

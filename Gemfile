@@ -33,7 +33,10 @@ gem 'activeadmin'
 gem 'carrierwave'
 gem 'mini_magick'
 
+# markdown
 gem 'redcarpet'
+
+gem 'meta-tags'
 
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'

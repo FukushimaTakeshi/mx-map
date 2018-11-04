@@ -53,11 +53,6 @@ export default {
          .style("stroke-width", 0.2)
          .style("fill", function(d){return rand_color(d.properties.region);});
     });
-  },
-  methods: {
-    hoge(){
-      console.log('Hogehoge');
-    }
   }
 }
 
@@ -104,7 +99,6 @@ function zoom_pref(region) {
            .style("fill", function(d){return rand_color(d.properties.region);});
       });
 
-  console.log(region);
 }
 
 function rand_color(region) {

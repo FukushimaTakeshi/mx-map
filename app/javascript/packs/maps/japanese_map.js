@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     el: '#map',
     components: { JapaneseMap }
   })
-
-  console.log(app)
 })
 
 
