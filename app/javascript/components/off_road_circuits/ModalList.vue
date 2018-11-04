@@ -7,7 +7,7 @@
           <p class="modal-card-title">コース一覧</p>
         </header>
         <section class="modal-card-body is-paddingless">
-          <div class="columns is-mobile is-multiline">
+          <div class="columns is-mobile is-multiline is-centered">
             <Loading v-if="loading"></Loading>
 
             <article v-show="OffRoadCircuitList.length == 0 && !loading" class="message is-danger">
@@ -17,7 +17,7 @@
               </div>
             </article>
 
-            <div v-for="circuit in OffRoadCircuitList" v-show="!loading" class="column post">
+            <div v-for="circuit in OffRoadCircuitList" v-show="!loading" class="column is-four-fifths post">
               <span class="media">
                 <div class="media-left">
                   <p class="image is-32x32">
