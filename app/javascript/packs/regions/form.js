@@ -18,5 +18,4 @@ document.addEventListener('turbolinks:load', () => {
       }
     }
   })
-  console.log(app)
 })

@@ -53,7 +53,6 @@ export default {
 
         const res = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
         if (res.status !== 200) {
-          console.log("Error!!")
           process.exit()
         }
         this.chartFullYearData.push(
@@ -94,7 +93,6 @@ export default {
       // 1ヶ月分のデータを取得
       const res = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
       if (res.status !== 200) {
-        console.log("Error!!")
         process.exit()
       }
       let circuitList = res.data.off_road_circuits
