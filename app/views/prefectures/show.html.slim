@@ -1,5 +1,9 @@
 = javascript_pack_tag 'prefectures/form'
 
+- set_meta_tags title: "#{@prefecture.name}のモトクロスコース一覧"
+- set_meta_tags description: "#{@prefecture.name}のモトクロスコース情報。#{default_meta_tags[:description]}"
+- set_meta_tags keywords: "#{@prefecture.name},#{default_meta_tags[:keywords]}"
+
 section.hero.is-dark.welcome.is-small
   div.hero-body
     div.container
@@ -23,12 +27,12 @@ div#form.columns.is-mobile.is-multiline
       div.column.is-full.is-paddingless
         article.box
           span.media
-            div.media-left
+            = link_to circuit, method: :get, class: 'media-left'
               carousel :img-list="#{circuit.photo.map(&:url)}"
 
             = link_to circuit, method: :get, class: 'media-content'
               div.content
-                h6 = circuit.name
+                h2.title.is-6 = circuit.name
 
                 nav.level.is-mobile
                   div.level-left
