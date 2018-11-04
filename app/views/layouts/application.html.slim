@@ -25,12 +25,17 @@ html
         div.navbar-menu id="navMenu"
           div.navbar-start
             - if user_signed_in?
+              span.navbar-item
+                = link_to user_path(current_user), class: 'button is-outlined is-primary', data: { turbolinks: false }
+                  span.icon
+                    i.fas.fa-user
+                  span マイページ
               = link_to 'プロフィール変更', edit_user_path(current_user), class: 'navbar-item'
               = link_to 'パスワード変更', edit_user_registration_path, class: 'navbar-item'
               = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'navbar-item'
             - else
               span.navbar-item
-                = link_to "ユーザー登録", new_user_registration_path, class: 'button is-inverted is-outlined'
+                = link_to "ユーザー登録", new_user_registration_path, class: 'button is-outlined'
               pan.navbar-item
                 = link_to 'ログイン', new_user_session_path, class: 'button is-white'
     

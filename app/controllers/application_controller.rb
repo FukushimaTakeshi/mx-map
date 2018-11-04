@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
   def admin_user
     redirect_to root_url unless current_user.try(:admin?)
   end
+  
+  def after_sign_in_path_for(resource)
+    user_path(current_user)
+  end
 end
