@@ -38,6 +38,8 @@ gem 'redcarpet'
 
 gem 'meta-tags'
 
+gem 'whenever', require: false
+
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'
   gem 'google-analytics-rails'
