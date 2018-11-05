@@ -32,6 +32,8 @@ set :prune_bundler, true
 
 set :keep_releases, 5
 
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+
 namespace :deploy do
   # desc 'reload the database with seed data'
   # task :seed do
