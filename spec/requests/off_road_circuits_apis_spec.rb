@@ -11,6 +11,7 @@ RSpec.describe 'OffRoadCircuitsApis', type: :request do
 
     it 'loads a off_road_circuit' do
       off_road_circuit = FactoryBot.create(:off_road_circuit, prefecture_id: 1, region_id: 1)
+      FactoryBot.create(:photo, off_road_circuit_id: off_road_circuit.id)
       get api_off_road_circuits_path, params: {
         user_id: @user.id,
         prefecture_id: off_road_circuit.prefecture_id
@@ -19,11 +20,9 @@ RSpec.describe 'OffRoadCircuitsApis', type: :request do
 
       json = JSON.parse(response.body)
       expect(json.length).to eq 1
-
-      off_road_circuits = json['off_road_circuits']
-      expect(off_road_circuits.length).to eq 1
-      expect(off_road_circuits[0]['name']).to eq 'テストサーキット'
-      expect(off_road_circuits[0]['photo_url']).to eq nil
+      expect(json['off_road_circuits'].length).to eq 1
+      expect(json['off_road_circuits'][0]['name']).to eq 'テストサーキット'
+      expect(json['off_road_circuits'][0]['photo_url']).to eq 'https://sample.com'
     end
   end
 end
