@@ -13,7 +13,13 @@ class ApplicationController < ActionController::Base
     redirect_to root_url unless current_user.try(:admin?)
   end
   
+  # https://github.com/plataformatec/devise/blob/v4.4.3/lib/devise/controllers/helpers.rb#L215
   def after_sign_in_path_for(resource)
-    user_path(current_user)
+    stored_location_for(resource) ||
+      if resource.is_a?(User)
+        user_path(current_user)
+      else
+        super
+      end
   end
 end
