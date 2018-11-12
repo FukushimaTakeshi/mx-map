@@ -16,12 +16,12 @@ class Api::FavoriteCoursesController < ApplicationController
   end
 
   def create
-    FavoriteCourse.find_or_create_by(favorite_course_params.merge(user_id: params[:user_id]))
-    head :ok
+    FavoriteCourse.create!(favorite_course_params)
+    head :created
   end
 
   def destroy
-    FavoriteCourse.find(params[:id]).destroy
+    FavoriteCourse.find(params[:id]).destroy!
     head :ok
   end
   
@@ -29,7 +29,8 @@ class Api::FavoriteCoursesController < ApplicationController
   
   def favorite_course_params
     params.require(:favorite_course).permit(
-      :off_road_circuit_id
+      :off_road_circuit_id,
+      :user_id
     )
   end
 end

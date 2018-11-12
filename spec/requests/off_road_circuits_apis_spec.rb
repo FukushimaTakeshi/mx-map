@@ -7,17 +7,20 @@ RSpec.describe 'OffRoadCircuitsApis', type: :request do
       @user.skip_confirmation!
       @user.save!
       sign_in @user
-    end
-
-    it 'loads a off_road_circuit' do
+      
       off_road_circuit = FactoryBot.create(:off_road_circuit, prefecture_id: 1, region_id: 1)
       FactoryBot.create(:photo, off_road_circuit_id: off_road_circuit.id)
       get api_off_road_circuits_path, params: {
         user_id: @user.id,
         prefecture_id: off_road_circuit.prefecture_id
       }
-      expect(response).to have_http_status(:success)
+    end
 
+    it 'httpステータス200が返ること' do
+      expect(response).to have_http_status(:success)
+    end
+      
+    it 'レスポンスが想定通り' do
       json = JSON.parse(response.body)
       expect(json.length).to eq 1
       expect(json['off_road_circuits'].length).to eq 1
