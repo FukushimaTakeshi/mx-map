@@ -1,4 +1,4 @@
-FROM ruby:2.5.0
+FROM ruby:2.6.0-preview3
 MAINTAINER fukushima
 ENV LANG C.UTF-8
 
@@ -35,10 +35,12 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install --path vendor/bundle
 #
-# # yarn install
-# COPY package.json package.json
-# COPY yarn.lock yarn.lock
-# RUN yarn install
+# yarn install
+COPY package.json package.json
+COPY yarn.lock yarn.lock
+RUN yarn install
+
+RUN echo 'export RUBYOPT=--jit' >> ~/.bashrc
 #
 # # install phantomjs
 # RUN \
