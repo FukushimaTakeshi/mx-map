@@ -146,7 +146,7 @@ export default {
 
     createAttendance: async function(date, index) {
       const res = await axios.post(`/api/plans/`, {date: date, off_road_circuit_id: this.circuitId })
-      if (res.status !== 200) {
+      if (res.status !== 201) {
         process.exit()
       }
       this.getAttendance(date, index)

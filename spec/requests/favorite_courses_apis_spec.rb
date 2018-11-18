@@ -57,7 +57,6 @@ RSpec.describe 'FavoriteCoursesApis', type: :request do
   end
   
   describe 'DELETE /api/:user_id/favorite_courses/:id' do
-    let(:params) { { id: favorite_course.id } }
     it 'httpステータス200が返ること' do
       delete api_user_favorite_course_path(@user, favorite_course)
       expect(response).to have_http_status(:success)
