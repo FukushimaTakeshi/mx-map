@@ -14,7 +14,7 @@ section.hero.has-background-light.is-fullheight
                     div.control
                       - if devise_mapping.omniauthable?
                         - resource_class.omniauth_providers.each do |provider|
-                          = oauth_content(provider, :login)
+                          = oauth_content(resource_name, provider, :login)
 
                 hr class="hr" style="border-top: 1px solid #7a7a7a;"
 

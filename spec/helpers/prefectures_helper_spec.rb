@@ -1,15 +1,26 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the PrefecturesHelper. For example:
-#
-# describe PrefecturesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe PrefecturesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#half_or_full_star' do
+    context 'decimal_partが3~7の場合' do
+      it 'calss属性がfa-star-halfであること' do
+        expect(half_or_full_star(3)).to eq '<span class="icon mdi-18px has-text-success"><i class="fas fa-star-half"></i></span>'
+        expect(half_or_full_star(4)).to eq '<span class="icon mdi-18px has-text-success"><i class="fas fa-star-half"></i></span>'
+        expect(half_or_full_star(5)).to eq '<span class="icon mdi-18px has-text-success"><i class="fas fa-star-half"></i></span>'
+        expect(half_or_full_star(6)).to eq '<span class="icon mdi-18px has-text-success"><i class="fas fa-star-half"></i></span>'
+        expect(half_or_full_star(7)).to eq '<span class="icon mdi-18px has-text-success"><i class="fas fa-star-half"></i></span>'
+      end
+    end
+    context 'decimal_partが8~9の場合' do
+      it 'calss属性がfa-starであること' do
+        expect(half_or_full_star(8)).to eq '<span class="icon mdi-18px has-text-success"><i class="fas fa-star"></i></span>'
+        expect(half_or_full_star(9)).to eq '<span class="icon mdi-18px has-text-success"><i class="fas fa-star"></i></span>'
+      end
+    end
+    context 'decimal_partが3~9以外の場合' do
+      it 'calss属性がfa-starであること' do
+        expect(half_or_full_star(1)).to eq nil
+      end
+    end
+  end
 end

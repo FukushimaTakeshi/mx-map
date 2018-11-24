@@ -1,5 +1,5 @@
 module UsersHelper
-  def oauth_content(provider, signup_or_login)
+  def oauth_content(resource_name, provider, signup_or_login)
     case provider
     when :twitter
       button_color = 'info'
