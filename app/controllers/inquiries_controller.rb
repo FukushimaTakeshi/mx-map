@@ -13,12 +13,12 @@ class InquiriesController < ApplicationController
     if @inquiry.valid?
       InquiryMailer.received_email(@inquiry).deliver
     else
-      raise
+      raise StandardError
     end
   end
 
   private
-  
+
   def inquiry_params
     params.require(:inquiry).permit(:email, :title, :message)
   end

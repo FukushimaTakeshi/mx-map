@@ -5,7 +5,7 @@ RSpec.describe 'RegionsApis', type: :request do
     before { get api_regions_path }
 
     it 'httpステータス200を返ること' do
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
     
     it 'レスポンスが想定通り' do

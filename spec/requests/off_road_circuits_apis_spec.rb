@@ -17,7 +17,7 @@ RSpec.describe 'OffRoadCircuitsApis', type: :request do
     end
 
     it 'httpステータス200が返ること' do
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
       
     it 'レスポンスが想定通り' do

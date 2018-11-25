@@ -18,7 +18,7 @@ RSpec.describe 'PlansApis', type: :request do
   describe 'GET /api/plans/?userid=:user_id&off_road_circuit=:off_road_circuit_id&all=1' do
     before { get api_plans_path(user_id: @user.id, off_road_circuit: off_road_circuit.id, all: 1, date: Date.today) }
     it 'httpステータス200が返ること' do
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it 'レスポンスが想定通り' do
@@ -33,7 +33,7 @@ RSpec.describe 'PlansApis', type: :request do
   describe 'GET /api/plans/?userid=:user_id&off_road_circuit=:off_road_circuit_id' do
     before { get api_plans_path(user_id: @user.id, off_road_circuit: off_road_circuit.id, date: Date.today) }
     it 'httpステータス200が返ること' do
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it 'レスポンスが想定通り' do
@@ -81,7 +81,7 @@ RSpec.describe 'PlansApis', type: :request do
   describe 'DELETE /api/plans/:id' do
     it 'httpステータス200が返ること' do
       delete api_plan_path(plan)
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
     it 'FavoriteCourseレコードが1削除されること' do
       expect{ delete api_plan_path(plan) }.to change(Plan, :count).by(-1)

@@ -18,7 +18,7 @@ RSpec.describe 'FavoriteCoursesApis', type: :request do
   describe 'GET /api/:user_id/favorite_courses' do
     before { get api_user_favorite_courses_path(@user) }
     it 'httpステータス200が返ること' do
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it 'レスポンスが想定通り' do
@@ -59,7 +59,7 @@ RSpec.describe 'FavoriteCoursesApis', type: :request do
   describe 'DELETE /api/:user_id/favorite_courses/:id' do
     it 'httpステータス200が返ること' do
       delete api_user_favorite_course_path(@user, favorite_course)
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
     it 'FavoriteCourseレコードが1削除されること' do
       expect{ delete api_user_favorite_course_path(@user, favorite_course) }.to change(FavoriteCourse, :count).by(-1)
