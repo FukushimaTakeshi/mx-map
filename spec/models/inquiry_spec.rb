@@ -6,9 +6,9 @@ RSpec.describe Inquiry, type: :model do
     let(:title) { 'ほげたいとる' }
     let(:email) { 'sample@example.com' }
     let(:message) { 'ほげめっせーじ' }
-    
+
     it { is_expected.to be_valid }
-    
+
     context 'titleが空の場合' do
       let(:title) { '' }
       it { is_expected.to_not be_valid }
@@ -42,7 +42,7 @@ RSpec.describe Inquiry, type: :model do
         expect(subject.errors[:email]).to include('は255文字以内で入力して下さい。')
       end
     end
-    
+
     context 'messageが空の場合' do
       let(:message) { '' }
       it { is_expected.to_not be_valid }
