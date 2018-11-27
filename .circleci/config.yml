@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.5.0-node-browsers
+      - image: 2.6.0-preview3-browsers
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - checkout
+
+      - run: curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs
 
       - restore_cache:
           keys:
