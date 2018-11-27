@@ -1,7 +1,6 @@
 class RegionsController < ApplicationController
   def index
-    @prefectures = Prefecture.all
-    @regions = Region.all
+    @regions = Region.includes(:prefectures).all
     @prefectures_count = OffRoadCircuit.joins(:prefecture).group("prefectures.name").count
   end
 end

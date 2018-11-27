@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :favorite_course do
-    user nil
-    motocross_course nil
+    user
+    off_road_circuit
   end
 end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :mx_profile do
-    history nil
+    mx_history nil
     license nil
     user nil
   end

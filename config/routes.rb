@@ -23,10 +23,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :place_details_search, param: :place_id, only: [:show]
-
   resources :off_road_circuits, only: [:show, :new, :create, :edit, :update, :destroy]
-  
+
   resource :inquiry, only: [:new, :create], path_names: { new: '' } do
     collection do
       post :confirm
@@ -39,7 +37,7 @@ Rails.application.routes.draw do
     end
 
     resources :regions, only: [:index]
-    
+
     resources :off_road_circuits, only: [:index]
 
     resources :plans, only: [:index, :create, :destroy]

@@ -22,12 +22,12 @@ module Api
     end
 
     def create
-      Plan.create(plan_params.merge(uuid: session['session_id'], user_id: current_user&.id))
-      head :ok
+      Plan.create!(plan_params.merge(uuid: session['session_id'], user_id: current_user&.id))
+      head :created
     end
 
     def destroy
-      Plan.find(params[:id]).destroy
+      Plan.find(params[:id]).destroy!
       head :ok
     end
 

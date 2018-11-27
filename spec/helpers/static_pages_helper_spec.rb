@@ -1,15 +1,14 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the StaticPagesHelper. For example:
-#
-# describe StaticPagesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe StaticPagesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#term' do
+    it '利用規約を返すこと' do
+      expect(term).to include('<h1>利用規約</h1>')
+    end
+  end
+  describe '#privacy' do
+    it 'プライバシーポリシーを返すこと' do
+      expect(privacy).to include('<h1>プライバシーポリシー</h1>')
+    end
+  end
 end

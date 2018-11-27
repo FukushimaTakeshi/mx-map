@@ -22,7 +22,7 @@ div.container
           transition
             div.message-body v-if="selectedArea === '#{index}'"
               div.columns.is-mobile.is-multiline.is-centered
-                - @prefectures.where(region_id: region.id).each do |pref|
+                - region.prefectures.each do |pref|
                   div.column.is-four-fifths.prefecture-post
                     = link_to prefecture_path(pref), data: { turbolinks: false }
                       = "#{pref.name} (#{@prefectures_count[pref.name] || '-'})"

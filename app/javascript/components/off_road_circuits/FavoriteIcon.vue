@@ -34,8 +34,11 @@ export default {
       return favoriteCircuit
     },
     registerFavoriteCircuit: async function() {
-      const res = await axios.post(`/api/users/${this.userId}/favorite_courses`, { off_road_circuit_id: this.circuitId })
-      if (res.status !== 200) {
+      const res = await axios.post(
+        `/api/users/${this.userId}/favorite_courses`,
+        { off_road_circuit_id: this.circuitId, user_id: this.userId }
+      )
+      if (res.status !== 201) {
         process.exit()
       }
       this.findAllFavoriteCourse().then(result => {

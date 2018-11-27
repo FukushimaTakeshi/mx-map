@@ -52,6 +52,7 @@ ja:
         blank: を入力して下さい。
         too_long: は%{count}文字以内で入力して下さい。
         invalid: は不正な値です。
+        taken: は既に存在します。
 
   helpers:
     placeholder:
