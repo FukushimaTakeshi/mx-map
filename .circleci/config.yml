@@ -54,8 +54,8 @@ jobs:
 
 
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:migrate
+      - run: bundle exec rails db:create --trace
+      - run: bundle exec rails db:migrate --trace
 
       # run tests!
       - run: bundle exec rspec
