@@ -4,9 +4,6 @@ jobs:
     docker:
       - image: circleci/ruby:2.6.0-preview3-browsers
         environment:
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
-          BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
           REDIS_HOST: 127.0.0.1
@@ -52,11 +49,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
 
-      - run:
-          name: Create DB
-          command: |
-            RAILS_ENV=test bundle exec rake db:create
-            bundle exec rake db:migrate
+      # Database setup
+      - run: bundle exec rails db:create --trace
+      - run: bundle exec rails db:migrate --trace
 
       # run tests!
       - run: bundle exec rspec
