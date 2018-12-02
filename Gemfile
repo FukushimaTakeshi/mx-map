@@ -43,6 +43,7 @@ gem 'whenever', require: false
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'
   gem 'google-analytics-rails'
+  gem 'newrelic_rpm'
 end
 
 group :development, :test do
