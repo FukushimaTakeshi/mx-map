@@ -45,7 +45,7 @@ ja:
         current_password: 現在のパスワード
         password_confirmation: パスワード確認
         email: メールアドレス
-        remember_me: 次回からパスワード入力を省く
+        remember_me: 次回から自動的にログインする
     errors:
       format: '%{attribute} %{message}'
       messages:

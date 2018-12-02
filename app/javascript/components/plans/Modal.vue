@@ -14,26 +14,23 @@
         </header>
         <section class="modal-card-body">
           <span v-if="!users.length" v-show="!loading">まだ予定がありません(´・ω・｀)</span>
-					<article v-for="user in users" v-show="!loading" class="post">
-						<div class="media">
-							<div class="media-left">
-								<p class="image is-32x32">
-									<img :src="user.avatar">
-								</p>
-							</div>
-							<div class="media-content">
-								<div class="content">
-									<p>
+          <article v-for="user in users" v-show="!loading" class="post">
+            <div class="media">
+              <div class="media-left">
+                <p class="image is-32x32">
+                  <img :src="user.avatar">
+                </p>
+              </div>
+              <div class="media-content">
+                <div class="content">
+                  <p>
                     <a v-if="user.id !== null" :href="'/users/' + user.id">{{ user.username }}</a>
                     <a v-else>{{ user.username }}</a>
-									</p>
-								</div>
-							</div>
-							<div class="media-right">
-								<span class="has-text-grey-light"><i class="fa fa-comments"></i> 1</span>
-							</div>
-						</div>
-					</article>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
           <!-- loading component -->
           <Loading v-if="loading"></Loading>
         </section>

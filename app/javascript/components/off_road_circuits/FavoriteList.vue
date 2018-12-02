@@ -1,7 +1,7 @@
 <template>
   <span>
     <a v-for="item in this.favoriteCourses" :key="item.id"
-       :href="offRoadCircuitsUrl(item.off_road_circuit_id)" 
+       :href="offRoadCircuitsUrl(item.off_road_circuit_id)"
        class="media" data-turbolinks="false">
       <div class="media-left">
         <figure class="image is-96x96">
