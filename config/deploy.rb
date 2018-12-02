@@ -24,37 +24,19 @@ append :linked_files, 'config/master.key', 'config/puma.rb'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/uploads', 'vendor/bundle', 'public/assets', 'public/uploads/tmp', 'public/uploads/user'
 
 set :puma_conf, "#{shared_path}/config/puma.rb"
-# capistrano3-puma の既定の再起動処理を無効化
-set :puma_default_hooks, false
-# puma を capistrano で利用するための設定
-set :puma_preload_app, false
-set :prune_bundler, true
 
 set :keep_releases, 5
 
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 namespace :deploy do
-  # desc 'reload the database with seed data'
-  # task :seed do
-  #   on primary fetch(:migration_role) do
-  #     within release_path do
-  #       with rails_env: fetch(:rails_env) do
-  #         execute :rake, 'db:seed'
-  #       end
-  #     end
-  #   end
-  # end
-  # 
-  desc 'Restart application'  
+  desc 'Restart Application'
   task :restart do
-    on roles(:app) do
-      with rails_env: fetch(:rails_env) do
-        invoke 'puma:phased-restart'
-      end
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke! 'puma:restart'
     end
   end
-  
+
   # webサーバー再起動時にキャッシュを削除する
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -65,7 +47,6 @@ namespace :deploy do
   end
 
   # linked_files で使用するファイルをアップロードするタスク
-  # deployが行われる前に実行する必要がある。
   desc 'Upload config files'
   task :upload_config do
     on roles(:app) do
@@ -74,8 +55,6 @@ namespace :deploy do
       upload!('config/puma.rb', "#{shared_path}/config/puma.rb")
     end
   end
-  
-  # Flow の before, after のタイミングで上記タスクを実行
+
   before :started, 'deploy:upload_config'
-  after :finishing, :restart
 end
