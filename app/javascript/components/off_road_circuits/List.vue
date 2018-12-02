@@ -1,7 +1,7 @@
 <template>
   <div class="column">
     <div class="box">
-
+      <h1 class="title is-6">コースを選択する</h1>
       <div class="columns is-centered has-text-left">
         <div class="column is-two-thirds">
           <article v-for="region in regionList" :key="region.id" class="message is-primary" id="message">

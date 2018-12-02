@@ -10,52 +10,53 @@ section.hero.is-dark.welcome.is-small
       h1.title.is-6
         = "#{@prefecture.name}のモトクロスコース一覧"
 
-div#form.columns.is-mobile.is-multiline
+div.container
+  div#form
 
-  - if @off_road_circuits.blank?
-    article.message.is-danger
-      div.message-body
-        | ごめんね。
-        p
-          | まだ#{@prefecture.name}のコースが登録されていません。
+    - if @off_road_circuits.blank?
+      article.message.is-danger
+        div.message-body
+          | ごめんね。
+          p
+            | まだ#{@prefecture.name}のコースが登録されていません。
 
-  - else
+    - else
 
-    - @off_road_circuits.shuffle.each do |circuit|
-      - place_id = circuit.place_id.to_sym
+      - @off_road_circuits.shuffle.each do |circuit|
+        - place_id = circuit.place_id.to_sym
+        div.columns.is-paddingless.is-centered
+          .column.is-three-fifths
+            article.box
+              = link_to circuit, method: :get, class: 'media'
+                div.media-left
+                  carousel :img-list="#{circuit.photo.map(&:url)}"
 
-      div.column.is-full.is-paddingless
-        article.box
-          span.media
-            = link_to circuit, method: :get, class: 'media-left'
-              carousel :img-list="#{circuit.photo.map(&:url)}"
+                div.media-content
+                  div.content
+                    h2.title.is-6 = circuit.name
 
-            = link_to circuit, method: :get, class: 'media-content'
-              div.content
-                h2.title.is-6 = circuit.name
+                    nav.level.is-mobile
+                      div.level-left
+                        div.has-text-success
+                          = @details[place_id][:rating]
+                        - @details[place_id][:rating].to_i.times do |i|
+                          span.icon.mdi-18px.has-text-success
+                            i.fas.fa-star
 
-                nav.level.is-mobile
-                  div.level-left
-                    div.has-text-success
-                      = @details[place_id][:rating]
-                    - @details[place_id][:rating].to_i.times do |i|
-                      span.icon.mdi-18px.has-text-success
-                        i.fas.fa-star
+                        - decimal_part = @details[place_id][:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
+                        = half_or_full_star(decimal_part)
 
-                    - decimal_part = @details[place_id][:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
-                    = half_or_full_star(decimal_part)
+                    small
+                      div.level.is-mobile
+                        div.level-left
+                          i.fas.fa-map-marker-alt.icon.is-small
+                          = circuit.address || @details[place_id][:vicinity]
 
-                small
-                  div.level.is-mobile
-                    div.level-left
-                      i.fas.fa-map-marker-alt.icon.is-small
-                      = circuit.address || @details[place_id][:vicinity]
+                - if user_signed_in?
+                  div.media-right
+                    favorite-icon :user-id="#{current_user.id}" :favorite-courses="#{@favorite_courses.to_json}" :circuit-id="#{circuit.id}"
 
-            - if user_signed_in?
-              div.media-right
-                favorite-icon :user-id="#{current_user.id}" :favorite-courses="#{@favorite_courses.to_json}" :circuit-id="#{circuit.id}"
-
-          plan :circuit-id="#{circuit.id}"
+              plan :circuit-id="#{circuit.id}"
 
 - content_for :footer
   div.content.has-text-right
