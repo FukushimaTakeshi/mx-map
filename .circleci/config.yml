@@ -55,3 +55,48 @@ jobs:
 
       # run tests!
       - run: bundle exec rspec
+
+  deploy:
+    docker:
+      - image: circleci/ruby:2.6.0-preview3-browsers
+        environment:
+          RAILS_ENV: development
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          - v1-dependencies-
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - add_ssh_keys:
+          fingerprints: b3:96:b5:ce:7b:6b:12:8b:85:94:7c:b4:ca:f2:99:c5
+
+      - run:
+          name: Capistrano deploy
+          command: |
+            bundle exec cap production deploy
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

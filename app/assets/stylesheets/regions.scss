@@ -5,11 +5,11 @@
   text-decoration: none !important;
 }
 
-div.prefecture-post {
+a.prefecture-post {
   cursor: pointer;
   padding-bottom: 0.3rem;
   border-bottom: 1px solid #E6EAEE;
 }
-div.prefecture-post:last-child {
+a.prefecture-post:last-child {
   border-bottom: none;
 }

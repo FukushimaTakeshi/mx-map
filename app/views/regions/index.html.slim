@@ -23,8 +23,7 @@ div.container
             div.message-body v-if="selectedArea === '#{index}'"
               div.columns.is-mobile.is-multiline.is-centered
                 - region.prefectures.each do |pref|
-                  div.column.is-four-fifths.prefecture-post
-                    = link_to prefecture_path(pref), data: { turbolinks: false }
-                      = "#{pref.name} (#{@prefectures_count[pref.name] || '-'})"
+                  = link_to prefecture_path(pref), data: { turbolinks: false }, class: 'column is-four-fifths prefecture-post'
+                    = "#{pref.name} (#{@prefectures_count[pref.name] || '-'})"
 
 = javascript_pack_tag 'regions/form'
