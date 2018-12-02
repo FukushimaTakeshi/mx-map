@@ -3,7 +3,7 @@ set :stage, :production
 set :branch, 'master'
 server '13.113.162.140', user: 'fukushima', roles: %w(web app db)
 
-set :ssh_options, keys: ["#{ENV['HOME']}/.ssh/id_rsa"],
+set :ssh_options, keys: ENV['PRODUCTION_SSH_KEY'] || ["#{ENV['HOME']}/.ssh/id_rsa"],
                   forward_agent: true,
                   auth_methods: %w(publickey)
 
