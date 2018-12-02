@@ -51,7 +51,8 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.logger = Logger.new('/var/log/rails/production.log', 'daily')
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -76,7 +77,7 @@ Rails.application.configure do
   # E-mails
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: Rails.application.credentials.domain }
-  
+
   config.action_mailer.smtp_settings = {
     user_name: Rails.application.credentials.smtp[:user_name],
     password: Rails.application.credentials.smtp[:password],
@@ -113,6 +114,6 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  
+
   GA.tracker = Rails.application.credentials.google_analytics[:tracking_id]
 end
