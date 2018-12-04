@@ -1,4 +1,4 @@
-class Api::OffRoadCircuitsController < ApplicationController
+class Api::OffRoadCircuitsController < ActionController::API
   def index
     off_road_circuits = OffRoadCircuit.where(prefecture_id: params[:prefecture_id])
 
