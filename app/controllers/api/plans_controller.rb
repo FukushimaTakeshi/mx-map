@@ -1,5 +1,5 @@
 module Api
-  class PlansController < ActionController::Base
+  class PlansController < ActionController::API
     def index
       if params[:all]
         plans = Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id]).count
