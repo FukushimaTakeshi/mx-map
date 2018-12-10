@@ -112,7 +112,7 @@ export default {
       if (MonthAndDate) {
         MonthAndDate = `${MonthAndDate}週`
       }
-      const currentMonthAndDate = MonthAndDate || `${toDay.getFullYear()}/${toDay.getMonth()}`
+      const currentMonthAndDate = MonthAndDate || `${toDay.getFullYear()}/${toDay.getMonth()+1}`
       EventBus.$emit('open-pie-chart', count, name, currentMonthAndDate)
     }
   }
