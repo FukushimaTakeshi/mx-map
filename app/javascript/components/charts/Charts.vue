@@ -73,11 +73,9 @@ export default {
       EventBus.$emit('open-bar-chart', date, count)
     },
     fetchMonthData: async function(MonthAndDate) {
-      const toDay = new Date();
-      let dateListOfCalendarRange = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
-
       let from // 月初
       let to // 月末
+      const toDay = new Date();
 
       if (MonthAndDate) {
         const arr = MonthAndDate.split('/')
@@ -85,12 +83,11 @@ export default {
         let tmpDate = new Date(MonthAndDate)
         to = new Date(tmpDate.setDate(tmpDate.getDate() + 6))
       } else {
-        from = new Date()
-        from.setDate(1)
-        to = new Date()
-        to.setDate(1)
-        to.setMonth(to.getMonth() + 1)
-        to.setDate(0)
+        const dateListOfCalendarRange = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
+        const firstCalendar = dateListOfCalendarRange[0]
+        from = `${firstCalendar.year}-${firstCalendar.month}-${firstCalendar.day}`
+        const lastCalendar = dateListOfCalendarRange[dateListOfCalendarRange.length - 1]
+        to = `${lastCalendar.year}-${lastCalendar.month}-${lastCalendar.day}`
       }
 
       // 1ヶ月分のデータを取得
@@ -115,7 +112,7 @@ export default {
       if (MonthAndDate) {
         MonthAndDate = `${MonthAndDate}週`
       }
-      let currentMonthAndDate = MonthAndDate || `${from.getFullYear()}/${from.getMonth()+1}`
+      const currentMonthAndDate = MonthAndDate || `${toDay.getFullYear()}/${toDay.getMonth()}`
       EventBus.$emit('open-pie-chart', count, name, currentMonthAndDate)
     }
   }
