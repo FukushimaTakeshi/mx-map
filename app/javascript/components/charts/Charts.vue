@@ -43,12 +43,12 @@ export default {
   methods: {
     fetchFullYearData: async function() {
       const toDay = new Date();
-      let calenderData = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
-    
-      for (let i = 0; i+7 <= calenderData.length; i+=7) {
-        const calenderFrom = calenderData[i]
+      let dateListOfCalendarRange = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
+
+      for (let i = 0; i+7 <= dateListOfCalendarRange.length; i+=7) {
+        const calenderFrom = dateListOfCalendarRange[i]
         const from = `${toDay.getFullYear()}-${calenderFrom.month}-${calenderFrom.day}`
-        const calenderTo = calenderData[i+6]
+        const calenderTo = dateListOfCalendarRange[i+6]
         const to = `${toDay.getFullYear()}-${calenderTo.month}-${calenderTo.day}`
 
         const res = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
@@ -73,6 +73,9 @@ export default {
       EventBus.$emit('open-bar-chart', date, count)
     },
     fetchMonthData: async function(MonthAndDate) {
+      const toDay = new Date();
+      let dateListOfCalendarRange = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
+
       let from // 月初
       let to // 月末
 
