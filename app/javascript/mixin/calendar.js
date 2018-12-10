@@ -1,20 +1,23 @@
+import moment from 'moment';
+
 export default {
   methods: {
     get_month_calendar: function(year, month) {
-      const today = new Date()
-      const firstDate = new Date(year, (month - 1), 1); // 指定した年月の初日の情報
-      const lastDay = new Date(year, (firstDate.getMonth() + 1), 0).getDate(); // 指定した年月の末日
-      const weekday = firstDate.getDay(); // 指定した年月の初日の曜日
+      let currentDate = moment([year, month -1]); // 現在選択中の日付
+      let weekdayCount = currentDate.weekday(); // 指定した年月の初日の曜日 (0-6)
 
-      let calendarData = []; // カレンダーの情報を格納
-      let weekdayCount = weekday; // 曜日のカウント用
-      const currentLastDay = new Date(year, (firstDate.getMonth()), 0).getDate()
-      const currentMonth = new Date(year, (firstDate.getMonth()), 0).getMonth() + 1
+      const previousDate = moment([year, month -1, 1]).subtract(1, 'months'); // 現在選択中(引数)の前月日付
+      const previousLastDay = previousDate.daysInMonth(); // 現在選択中(引数)月の前月の日数 = 末日
+
+      let dateListOfCalendarRange = []; // 現在選択中カレンダーリスト(日単位)
+
+      // カレンダー1行目の前月日付
       for (let i = 0; i < weekdayCount; i++) {
-        calendarData.push(
+        dateListOfCalendarRange.push(
           {
-            month: currentMonth,
-            day: currentLastDay - weekdayCount + i + 1,
+            year: previousDate.year(),
+            month: previousDate.month() + 1,
+            day: previousLastDay - weekdayCount + i + 1,
             idToday: false,
             isDisabled: true,
             weekdayCount: weekdayCount,
@@ -22,12 +25,17 @@ export default {
           }
         )
       }
-      for (let i = 0; i < lastDay; i++) {
-        calendarData.push(
+
+      // 現在選択中月の日付
+      const today = moment();
+      const currentLastDay = moment([year, month -1, 1]).daysInMonth(); // 指定した年の月の日数 = 末日
+      for (let i = 0; i < currentLastDay; i++) {
+        dateListOfCalendarRange.push(
           {
-            month: today.getMonth() + 1,
+            year: currentDate.year(),
+            month: currentDate.month() + 1,
             day: i + 1,
-            isToday: today.getDate() == i+1 ? true : false,
+            isToday: today.date() == i+1 ? true : false,
             isDisabled: false,
             weekdayCount: weekdayCount,
             isActive: (weekdayCount == 0 || weekdayCount == 6) ? true : false
@@ -40,11 +48,17 @@ export default {
             weekdayCount++;
         }
       }
-      if (weekdayCount < 6 && weekdayCount != 0) {
+
+      // カレンダー最終行の翌月日付
+      if (weekdayCount <= 6 && weekdayCount != 0) {
+        // 翌月に進める
+        currentDate.add(1, 'months')
+
         for (let i = 0; i <= 6-weekdayCount; i++) {
-          calendarData.push(
+          dateListOfCalendarRange.push(
             {
-              month: today.getMonth() + 2,
+              year: currentDate.year(),
+              month: currentDate.month() + 1,
               day: i + 1,
               idToday: false,
               isDisabled: true,
@@ -54,7 +68,7 @@ export default {
           )
         }
       }
-      return calendarData
+      return dateListOfCalendarRange
     }
   }
 }

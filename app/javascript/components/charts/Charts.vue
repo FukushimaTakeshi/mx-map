@@ -43,12 +43,12 @@ export default {
   methods: {
     fetchFullYearData: async function() {
       const toDay = new Date();
-      let calenderData = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
-    
-      for (let i = 0; i+7 <= calenderData.length; i+=7) {
-        const calenderFrom = calenderData[i]
+      let dateListOfCalendarRange = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
+
+      for (let i = 0; i+7 <= dateListOfCalendarRange.length; i+=7) {
+        const calenderFrom = dateListOfCalendarRange[i]
         const from = `${toDay.getFullYear()}-${calenderFrom.month}-${calenderFrom.day}`
-        const calenderTo = calenderData[i+6]
+        const calenderTo = dateListOfCalendarRange[i+6]
         const to = `${toDay.getFullYear()}-${calenderTo.month}-${calenderTo.day}`
 
         const res = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
@@ -75,6 +75,7 @@ export default {
     fetchMonthData: async function(MonthAndDate) {
       let from // 月初
       let to // 月末
+      const toDay = new Date();
 
       if (MonthAndDate) {
         const arr = MonthAndDate.split('/')
@@ -82,12 +83,11 @@ export default {
         let tmpDate = new Date(MonthAndDate)
         to = new Date(tmpDate.setDate(tmpDate.getDate() + 6))
       } else {
-        from = new Date()
-        from.setDate(1)
-        to = new Date()
-        to.setDate(1)
-        to.setMonth(to.getMonth() + 1)
-        to.setDate(0)
+        const dateListOfCalendarRange = this.get_month_calendar(toDay.getFullYear(), toDay.getMonth()+1)
+        const firstCalendar = dateListOfCalendarRange[0]
+        from = `${firstCalendar.year}-${firstCalendar.month}-${firstCalendar.day}`
+        const lastCalendar = dateListOfCalendarRange[dateListOfCalendarRange.length - 1]
+        to = `${lastCalendar.year}-${lastCalendar.month}-${lastCalendar.day}`
       }
 
       // 1ヶ月分のデータを取得
@@ -112,7 +112,7 @@ export default {
       if (MonthAndDate) {
         MonthAndDate = `${MonthAndDate}週`
       }
-      let currentMonthAndDate = MonthAndDate || `${from.getFullYear()}/${from.getMonth()+1}`
+      const currentMonthAndDate = MonthAndDate || `${toDay.getFullYear()}/${toDay.getMonth()}`
       EventBus.$emit('open-pie-chart', count, name, currentMonthAndDate)
     }
   }
