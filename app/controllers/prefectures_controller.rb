@@ -1,7 +1,7 @@
 class PrefecturesController < ApplicationController
   def show
     @prefecture = Prefecture.find(params[:id])
-    @off_road_circuits = OffRoadCircuit.where(prefecture_id: params[:id])
+    @off_road_circuits = OffRoadCircuit.includes(:photo).where(prefecture_id: params[:id])
     @details = {}
     @off_road_circuits.each do |circuit|
       circuit_details(circuit.place_id.to_sym)

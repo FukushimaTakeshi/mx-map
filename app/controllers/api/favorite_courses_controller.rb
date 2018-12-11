@@ -2,7 +2,7 @@ class Api::FavoriteCoursesController < ActionController::API
   before_action :authenticate_user!
 
   def index
-    favorite_courses = current_user.favorite_courses.includes(:off_road_circuit)
+    favorite_courses = current_user.favorite_courses.includes(off_road_circuit: [:photo])
     render json: {
       favorite_courses: favorite_courses.map do |favorite_course|
         {
