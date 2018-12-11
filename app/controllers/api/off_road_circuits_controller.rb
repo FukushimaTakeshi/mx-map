@@ -1,6 +1,6 @@
 class Api::OffRoadCircuitsController < ActionController::API
   def index
-    off_road_circuits = OffRoadCircuit.where(prefecture_id: params[:prefecture_id])
+    off_road_circuits = OffRoadCircuit.includes(:photo).where(prefecture_id: params[:prefecture_id])
 
     render json: {
       off_road_circuits: off_road_circuits.map do |circuit|

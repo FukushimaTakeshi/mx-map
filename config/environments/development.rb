@@ -19,7 +19,7 @@ Rails.application.configure do
 
   config.action_controller.perform_caching = true
   config.cache_store = :redis_store, 'redis://redis:6379/1'
-  
+
   config.session_store :redis_store,
     servers: ["redis://redis:6379/0/session"],
     expire_after: 90.minutes,
@@ -62,4 +62,12 @@ Rails.application.configure do
   # config.file_watcher = ActiveSupport::FileUpdateChecker
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+  end
 end
