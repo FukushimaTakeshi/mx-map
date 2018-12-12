@@ -4,14 +4,11 @@ import EventBus from '../../packs/users/form.js'
 
 export default {
   extends: Bar,
-  props: [
-    'chartFullYearData'
-  ],
   mounted: function() {
     EventBus.$on('open-bar-chart', this.open)
   },
   methods: {
-    open: function(date, count) {
+    open: function(date, count, subject) {
       this.renderChart({
         labels: date,
         datasets: [
@@ -23,7 +20,7 @@ export default {
       }, {
         title: {
           display: true,
-          text: '今月の練習回数'
+          text: `${subject}の練習回数`
         },
         scales: {
           yAxes: [{
