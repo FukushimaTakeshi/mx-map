@@ -20,7 +20,7 @@ set :rbenv_roles, :all
 
 set :yarn_flags, '--prefer-offline --production'
 
-append :linked_files, 'config/master.key', 'config/puma.rb'
+append :linked_files, 'config/puma.rb'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/uploads', 'vendor/bundle', 'public/assets', 'public/uploads/tmp', 'public/uploads/user'
 
 set :puma_conf, "#{shared_path}/config/puma.rb"
@@ -45,16 +45,4 @@ namespace :deploy do
       end
     end
   end
-
-  # linked_files で使用するファイルをアップロードするタスク
-  desc 'Upload config files'
-  task :upload_config do
-    on roles(:app) do
-      execute :mkdir, '-p', shared_path.join('config')
-      upload!('config/master.key', "#{shared_path}/config/master.key")
-      upload!('config/puma.rb', "#{shared_path}/config/puma.rb")
-    end
-  end
-
-  before :started, 'deploy:upload_config'
 end
