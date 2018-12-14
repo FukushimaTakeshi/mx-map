@@ -82,7 +82,7 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       - add_ssh_keys:
-          fingerprints: 9f:23:2f:f9:b3:e2:38:29:48:fc:19:6a:fd:46:22:21
+          fingerprints: b3:96:b5:ce:7b:6b:12:8b:85:94:7c:b4:ca:f2:99:c5
 
       - run:
           name: Capistrano deploy
