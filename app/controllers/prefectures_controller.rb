@@ -21,8 +21,8 @@ class PrefecturesController < ApplicationController
     details = cached_details(place_id)
 
     @details[place_id] = {
-      rating: details['result']['rating'],
-      vicinity: details['result']['vicinity']
+      rating: details.dig('result', 'rating'),
+      vicinity: details.dig('result', 'vicinity')
      }
   end
 end

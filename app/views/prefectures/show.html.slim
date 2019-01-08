@@ -38,19 +38,21 @@ div.container
                     nav.level.is-mobile
                       div.level-left
                         div.has-text-success
-                          = @details[place_id][:rating]
-                        - @details[place_id][:rating].to_i.times do |i|
-                          span.icon.mdi-18px.has-text-success
-                            i.fas.fa-star
+                          = @details.dig(place_id, :rating)
 
-                        - decimal_part = @details[place_id][:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
-                        = half_or_full_star(decimal_part)
+                        - if @details.dig(place_id, :rating)
+                          - @details.dig(place_id, :rating).to_i.times do |i|
+                            span.icon.mdi-18px.has-text-success
+                              i.fas.fa-star
+
+                          - decimal_part = @details[place_id][:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
+                          = half_or_full_star(decimal_part)
 
                     small
                       div.level.is-mobile
                         div.level-left
                           i.fas.fa-map-marker-alt.icon.is-small
-                          = circuit.address || @details[place_id][:vicinity]
+                          = circuit.address || @details.dig(place_id, :vicinity)
 
                 - if user_signed_in?
                   div.media-right

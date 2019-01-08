@@ -21,12 +21,15 @@ section.hero.is-info.is-bold
         = @off_road_circuit.name
       h2.subtitle
         = @detail[:rating]
-        - @detail[:rating].to_i.times do |i|
-          span.icon.mdi-18px.has-text-success
-            i.fas.fa-star
 
-        - decimal_part = @detail[:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
-        = half_or_full_star(decimal_part)
+        - if @detail[:rating]
+          - @detail[:rating].to_i.times do |i|
+            span.icon.mdi-18px.has-text-success
+              i.fas.fa-star
+
+          - decimal_part = @detail[:rating].to_s[/(\d+)\.+(\d+)/, 2].to_i
+          = half_or_full_star(decimal_part)
+
       h3.subtitle
         = @off_road_circuit.address || @detail[:vicinity]
 

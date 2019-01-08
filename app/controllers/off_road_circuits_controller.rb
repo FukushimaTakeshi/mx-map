@@ -68,8 +68,8 @@ class OffRoadCircuitsController < ApplicationController
       PlaceSearch.new(query: place_id).details
     end
     {
-      rating: details['result']['rating'],
-      vicinity: details['result']['vicinity']
+      rating: details.dig('result', 'rating'),
+      vicinity: details.dig('result', 'vicinity')
      }
   end
 end
