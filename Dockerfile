@@ -1,4 +1,4 @@
-FROM ruby:2.6.0-preview3
+FROM ruby:2.6.0
 MAINTAINER fukushima
 ENV LANG C.UTF-8
 
@@ -40,7 +40,6 @@ COPY package.json package.json
 COPY yarn.lock yarn.lock
 RUN yarn install
 
-RUN echo 'export RUBYOPT=--jit' >> ~/.bashrc
 #
 # # install phantomjs
 # RUN \
