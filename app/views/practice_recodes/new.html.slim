@@ -4,7 +4,14 @@ section.hero.has-background-light.is-fullheight
       div.column.is-4.is-offset-4
         h1.subtitle.has-text-grey 練習を記録
         div.box
-          = form_with model: [@user, @practice_recode], local: true do |f|
+          = form_with model: [@current_user, @practice_recode], local: true do |f|
+
+            - if @practice_recode.errors.any?
+              .notification
+                strong 入力内容にエラーがあります
+                ul.help.is-danger
+                  - @practice_recode.errors.full_messages.each do |msg|
+                    li = msg
 
             div.has-text-left
               div.field
@@ -16,17 +23,17 @@ section.hero.has-background-light.is-fullheight
               div.field
                 = f.label :off_road_circuit_id, class: 'label'
                 div.control
-                  = f.collection_select :off_road_circuit_id, @off_road_circuit, :id, :name, class: 'input'
+                  = f.collection_select :off_road_circuit_id, @off_road_circuits, :id, :name, class: 'input'
 
             div.has-text-left
               div.field
                 = f.label :duration, class: 'label'
                 div.control
-                  = f.select :duration, [*1..23].map{ |hour| [hour, hour * 60] }, include_blank: true, class: 'input'
+                  = f.select :duration_hour, [*1..23].map, include_blank: true, class: 'input'
                   | 時間
 
                 div.control
-                  = f.select :duration, [*0..59].map, include_blank: true, class: 'input'
+                  = f.select :duration_minute, [*0..59].map, include_blank: true, class: 'input'
                   | 分
 
             div.has-text-left
