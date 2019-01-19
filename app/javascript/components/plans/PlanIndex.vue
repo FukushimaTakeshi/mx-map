@@ -94,6 +94,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'bulma-calendar/dist/css/bulma-calendar.min.css';
+
 .show-next-enter-active, .show-next-leave-active,
 .show-prev-enter-active, .show-prev-leave-active  {
   transition: all .1s;
