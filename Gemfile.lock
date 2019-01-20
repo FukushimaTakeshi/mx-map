@@ -75,7 +75,7 @@ GEM
     bullet (5.9.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    bulma-rails (0.7.1)
+    bulma-rails (0.7.2)
       sass (~> 3.2)
     byebug (10.0.2)
     capistrano (3.11.0)
@@ -164,7 +164,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.25)
+    ffi (1.10.0)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
@@ -309,8 +309,8 @@ GEM
       activesupport (>= 5.0)
       i18n
     rb-fsevent (0.10.3)
-    rb-inotify (0.9.10)
-      ffi (>= 0.5.0, < 2)
+    rb-inotify (0.10.0)
+      ffi (~> 1.0)
     redcarpet (3.4.0)
     redis (4.0.1)
     redis-actionpack (5.0.2)
@@ -351,7 +351,7 @@ GEM
     rspec-support (3.7.1)
     ruby_dep (1.5.0)
     safe_yaml (1.0.4)
-    sass (3.5.6)
+    sass (3.7.3)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -422,7 +422,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap (>= 1.1.0)
   bullet
-  bulma-rails (~> 0.7.1)
+  bulma-rails
   byebug
   capistrano
   capistrano-bundler
