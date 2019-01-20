@@ -13,6 +13,10 @@
         </router-link>
       </div>
     </div>
+
+    <div class="box">
+      <router-view name="registration-form" :user-id="this.userId" />
+    </div>
   </div>
 </template>
 

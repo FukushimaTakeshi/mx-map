@@ -1,11 +1,16 @@
 import 'babel-polyfill'
 import Vue from 'vue'
+import Buefy from 'buefy'
+// import 'buefy/dist/buefy.css'
+Vue.use(Buefy)
 
 import UserNavgationBar from '../../components/navigation_bar/UserNavgationBar.vue'
 import UserStatusList from '../../components/users/UserStatusList.vue'
 
 import Charts from '../../components/charts/Charts.vue'
 import FavoriteList from '../../components/off_road_circuits/FavoriteList.vue'
+import RegistrationForm from '../../components/practice_recodes/RegistrationForm.vue'
+
 import List from '../../components/off_road_circuits/List.vue'
 
 import ModalEvent from '../EventBus.js'
@@ -14,8 +19,12 @@ export default ModalEvent
 import calender from '../../mixin/calendar.js'
 Vue.mixin(calender)
 
-import VueRouter from 'vue-router'
+import ja from 'vee-validate/dist/locale/ja.js'
+import VeeValidate, { Validator } from 'vee-validate';
+Vue.use(VeeValidate, { locale: ja })
+Validator.localize('ja', ja)
 
+import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import TurbolinksAdapter from 'vue-turbolinks'
@@ -26,7 +35,7 @@ document.addEventListener('turbolinks:load', () => {
     new Vue({
       router: new VueRouter({
         routes: [
-          { 
+          {
             path: '/',
             component: UserNavgationBar,
             children: [
@@ -36,9 +45,10 @@ document.addEventListener('turbolinks:load', () => {
                 children: [
                   {
                     path: '',
-                    components: { 
+                    components: {
                       'charts': Charts,
-                      'favorite-list': FavoriteList
+                      'favorite-list': FavoriteList,
+                      'registration-form': RegistrationForm
                     }
                   }
                 ]
