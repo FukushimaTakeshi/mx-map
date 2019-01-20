@@ -12,9 +12,9 @@ class Api::PracticeRecodesController < ActionController::API
   def create
     practice_recode = PracticeRecode.new(practice_recode_params)
     if practice_recode.save
-      head :ok
+      head :created
     else
-      render json: practice_recode.errors.full_messages
+      render json: practice_recode.errors.as_json
     end
   end
 

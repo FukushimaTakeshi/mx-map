@@ -15,7 +15,7 @@ class PracticeRecode < ApplicationRecord
   private
 
   def set_duration
-    return if @duration_hour.blank? && @duration_minute.blank?
-    self.duration = (@duration_hour || 0) * 60 + (@duration_minute || 0)
+    return if self.duration_hour.blank? && self.duration_minute.blank?
+    self.duration = (self.duration_hour || 0) * 60 + (self.duration_minute || 0)
   end
 end
