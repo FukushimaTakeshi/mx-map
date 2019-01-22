@@ -7,6 +7,8 @@
             v-validate="'required|date_format:YYYY/MM/DD'"
             data-vv-as="日付"
             v-model="date"
+            :events="events"
+            :indicators="'bars'"
             placeholder="クリックして下さい"
             icon-pack="far"
             icon="calendar-alt"
@@ -108,6 +110,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
   props: ['userId'],
@@ -123,7 +126,8 @@ export default {
       minutes: [...Array(60).keys()],
       comment: "",
       isValidateErrorModalActive: false,
-      serverErrors: {}
+      serverErrors: {},
+      events: []
     }
   },
   mounted: async function() {
@@ -132,6 +136,21 @@ export default {
       process.exit()
     }
     this.favoriteCourses = res.data.favorite_courses
+
+    // １ヶ月前〜1ヶ月後までのplanを取得
+    const from = moment().add(-1, 'months').format("YYYY-MM-DD")
+    const to = moment().add(+1, 'months').format("YYYY-MM-DD")
+    const plans = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
+    let events = []
+    plans.data['plans'].forEach(function(value) {
+      events.push(
+        {
+          date: moment(value.date).toDate(),
+          type: 'is-info'
+        }
+      )
+    })
+    this.events = events
   },
   methods: {
     async registerPractice() {
