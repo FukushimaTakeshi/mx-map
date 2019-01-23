@@ -105,6 +105,8 @@
         </div>
       </article>
     </b-modal>
+
+    <LatelyPlans :userId="userId" />
   </span>
 </template>
 
@@ -112,7 +114,10 @@
 import axios from 'axios'
 import moment from 'moment'
 
+import LatelyPlans from '../plans/LatelyPlans.vue'
+
 export default {
+  components: { LatelyPlans },
   props: ['userId'],
   data() {
     return {
