@@ -16,6 +16,11 @@
           </b-datepicker>
         </div>
       </b-field>
+      <li>
+        <a @click="isLatelyPlansModalActive = true">
+          最近の練習予定から日付を選択する
+        </a>
+      </li>
       <p class="help is-danger" v-show="errors.has('date')">
         {{ errors.first('date') }}
       </p>
@@ -106,7 +111,9 @@
       </article>
     </b-modal>
 
-    <LatelyPlans :userId="userId" />
+    <b-modal :active.sync="isLatelyPlansModalActive">
+      <LatelyPlans :userId="userId" v-on:selected="inputDate" />
+    </b-modal>
   </span>
 </template>
 
@@ -130,6 +137,7 @@ export default {
       durationMinute: 0,
       minutes: [...Array(60).keys()],
       comment: "",
+      isLatelyPlansModalActive: false,
       isValidateErrorModalActive: false,
       serverErrors: {},
       events: []
@@ -188,6 +196,10 @@ export default {
         this.isValidateErrorModalActive = true
         return
       }
+    },
+    inputDate(date) {
+      this.date = moment(date).toDate()
+      this.isLatelyPlansModalActive = false
     }
   }
 }
