@@ -3,7 +3,7 @@
     <header class="modal-card-head">
       <p class="modal-card-title">最近の練習予定(過去3ヶ月)</p>
     </header>
-    <section class="modal-card-body is-paddingless">
+    <section class="modal-card-body">
       <div class="columns is-mobile is-multiline is-centered">
 
         <div v-for="latelyPlan in latelyPlans" class="column is-four-fifths post">
@@ -12,7 +12,7 @@
               <h4>{{ latelyPlan['date'] }}</h4>
             </div>
             <div class="media-content">
-              <h4>ああああ</h4>
+              <h4>{{ latelyPlan['off_road_circuit_name'] }}</h4>
             </div>
             <div class="medis-right">
               <button @click="selectDate(latelyPlan['date'])" class="button is-small is-primary">選択する</button>
@@ -56,3 +56,17 @@ export default {
   }
 }
 </script>
+<style>
+.modal-card-body {
+  max-height: 300px;
+}
+
+div.post {
+  cursor: pointer;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #E6EAEE;
+}
+div.post:last-child {
+  border-bottom: none;
+}
+</style>

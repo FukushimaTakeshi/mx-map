@@ -134,7 +134,7 @@ export default {
       if (res.status !== 200) {
         process.exit()
       }
-      this.holidayList[index].attendance = res.data.plans
+      this.holidayList[index].attendance = res.data.plans.length
 
       if (res.data.id == null) {
         this.holidayList[index].exists = false

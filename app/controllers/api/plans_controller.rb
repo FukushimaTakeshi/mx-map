@@ -2,9 +2,9 @@ module Api
   class PlansController < ActionController::API
     def index
       if params[:all]
-        plans = Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id]).count
+        plans = Plan.includes(:off_road_circuit).search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id])
       else
-        plans = Plan.with_user.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id]).order('plans.date')
+        plans = Plan.with_user.includes(:off_road_circuit).search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id]).order('plans.date')
         users = user_list(plans)
         off_road_circuits = off_road_circuit_list(plans)
       end
@@ -14,7 +14,14 @@ module Api
              Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(uuid: session['session_id'])&.id
            end
       render json: {
-        plans: plans,
+        plans: plans.map do |plan|
+          {
+            id: plan.id,
+            date: plan.date,
+            off_road_circuit_id: plan.off_road_circuit_id,
+            off_road_circuit_name: plan.off_road_circuit.name
+          }
+        end,
         users: users,
         off_road_circuits: off_road_circuits,
         id: id
