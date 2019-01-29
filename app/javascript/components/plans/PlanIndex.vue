@@ -35,7 +35,7 @@
             </button>
           </div>
           <!-- modal component -->
-          <Modal :circuitId="circuitId"></Modal>
+          <Modal :circuit-id="circuitId" :user-id="userId"></Modal>
         </div>
       </div>
     </div>
@@ -47,7 +47,10 @@ import Modal from './Modal.vue'
 import ModalEvent from '../../packs/off_road_circuits/form.js'
 
 export default {
-  props: ['circuitId'],
+  props: [
+    'circuitId',
+    'userId'
+  ],
   components: {
     Modal
   },

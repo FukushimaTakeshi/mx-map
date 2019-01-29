@@ -56,7 +56,8 @@ export default {
   components: { Loading },
   name: 'App',
   props: [
-    'circuitId'
+    'circuitId',
+    'userId'
   ],
   data() {
     return {
@@ -102,11 +103,16 @@ export default {
       getAttendance(this.circuitId, this.date).then(result => {
         this.plan = result.plans.length
         this.users = result.users
-        if (result.id == null) {
-          this.isAlreadyPlan = false
-        } else {
+
+        const singnedInUserPlan = result.plans.find((plan) => {
+          return (this.userId === plan['user_id'])
+        })
+
+        if (singnedInUserPlan || result.id ) {
           this.isAlreadyPlan = true
-          this.planId = result.id
+          this.planId = (result.id || singnedInUserPlan['id'])
+        } else {
+          this.isAlreadyPlan = false
         }
         this.loading = false
       })

@@ -12,6 +12,18 @@ class PracticeRecode < ApplicationRecord
 
   after_validation :set_duration
 
+  scope :search_date, ->(date) {
+    return if date.blank?
+    if date.is_a?(String)
+      where(practice_date: date)
+    elsif date.is_a?(Array)
+      where(practice_date: date[0]..date[1])
+    end
+  }
+
+  SORT_PARAMS = %w(ASC DESC)
+  scope :sorted, ->(sort) { order(SORT_PARAMS.include?(sort) ? { practice_date: sort } : :practice_date) }
+
   private
 
   def set_duration

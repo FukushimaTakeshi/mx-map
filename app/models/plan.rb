@@ -28,6 +28,9 @@ class Plan < ApplicationRecord
     end
   }
 
+  SORT_PARAMS = %w(ASC DESC)
+  scope :sorted, ->(sort) { order(SORT_PARAMS.include?(sort) ? { date: sort } : :date) }
+
   scope :search_user_id, lambda { |user_id|
     where(user_id: user_id) if user_id.present?
   }

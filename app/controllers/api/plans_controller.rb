@@ -2,24 +2,32 @@ module Api
   class PlansController < ActionController::API
     def index
       if params[:all]
-        plans = Plan.includes(:off_road_circuit).search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id])
+        plans = Plan.includes(:off_road_circuit)
+                  .search_circuit_id(params[:off_road_circuit_id])
+                  .search_date(params[:date])
+                  .search_user_id(params[:user_id])
       else
-        plans = Plan.with_user.includes(:off_road_circuit).search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).search_user_id(params[:user_id]).order('plans.date')
+        plans = Plan.with_user
+                  .includes(:off_road_circuit)
+                  .search_circuit_id(params[:off_road_circuit_id])
+                  .search_date(params[:date])
+                  .search_user_id(params[:user_id])
+                  .sorted(params[:sort])
+
         users = user_list(plans)
         off_road_circuits = off_road_circuit_list(plans)
       end
-      id = if current_user
-             Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(user_id: current_user.id)&.id
-           else
-             Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(uuid: session['session_id'])&.id
-           end
+
+      id = Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(uuid: request.session_options[:id])&.id unless user_signed_in?
+
       render json: {
         plans: plans.map do |plan|
           {
             id: plan.id,
             date: plan.date,
             off_road_circuit_id: plan.off_road_circuit_id,
-            off_road_circuit_name: plan.off_road_circuit.name
+            off_road_circuit_name: plan.off_road_circuit.name,
+            user_id: plan.user_id
           }
         end,
         users: users,
@@ -29,7 +37,7 @@ module Api
     end
 
     def create
-      Plan.create!(plan_params.merge(uuid: session['session_id'], user_id: current_user&.id))
+      Plan.create!(plan_params.merge(uuid: request.session_options[:id], user_id: current_user&.id))
       head :created
     end
 

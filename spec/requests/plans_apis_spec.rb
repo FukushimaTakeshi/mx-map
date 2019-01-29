@@ -23,7 +23,7 @@ RSpec.describe 'PlansApis', type: :request do
 
     it 'レスポンスが想定通り' do
       json = JSON.parse(response.body)
-      expect(json['plans']).to eq 1
+      expect(json['plans'].length).to eq 1
       expect(json['users']).to eq nil
       expect(json['off_road_circuits']).to eq nil
       expect(json['id']).to eq plan.id
@@ -53,7 +53,7 @@ RSpec.describe 'PlansApis', type: :request do
       expect(json['id']).to eq plan.id
     end
   end
-  
+
   describe 'POST /api/plans' do
     context 'パラメータが正しい場合' do
       let(:params) { { plan: { date: Date.today, off_road_circuit_id: off_road_circuit.id, user_id: @user.id } } }
@@ -65,7 +65,7 @@ RSpec.describe 'PlansApis', type: :request do
         expect{ post api_plans_path, params: params }.to change(Plan, :count).by(1)
       end
     end
-    
+
     context 'パラメータが正しくない場合' do
       let(:params) { { plan: { date: Date.today, off_road_circuit_id: '' , user_id: @user.id } } }
       it 'httpステータス422が返ること' do
@@ -77,7 +77,7 @@ RSpec.describe 'PlansApis', type: :request do
       end
     end
   end
-  
+
   describe 'DELETE /api/plans/:id' do
     it 'httpステータス200が返ること' do
       delete api_plan_path(plan)
