@@ -14,7 +14,6 @@ module Api
                   .search_user_id(params[:user_id])
                   .sorted(params[:sort])
 
-        users = user_list(plans)
         off_road_circuits = off_road_circuit_list(plans)
       end
 
@@ -27,10 +26,9 @@ module Api
             date: plan.date,
             off_road_circuit_id: plan.off_road_circuit_id,
             off_road_circuit_name: plan.off_road_circuit.name,
-            user_id: plan.user_id
+            users: user_details(plan.user)
           }
         end,
-        users: users,
         off_road_circuits: off_road_circuits,
         id: id
       }
@@ -55,13 +53,11 @@ module Api
       )
     end
 
-    def user_list(plans)
-      plans.map do |plan|
-        if plan.user.present?
-          { id: plan.user.id, username: plan.user.username, avatar: plan.user.avatar&.url }
-        else
-          { id: nil, username: "ゲストユーザ" }
-        end
+    def user_details(user)
+      if user.present?
+        { id: user.id, username: user.username, avatar: user.avatar&.url }
+      else
+        { id: nil, username: 'ゲストユーザ' }
       end
     end
 

@@ -155,7 +155,7 @@ export default {
     const to = moment().add(+1, 'months').format("YYYY-MM-DD")
     const plans = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
     let events = []
-    plans.data['plans'].forEach(function(value) {
+    plans.data.plans.forEach(function(value) {
       events.push(
         {
           date: moment(value.date).toDate(),

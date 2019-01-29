@@ -6,16 +6,16 @@
     <section class="modal-card-body">
       <div class="columns is-mobile is-multiline is-centered">
 
-        <div v-for="latelyPlan in latelyPlans" @click="selectDate(latelyPlan['date'])" class="column is-four-fifths post">
+        <div v-for="latelyPlan in latelyPlans" @click="selectDate(latelyPlan.date)" class="column is-four-fifths post">
           <span class="media">
             <div class="media-left">
-              <h4>{{ latelyPlan['date'] }}</h4>
+              <h4>{{ latelyPlan.date }}</h4>
             </div>
             <div class="media-content">
-              <h4>{{ latelyPlan['off_road_circuit_name'] }}</h4>
+              <h4>{{ latelyPlan.off_road_circuit_name }}</h4>
             </div>
             <div class="medis-right">
-              <span v-if="isRegistered(latelyPlan['date'])" class="tag is-light">登録済み</span>
+              <span v-if="isRegistered(latelyPlan.date)" class="tag is-light">登録済み</span>
               <span v-else class="tag is-primary">未登録</span>
             </div>
           </span>

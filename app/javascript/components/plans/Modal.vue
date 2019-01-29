@@ -7,25 +7,25 @@
         <header class="modal-card-head">
           <p class="mdi-18px has-text-link">
             <i class="fas fa-heart"></i>
-            {{ plan }}人
+            {{ plans.length }}人
           </p>
           <p class="modal-card-title">{{ date }}</p>
           <button @click.self="close()" class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-          <span v-if="!users.length" v-show="!loading">まだ予定がありません(´・ω・｀)</span>
-          <article v-for="user in users" v-show="!loading" class="post">
+          <span v-if="!plans.length" v-show="!loading">まだ予定がありません(´・ω・｀)</span>
+          <article v-for="plan in plans" v-show="!loading" class="post">
             <div class="media">
               <div class="media-left">
                 <p class="image is-32x32">
-                  <img :src="user.avatar">
+                  <img :src="plan.users.avatar">
                 </p>
               </div>
               <div class="media-content">
                 <div class="content">
                   <p>
-                    <a v-if="user.id !== null" :href="'/users/' + user.id">{{ user.username }}</a>
-                    <a v-else>{{ user.username }}</a>
+                    <a v-if="plan.users.id !== null" :href="'/users/' + plan.users.id">{{ plan.users.username }}</a>
+                    <a v-else>{{ plan.users.username }}</a>
                   </p>
                 </div>
               </div>
@@ -63,7 +63,7 @@ export default {
     return {
       date: "",
       plan: 0,
-      users: [],
+      plans: [],
       isAlreadyPlan: false,
       isOpen: false,
       loading: false
@@ -101,8 +101,7 @@ export default {
     },
     setPlans: function() {
       getAttendance(this.circuitId, this.date).then(result => {
-        this.plan = result.plans.length
-        this.users = result.users
+        this.plans = result.plans
 
         const singnedInUserPlan = result.plans.find((plan) => {
           return (this.userId === plan['user_id'])
