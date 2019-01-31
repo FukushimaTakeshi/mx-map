@@ -175,7 +175,7 @@ export default {
       const res = await axios.post(
         `/api/users/${this.userId}/practice_recodes`,
         {
-          practice_date: this.date,
+          practice_date: moment(this.date).format('YYYY-MM-DD'),
           off_road_circuit_id: this.cource,
           duration_hour: this.durationHour,
           duration_minute: this.durationMinute,
@@ -189,7 +189,7 @@ export default {
         })
       } else {
         if (res.data['practice_date']) {
-          this.serverErrors = `${this.date.getFullYear()}/${this.date.getMonth()+1}/${this.date.getDate()}の記録${res.data['practice_date'][0]}別の日付で登録して下さい。`
+          this.serverErrors = `${moment(this.date).format('YYYY-MM-DD')}の記録${res.data['practice_date'][0]}別の日付で登録して下さい。`
         } else {
           this.serverErrors = "お手数ですが、もう一度お願いします。"
         }
