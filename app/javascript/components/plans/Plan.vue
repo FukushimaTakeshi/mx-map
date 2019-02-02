@@ -145,14 +145,14 @@ export default {
     },
 
     getAttendance: async function(date, index) {
-      const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}&all=1`)
+      const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}`)
       if (res.status !== 200) {
         process.exit()
       }
       this.holidayList[index].attendance = res.data.plans.length
 
       const singnedInUserPlan = res.data.plans.find((plan) => {
-        return (this.userId === plan['user_id'])
+        return (this.userId === plan.user_details.id)
       })
 
       if (singnedInUserPlan || res.data.id) {

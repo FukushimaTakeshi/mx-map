@@ -18,14 +18,14 @@
             <div class="media">
               <div class="media-left">
                 <p class="image is-32x32">
-                  <img :src="plan.users.avatar">
+                  <img :src="plan.user_details.avatar">
                 </p>
               </div>
               <div class="media-content">
                 <div class="content">
                   <p>
-                    <a v-if="plan.users.id !== null" :href="'/users/' + plan.users.id">{{ plan.users.username }}</a>
-                    <a v-else>{{ plan.users.username }}</a>
+                    <a v-if="plan.user_details.id !== null" :href="'/users/' + plan.user_details.id">{{ plan.user_details.username }}</a>
+                    <a v-else>{{ plan.user_details.username }}</a>
                   </p>
                 </div>
               </div>
@@ -104,7 +104,7 @@ export default {
         this.plans = result.plans
 
         const singnedInUserPlan = result.plans.find((plan) => {
-          return (this.userId === plan['user_id'])
+          return (this.userId === plan.user_details.id)
         })
 
         if (singnedInUserPlan || result.id ) {

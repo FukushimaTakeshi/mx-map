@@ -1,21 +1,12 @@
 module Api
   class PlansController < ActionController::API
     def index
-      if params[:all]
-        plans = Plan.includes(:off_road_circuit)
-                  .search_circuit_id(params[:off_road_circuit_id])
-                  .search_date(params[:date])
-                  .search_user_id(params[:user_id])
-      else
-        plans = Plan.with_user
-                  .includes(:off_road_circuit)
-                  .search_circuit_id(params[:off_road_circuit_id])
-                  .search_date(params[:date])
-                  .search_user_id(params[:user_id])
-                  .sorted(params[:sort])
-
-        off_road_circuits = off_road_circuit_list(plans)
-      end
+      plans = Plan
+                .includes(:user, :off_road_circuit)
+                .search_circuit_id(params[:off_road_circuit_id])
+                .search_date(params[:date])
+                .search_user_id(params[:user_id])
+                .sorted(params[:sort])
 
       id = Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(uuid: request.session_options[:id])&.id unless user_signed_in?
 
@@ -26,10 +17,10 @@ module Api
             date: plan.date,
             off_road_circuit_id: plan.off_road_circuit_id,
             off_road_circuit_name: plan.off_road_circuit.name,
-            users: user_details(plan.user)
+            user_details: user_details(plan.user)
           }
         end,
-        off_road_circuits: off_road_circuits,
+        off_road_circuits: off_road_circuit_list(plans),
         id: id
       }
     end
@@ -63,7 +54,7 @@ module Api
 
     def off_road_circuit_list(plans)
       circuits = plans.map do |plan|
-        { id: plan.off_road_circuit.id, name: plan.off_road_circuit.name }
+        { id: plan.off_road_circuit_id, name: plan.off_road_circuit.name }
       end
       circuits.group_by do |circuit|
         circuit[:id]

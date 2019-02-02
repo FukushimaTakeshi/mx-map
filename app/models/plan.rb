@@ -13,8 +13,6 @@ class Plan < ApplicationRecord
   belongs_to :off_road_circuit
   belongs_to :user, optional: true
 
-  scope :with_user, -> { includes(:user).references(:user) }
-
   scope :search_circuit_id, lambda { |id|
     where(off_road_circuit_id: id) if id.present?
   }
