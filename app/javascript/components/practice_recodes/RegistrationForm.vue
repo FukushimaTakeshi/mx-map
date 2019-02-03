@@ -121,6 +121,8 @@
 import axios from 'axios'
 import moment from 'moment'
 
+import store from '../../store/store.js'
+
 import LatelyPlans from '../plans/LatelyPlans.vue'
 
 export default {
@@ -140,10 +142,14 @@ export default {
       isLatelyPlansModalActive: false,
       isValidateErrorModalActive: false,
       serverErrors: {},
-      events: []
+      events: [],
+      store: store.state.count
     }
   },
   mounted: async function() {
+    store.commit('increment')
+    this.store = store.state.count
+
     const res = await axios.get(`/api/users/${this.userId}/favorite_courses`)
     if (res.status !== 200) {
       process.exit()
