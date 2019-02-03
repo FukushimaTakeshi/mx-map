@@ -33,6 +33,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 import PracticeBarChart from './PracticeBarChart.vue'
 import PracticePieChart from './PracticePieChart.vue'
 import EventBus from '../../packs/users/form.js'
@@ -70,53 +71,42 @@ export default {
       this.fetchFullYearData()
       this.fetchMonthData()
     },
+    // 1週間ごと、合計1ヶ月分を取得
     fetchFullYearData: async function() {
-      const calendarYear = this.currentDate.getFullYear()
-      const calenderMonth = this.currentDate.getMonth()+1
-      let dateListOfCalendarRange = this.get_month_calendar(calendarYear, calenderMonth)
+      const dateListOfCalendarRange = this.get_month_calendar(this.currentDate.getFullYear(), this.currentDate.getMonth()+1)
+      const firstCalendar = dateListOfCalendarRange[0]
+      const from = `${firstCalendar.year}-${firstCalendar.month}-${firstCalendar.day}`
+      const lastCalendar = dateListOfCalendarRange[dateListOfCalendarRange.length - 1]
+      const to = `${lastCalendar.year}-${lastCalendar.month}-${lastCalendar.day}`
 
-      let chartFullYearData = []
-      for (let i = 0; i+7 <= dateListOfCalendarRange.length; i+=7) {
-        const calenderFrom = dateListOfCalendarRange[i]
-        const from = `${calendarYear}-${calenderFrom.month}-${calenderFrom.day}`
-        const calenderTo = dateListOfCalendarRange[i+6]
-        const to = `${calendarYear}-${calenderTo.month}-${calenderTo.day}`
+      const res = await axios.get(`/api/users/${this.userId}/practice_recodes/?date[]=${from}&date[]=${to}`)
 
-        const res = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
-        if (res.status !== 200) {
-          process.exit()
-        }
-
-        chartFullYearData.push(
-          {
-            date : `${calenderFrom.month}/${calenderFrom.day}`,
-            count: res.data.plans.length
-          }
-        )
-      }
       let date = []
-      for(let val in chartFullYearData){
-        date.push(chartFullYearData[val].date)
-      }
       let count = []
-      for(let val in chartFullYearData){
-        count.push(chartFullYearData[val].count)
+      for (let i = 0; i+7 <= dateListOfCalendarRange.length; i+=7) {
+        let calenderFrom = dateListOfCalendarRange[i]
+        let from = `${calenderFrom.year}-${calenderFrom.month}-${calenderFrom.day}`
+        let rages = res.data.practice_recodes.filter((practiceRecode) => {
+          return moment(practiceRecode.practice_date).isBetween(from, (moment(from).add(+7, 'days')), 'day', '[)')
+        })
+        date.push(`${calenderFrom.month}/${calenderFrom.day}`)
+        count.push(rages.length)
       }
+
       const subject = `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
       EventBus.$emit('open-bar-chart', date, count, subject)
     },
+    // 1ヶ月分まるっと取得
     fetchMonthData: async function(MonthAndDate) {
       let from // 月初
       let to // 月末
       const toDay = new Date();
 
       if (MonthAndDate) {
-        const arr = MonthAndDate.split('/')
         from = new Date(MonthAndDate)
-        let tmpDate = new Date(MonthAndDate)
+        const tmpDate = new Date(MonthAndDate)
         to = new Date(tmpDate.setDate(tmpDate.getDate() + 6))
       } else {
-
         const dateListOfCalendarRange = this.get_month_calendar(this.currentDate.getFullYear(), this.currentDate.getMonth()+1)
         const firstCalendar = dateListOfCalendarRange[0]
         from = `${firstCalendar.year}-${firstCalendar.month}-${firstCalendar.day}`
@@ -124,29 +114,30 @@ export default {
         to = `${lastCalendar.year}-${lastCalendar.month}-${lastCalendar.day}`
       }
 
-      // 1ヶ月分のデータを取得
-      const res = await axios.get(`/api/plans/?user_id=${this.userId}&date[]=${from}&date[]=${to}`)
-      if (res.status !== 200) {
-        process.exit()
-      }
-      let circuitList = res.data.off_road_circuits
-      // 日付順(昇順)に並び替え
-      circuitList.sort(function(a,b){
-        if(a.id < b.id) return -1
-        if(a.id > b.id) return 1
-        return 0
-      })
+      const practiceRecodes = await axios.get(`/api/users/${this.userId}/practice_recodes/?date[]=${from}&date[]=${to}`)
+
+      const group = practiceRecodes.data.practice_recodes.reduce((result, current) => {
+        const element = result.find((p) => p.off_road_circuit_id === current.off_road_circuit_id)
+        if (element) {
+          element.count ++
+        } else {
+          result.push({
+            off_road_circuit_id: current.off_road_circuit_id,
+            off_road_circuit_name: current.off_road_circuit_name,
+            count: 1,
+          })
+        }
+        return result
+      }, [])
 
       let count = []
       let name = []
-      circuitList.forEach(function(value) {
-        count.push(value.length)
-        name.push(value[0].name)
+      group.forEach(o => {
+        count.push(o.count)
+        name.push(o.off_road_circuit_name)
       })
-      if (MonthAndDate) {
-        MonthAndDate = `${MonthAndDate}週`
-      }
-      const currentMonthAndDate = MonthAndDate || `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
+
+      const currentMonthAndDate = MonthAndDate ? `${MonthAndDate}週` : `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
       EventBus.$emit('open-pie-chart', count, name, currentMonthAndDate)
     }
   }

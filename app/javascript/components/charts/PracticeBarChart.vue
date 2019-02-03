@@ -45,8 +45,8 @@ export default {
         maintainAspectRatio: false,
         onClick: function (evt, item) {
           if (item.length != 0) {
-            const toDay = new Date()
-            EventBus.$emit('change-pie-chart', `${toDay.getFullYear()}/${item[0]['_model'].label}`)
+            const year = item[0]['_chart'].options.title.text.slice(0, 4)
+            EventBus.$emit('change-pie-chart', `${year}/${item[0]['_model'].label}`)
           } else {
             EventBus.$emit('change-pie-chart', null)
           }

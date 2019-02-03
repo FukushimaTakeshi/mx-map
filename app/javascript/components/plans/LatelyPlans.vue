@@ -55,7 +55,7 @@ export default {
     if (practiceRecodes.status !== 200) {
       return false
     }
-    this.practiceRecodes = practiceRecodes.data
+    this.practiceRecodes = practiceRecodes.data.practice_recodes
   },
   methods: {
     selectDate: function(date) {

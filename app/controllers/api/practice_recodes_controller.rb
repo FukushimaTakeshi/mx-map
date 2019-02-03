@@ -2,7 +2,22 @@ class Api::PracticeRecodesController < ActionController::API
   before_action :authenticate_user!
 
   def index
-    render json: PracticeRecode.where(user_id: current_user.id).search_date(params[:date]).sorted(params[:sort])
+    practice_recodes = PracticeRecode
+                         .includes(:off_road_circuit)
+                         .where(user_id: current_user.id)
+                         .search_date(params[:date])
+                         .sorted(params[:sort])
+
+    render json: {
+      practice_recodes: practice_recodes.map do |practice_recode|
+        {
+          id: practice_recode.id,
+          practice_date: practice_recode.practice_date,
+          off_road_circuit_id: practice_recode.off_road_circuit_id,
+          off_road_circuit_name: practice_recode.off_road_circuit.name
+        }
+      end
+    }
   end
 
   def show
