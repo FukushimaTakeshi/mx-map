@@ -30,9 +30,12 @@ Vue.use(VueRouter)
 import TurbolinksAdapter from 'vue-turbolinks'
 Vue.use(TurbolinksAdapter)
 
+import store from '../../store/store.js'
+
 document.addEventListener('turbolinks:load', () => {
   if (document.getElementById('app')) {
     new Vue({
+      store,
       router: new VueRouter({
         routes: [
           {
