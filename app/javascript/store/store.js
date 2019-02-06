@@ -17,8 +17,18 @@ const store = new Vuex.Store({
   },
   actions: {
     async getPracticeRecodes ({ commit }, { userId, from, to }) {
-      const res = await axios.get(`/api/users/${userId}/practice_recodes/?date[]=${from}&date[]=${to}`)
-      commit('setPracticeRecodes', res.data.practice_recodes)
+      await axios.get(`/api/users/${userId}/practice_recodes/?date[]=${from}&date[]=${to}`)
+        .then((res) => {
+          if (res.status === 200) {
+            commit('setPracticeRecodes', res.data.practice_recodes)
+          } else {
+            commit('setPracticeRecodes', [])
+          }
+        })
+        .catch((res) => {
+          console.log(res)
+          throw res
+        })
     }
   }
 })

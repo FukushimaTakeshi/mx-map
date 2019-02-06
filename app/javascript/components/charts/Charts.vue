@@ -51,17 +51,17 @@ export default {
       currentDate: new Date()
     }
   },
-  computed: {
-    practiceRecodes() {
-      return this.$store.state.practiceRecodes
-    }
-  },
+  // computed: {
+  //   practiceRecodes() {
+  //     return this.$store.state.practiceRecodes
+  //   }
+  // },
   created() {
     this.updatePracticeRecodes().then(() => {
       this.fetchFullYearData()
       this.fetchMonthData()
-      EventBus.$on('change-pie-chart', this.fetchMonthData)
     })
+    EventBus.$on('change-pie-chart', this.fetchMonthData)
   },
   methods: {
     next: function() {
@@ -93,11 +93,10 @@ export default {
 
       let date = []
       let count = []
-      const self = this
       for (let i = 0; i+7 <= dateListOfCalendarRange.length; i+=7) {
         let calenderFrom = dateListOfCalendarRange[i]
         let from = `${calenderFrom.year}-${calenderFrom.month}-${calenderFrom.day}`
-        let rages = self.$store.state.practiceRecodes.filter((practiceRecode) => {
+        let rages = this.$store.state.practiceRecodes.filter((practiceRecode) => {
           return moment(practiceRecode.practice_date).isBetween(from, (moment(from).add(+7, 'days')), 'day', '[)')
         })
         date.push(`${calenderFrom.month}/${calenderFrom.day}`)
@@ -114,8 +113,9 @@ export default {
       if (MonthAndDate) {
         const from = moment(MonthAndDate).format('YYYY-MM-DD')
         const to = moment(from).add(+6, 'days').format('YYYY-MM-DD')
-        practiceRecodes = await axios.get(`/api/users/${this.userId}/practice_recodes/?date[]=${from}&date[]=${to}`)
-        practiceRecodes = practiceRecodes.data.practice_recodes
+        practiceRecodes = await axios.get(`/api/users/${this.userId}/practice_recodes/?date[]=${from}&date[]=${to}`).then((res) => {
+          return res.data.practice_recodes
+        })
       } else {
         practiceRecodes = this.$store.state.practiceRecodes
       }
