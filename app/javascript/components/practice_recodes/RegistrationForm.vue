@@ -186,6 +186,7 @@ export default {
           message: '登録しました!',
           type: 'is-success'
         })
+        this.updatePracticeRecodes()
       } else {
         if (res.data['practice_date']) {
           this.serverErrors = `${moment(this.date).format('YYYY-MM-DD')}の記録${res.data['practice_date'][0]}別の日付で登録して下さい。`
@@ -195,6 +196,16 @@ export default {
         this.isValidateErrorModalActive = true
         return
       }
+    },
+    async updatePracticeRecodes() {
+      const currentDate = new Date()
+      const dateListOfCalendarRange = this.get_month_calendar(currentDate.getFullYear(), currentDate.getMonth()+1)
+      const firstCalendar = dateListOfCalendarRange[0]
+      const from = `${firstCalendar.year}-${firstCalendar.month}-${firstCalendar.day}`
+      const lastCalendar = dateListOfCalendarRange[dateListOfCalendarRange.length - 1]
+      const to = `${lastCalendar.year}-${lastCalendar.month}-${lastCalendar.day}`
+
+      await this.$store.dispatch('getPracticeRecodes', { userId: this.userId, from: from, to: to })
     },
     inputDate(date) {
       this.date = moment(date).toDate()

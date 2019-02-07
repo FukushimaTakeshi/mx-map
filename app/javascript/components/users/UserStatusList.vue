@@ -1,5 +1,6 @@
 <template>
   <div class="column">
+    <!-- <b-loading :active.sync="this.$store.state.loading"></b-loading> -->
     <div class="box">
       <router-view name="charts" :user-id="this.userId" />
     </div>

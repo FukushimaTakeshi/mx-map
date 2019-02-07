@@ -1,12 +1,13 @@
 <template>
   <span>
     <div class="columns is-gapless is-multiline is-mobile">
+      <b-loading :active.sync="loading"></b-loading>
       <div class="column is-half">
-        <practice-bar-chart></practice-bar-chart>
+        <practice-bar-chart />
       </div>
 
       <div class="column is-half">
-        <practice-pie-chart></practice-pie-chart>
+        <practice-pie-chart />
       </div>
     </div>
 
@@ -48,34 +49,38 @@ export default {
   ],
   data() {
     return {
-      currentDate: new Date()
+      currentDate: moment().toDate()
     }
   },
-  // computed: {
-  //   practiceRecodes() {
-  //     return this.$store.state.practiceRecodes
-  //   }
-  // },
+  computed: {
+    loading() {
+      if (!this.$store.state.loading) {
+        this.fetchBarChartData()
+        // this.fetchPieChartData()
+      }
+      return this.$store.state.loading
+    }
+  },
   created() {
     this.updatePracticeRecodes().then(() => {
-      this.fetchFullYearData()
-      this.fetchMonthData()
+      this.fetchBarChartData()
+      this.fetchPieChartData()
     })
-    EventBus.$on('change-pie-chart', this.fetchMonthData)
+    EventBus.$on('change-pie-chart', this.fetchWeekData)
   },
   methods: {
     next: function() {
-      this.currentDate.setMonth(this.currentDate.getMonth()+1)
+      this.currentDate = moment(this.currentDate).add(+1, 'months').toDate()
       this.updatePracticeRecodes().then(() => {
-        this.fetchFullYearData()
-        this.fetchMonthData()
+        // this.fetchBarChartData()
+        this.fetchPieChartData()
       })
     },
     back: function() {
-      this.currentDate.setMonth(this.currentDate.getMonth()-1)
+      this.currentDate = moment(this.currentDate).add(-1, 'months').toDate()
       this.updatePracticeRecodes().then(() => {
-        this.fetchFullYearData()
-        this.fetchMonthData()
+        // this.fetchBarChartData()
+        this.fetchPieChartData()
       })
     },
     updatePracticeRecodes: async function() {
@@ -88,7 +93,7 @@ export default {
       await this.$store.dispatch('getPracticeRecodes', { userId: this.userId, from: from, to: to })
     },
     // 1週間ごと、合計1ヶ月分を取得
-    fetchFullYearData: function() {
+    fetchBarChartData: function() {
       const dateListOfCalendarRange = this.get_month_calendar(this.currentDate.getFullYear(), this.currentDate.getMonth()+1)
 
       let date = []
@@ -107,19 +112,22 @@ export default {
       EventBus.$emit('open-bar-chart', date, count, subject)
     },
     // 1ヶ月分まるっと取得
-    fetchMonthData: async function(MonthAndDate) {
-      let practiceRecodes
+    fetchPieChartData: function() {
+      const group = this.groupByCircuit(this.$store.state.practiceRecodes)
+      const currentMonthAndDate = `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
 
-      if (MonthAndDate) {
-        const from = moment(MonthAndDate).format('YYYY-MM-DD')
-        const to = moment(from).add(+6, 'days').format('YYYY-MM-DD')
-        practiceRecodes = await axios.get(`/api/users/${this.userId}/practice_recodes/?date[]=${from}&date[]=${to}`).then((res) => {
-          return res.data.practice_recodes
-        })
-      } else {
-        practiceRecodes = this.$store.state.practiceRecodes
-      }
+      EventBus.$emit('open-pie-chart', group.count, group.name, currentMonthAndDate)
+    },
+    fetchWeekData: async function(MonthAndDate) {
+      const from = moment(MonthAndDate).format('YYYY-MM-DD')
+      const to = moment(from).add(+6, 'days').format('YYYY-MM-DD')
+      const group = await axios.get(`/api/users/${this.userId}/practice_recodes/?date[]=${from}&date[]=${to}`).then((res) => {
+        return this.groupByCircuit(res.data.practice_recodes)
+      })
 
+      EventBus.$emit('open-pie-chart', group.count, group.name, `${MonthAndDate}週`)
+    },
+    groupByCircuit: function(practiceRecodes) {
       const group = practiceRecodes.reduce((result, current) => {
         const element = result.find((p) => p.off_road_circuit_id === current.off_road_circuit_id)
         if (element) {
@@ -140,9 +148,7 @@ export default {
         count.push(o.count)
         name.push(o.off_road_circuit_name)
       })
-
-      const currentMonthAndDate = MonthAndDate ? `${MonthAndDate}週` : `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
-      EventBus.$emit('open-pie-chart', count, name, currentMonthAndDate)
+      return { count: count, name: name }
     }
   }
 }
