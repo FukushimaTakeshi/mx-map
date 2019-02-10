@@ -46,9 +46,9 @@ export default {
         onClick: function (evt, item) {
           if (item.length != 0) {
             const year = item[0]['_chart'].options.title.text.slice(0, 4)
-            EventBus.$emit('change-pie-chart', `${year}/${item[0]['_model'].label}`)
+            EventBus.$emit('week-pie-chart', `${year}/${item[0]['_model'].label}`)
           } else {
-            EventBus.$emit('change-pie-chart', null)
+            EventBus.$emit('default-pie-chart')
           }
         }
       })

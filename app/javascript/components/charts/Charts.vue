@@ -52,34 +52,26 @@ export default {
       currentDate: moment().toDate()
     }
   },
-  computed: {
-    loading() {
-      if (!this.$store.state.loading) {
-        this.fetchBarChartData()
-        // this.fetchPieChartData()
-      }
-      return this.$store.state.loading
-    }
-  },
   created() {
     this.updatePracticeRecodes().then(() => {
       this.fetchBarChartData()
       this.fetchPieChartData()
     })
-    EventBus.$on('change-pie-chart', this.fetchWeekData)
+    EventBus.$on('week-pie-chart', this.fetchWeekData)
+    EventBus.$on('default-pie-chart', this.fetchPieChartData)
   },
   methods: {
     next: function() {
       this.currentDate = moment(this.currentDate).add(+1, 'months').toDate()
       this.updatePracticeRecodes().then(() => {
-        // this.fetchBarChartData()
+        this.fetchBarChartData()
         this.fetchPieChartData()
       })
     },
     back: function() {
       this.currentDate = moment(this.currentDate).add(-1, 'months').toDate()
       this.updatePracticeRecodes().then(() => {
-        // this.fetchBarChartData()
+        this.fetchBarChartData()
         this.fetchPieChartData()
       })
     },
@@ -92,7 +84,6 @@ export default {
 
       await this.$store.dispatch('getPracticeRecodes', { userId: this.userId, from: from, to: to })
     },
-    // 1週間ごと、合計1ヶ月分を取得
     fetchBarChartData: function() {
       const dateListOfCalendarRange = this.get_month_calendar(this.currentDate.getFullYear(), this.currentDate.getMonth()+1)
 
@@ -111,13 +102,13 @@ export default {
       const subject = `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
       EventBus.$emit('open-bar-chart', date, count, subject)
     },
-    // 1ヶ月分まるっと取得
     fetchPieChartData: function() {
       const group = this.groupByCircuit(this.$store.state.practiceRecodes)
       const currentMonthAndDate = `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
 
       EventBus.$emit('open-pie-chart', group.count, group.name, currentMonthAndDate)
     },
+    // 選択肢した週のみ
     fetchWeekData: async function(MonthAndDate) {
       const from = moment(MonthAndDate).format('YYYY-MM-DD')
       const to = moment(from).add(+6, 'days').format('YYYY-MM-DD')
@@ -142,12 +133,9 @@ export default {
         return result
       }, [])
 
-      let count = []
-      let name = []
-      group.forEach(o => {
-        count.push(o.count)
-        name.push(o.off_road_circuit_name)
-      })
+      const count = group.map((val) => val.count)
+      const name = group.map((val) => val.off_road_circuit_name)
+
       return { count: count, name: name }
     }
   }
