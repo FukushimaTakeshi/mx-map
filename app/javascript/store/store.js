@@ -8,15 +8,20 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
-    practiceRecodes: []
+    practiceRecodes: [],
+    loading: false
   },
   mutations: {
     setPracticeRecodes (state, payload) {
       state.practiceRecodes = payload
+    },
+    setLoading (state, payload) {
+      state.loading = payload
     }
   },
   actions: {
     async getPracticeRecodes ({ commit }, { userId, from, to }) {
+      commit('setLoading', true)
       await axios.get(`/api/users/${userId}/practice_recodes/?date[]=${from}&date[]=${to}`)
         .then((res) => {
           if (res.status === 200) {
@@ -26,9 +31,11 @@ const store = new Vuex.Store({
           }
         })
         .catch((res) => {
+          commit('setLoading', false)
           console.log(res)
           throw res
         })
+      commit('setLoading', false)
     }
   }
 })
