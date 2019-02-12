@@ -59,6 +59,7 @@ export default {
     })
     EventBus.$on('week-pie-chart', this.fetchWeekData)
     EventBus.$on('default-pie-chart', this.fetchPieChartData)
+    this.$root.eventBus.$on('refresh-charts', this.refreshCharts)
   },
   methods: {
     next: function() {
@@ -70,6 +71,13 @@ export default {
     },
     back: function() {
       this.currentDate = moment(this.currentDate).add(-1, 'months').toDate()
+      this.updatePracticeRecodes().then(() => {
+        this.fetchBarChartData()
+        this.fetchPieChartData()
+      })
+    },
+    refreshCharts: function() {
+      this.currentDate = moment().toDate()
       this.updatePracticeRecodes().then(() => {
         this.fetchBarChartData()
         this.fetchPieChartData()

@@ -36,6 +36,9 @@ document.addEventListener('turbolinks:load', () => {
   if (document.getElementById('app')) {
     new Vue({
       store,
+      data: {
+        eventBus: new Vue()
+      },
       router: new VueRouter({
         routes: [
           {
