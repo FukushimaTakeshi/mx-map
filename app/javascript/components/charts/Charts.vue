@@ -1,7 +1,6 @@
 <template>
   <span>
     <div class="columns is-gapless is-multiline is-mobile">
-      <b-loading :active.sync="loading"></b-loading>
       <div class="column is-half">
         <practice-bar-chart />
       </div>

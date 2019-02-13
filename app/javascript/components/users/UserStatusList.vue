@@ -1,6 +1,10 @@
 <template>
   <div class="column">
-    <!-- <b-loading :active.sync="this.$store.state.loading"></b-loading> -->
+    <b-loading :active.sync="this.$store.state.loading"></b-loading>
+    <div class="box">
+      <router-view name="registration-form" :user-id="this.userId" />
+    </div>
+
     <div class="box">
       <router-view name="charts" :user-id="this.userId" />
     </div>
@@ -13,10 +17,6 @@
           <span class="name">登録・編集</span>
         </router-link>
       </div>
-    </div>
-
-    <div class="box">
-      <router-view name="registration-form" :user-id="this.userId" />
     </div>
   </div>
 </template>

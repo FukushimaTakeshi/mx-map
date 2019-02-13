@@ -49,9 +49,9 @@ document.addEventListener('turbolinks:load', () => {
                   {
                     path: '',
                     components: {
+                      'registration-form': RegistrationForm,
                       'charts': Charts,
-                      'favorite-list': FavoriteList,
-                      'registration-form': RegistrationForm
+                      'favorite-list': FavoriteList
                     }
                   }
                 ]
