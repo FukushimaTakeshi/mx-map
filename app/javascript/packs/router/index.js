@@ -13,9 +13,6 @@ import RegistrationForm from '../../components/practice_recodes/RegistrationForm
 
 import List from '../../components/off_road_circuits/List.vue'
 
-import ModalEvent from '../EventBus.js'
-export default ModalEvent
-
 import calender from '../../mixin/calendar.js'
 Vue.mixin(calender)
 

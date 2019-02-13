@@ -29,8 +29,6 @@
 
 <script>
 import ModalList from './ModalList.vue'
-import ModalEvent from '../../packs/router/index.js'
-
 import axios from 'axios'
 
 export default {
@@ -52,7 +50,7 @@ export default {
   },
   methods: {
     openCircuitsModal: function(prefectureId) {
-      ModalEvent.$emit('open-circuits-modal', prefectureId)
+      this.$root.eventBus.$emit('open-circuits-modal', prefectureId)
     },
     setArea: function(index) {
       if (this.selectedArea == index) {
