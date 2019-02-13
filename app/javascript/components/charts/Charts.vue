@@ -37,7 +37,6 @@ import axios from 'axios'
 import moment from 'moment'
 import PracticeBarChart from './PracticeBarChart.vue'
 import PracticePieChart from './PracticePieChart.vue'
-import EventBus from '../../packs/users/form.js'
 
 export default {
   components: {
@@ -57,8 +56,8 @@ export default {
       this.fetchBarChartData()
       this.fetchPieChartData()
     })
-    EventBus.$on('week-pie-chart', this.fetchWeekData)
-    EventBus.$on('default-pie-chart', this.fetchPieChartData)
+    this.$root.eventBus.$on('week-pie-chart', this.fetchWeekData)
+    this.$root.eventBus.$on('default-pie-chart', this.fetchPieChartData)
     this.$root.eventBus.$on('refresh-charts', this.refreshCharts)
   },
   methods: {
@@ -108,13 +107,13 @@ export default {
       }
 
       const subject = `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
-      EventBus.$emit('open-bar-chart', date, count, subject)
+      this.$root.eventBus.$emit('open-bar-chart', date, count, subject)
     },
     fetchPieChartData: function() {
       const group = this.groupByCircuit(this.$store.state.practiceRecodes)
       const currentMonthAndDate = `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
 
-      EventBus.$emit('open-pie-chart', group.count, group.name, currentMonthAndDate)
+      this.$root.eventBus.$emit('open-pie-chart', group.count, group.name, currentMonthAndDate)
     },
     // 選択肢した週のみ
     fetchWeekData: async function(MonthAndDate) {
@@ -124,7 +123,7 @@ export default {
         return this.groupByCircuit(res.data.practice_recodes)
       })
 
-      EventBus.$emit('open-pie-chart', group.count, group.name, `${MonthAndDate}週`)
+      this.$root.eventBus.$emit('open-pie-chart', group.count, group.name, `${MonthAndDate}週`)
     },
     groupByCircuit: function(practiceRecodes) {
       const group = practiceRecodes.reduce((result, current) => {

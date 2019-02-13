@@ -1,11 +1,10 @@
 <script>
 import { Bar } from 'vue-chartjs'
-import EventBus from '../../packs/users/form.js'
 
 export default {
   extends: Bar,
   mounted: function() {
-    EventBus.$on('open-bar-chart', this.open)
+    this.$root.eventBus.$on('open-bar-chart', this.open)
   },
   methods: {
     open: function(date, count, subject) {
@@ -43,12 +42,12 @@ export default {
         },
         responsive: true,
         maintainAspectRatio: false,
-        onClick: function (evt, item) {
+        onClick: (evt, item) => {
           if (item.length != 0) {
             const year = item[0]['_chart'].options.title.text.slice(0, 4)
-            EventBus.$emit('week-pie-chart', `${year}/${item[0]['_model'].label}`)
+            this.$root.eventBus.$emit('week-pie-chart', `${year}/${item[0]['_model'].label}`)
           } else {
-            EventBus.$emit('default-pie-chart')
+            this.$root.eventBus.$emit('default-pie-chart')
           }
         }
       })
