@@ -20,7 +20,6 @@ module Api
             user_details: user_details(plan.user)
           }
         end,
-        off_road_circuits: off_road_circuit_list(plans),
         id: id
       }
     end
@@ -50,15 +49,6 @@ module Api
       else
         { id: nil, username: 'ゲストユーザ' }
       end
-    end
-
-    def off_road_circuit_list(plans)
-      circuits = plans.map do |plan|
-        { id: plan.off_road_circuit_id, name: plan.off_road_circuit.name }
-      end
-      circuits.group_by do |circuit|
-        circuit[:id]
-      end.values
     end
   end
 end
