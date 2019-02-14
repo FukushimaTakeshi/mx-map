@@ -16,11 +16,11 @@
           </b-datepicker>
         </div>
       </b-field>
-      <li>
-        <a @click="isLatelyPlansModalActive = true">
-          最近の練習予定から日付を選択する
-        </a>
-      </li>
+
+      <a class="button is-info is-outlined is-small is-fullwidth" @click="isLatelyPlansModalActive = true">
+        最近の練習予定から日付を選択する
+      </a>
+
       <p class="help is-danger" v-show="errors.has('date')">
         {{ errors.first('date') }}
       </p>
@@ -29,16 +29,18 @@
     <div class="field">
       <label class="label">コース</label>
       <div class="control">
-        <select name="cource"
-          v-model="cource"
-          v-validate="'required'"
-          data-vv-as="コース"
-        >
-          <option value="">選択して下さい</option>
-          <option v-for="favoriteCourse in favoriteCourses" :value="favoriteCourse.off_road_circuit_id">
-            {{ favoriteCourse.name }}
-          </option>
-        </select>
+        <div class="select">
+          <select name="cource"
+            v-model="cource"
+            v-validate="'required'"
+            data-vv-as="コース"
+          >
+            <option value="">選択して下さい</option>
+            <option v-for="favoriteCourse in favoriteCourses" :value="favoriteCourse.off_road_circuit_id">
+              {{ favoriteCourse.name }}
+            </option>
+          </select>
+        </div>
         <p class="help is-danger" v-show="errors.has('cource')">
           {{ errors.first('cource') }}
         </p>
@@ -49,31 +51,37 @@
 
     <div class="field">
       <label class="label">走行時間</label>
-      <div class="control">
-        <select name="duration_hour"
-          v-model="durationHour"
-          v-validate="'max_value:23'"
-          data-vv-as="走行時間(時)"
-        >
-          <option v-for="hour in hours" :value="hour">
-            {{ hour }}
-          </option>
-        </select>
-        時間
-        <p class="help is-danger" v-show="errors.has('duration_hour')">
-          {{ errors.first('duration_hour') }}
-        </p>
+      <div class="columns is-mobile">
+        <div class="control column">
+          <div class="select">
+            <select name="duration_hour"
+              v-model="durationHour"
+              v-validate="'max_value:23'"
+              data-vv-as="走行時間(時)"
+            >
+              <option v-for="hour in hours" :value="hour">
+                {{ hour }}
+              </option>
+            </select>
+          </div>
+          時間
+          <p class="help is-danger" v-show="errors.has('duration_hour')">
+            {{ errors.first('duration_hour') }}
+          </p>
+        </div>
 
-        <div class="control">
-          <select name="duration_minute"
-            v-model="durationMinute"
-            v-validate="'max_value:59'"
-            data-vv-as="走行時間(分)"
-          >
-            <option v-for="minute in minutes" :value="minute">
-              {{ minute }}
-            </option>
-          </select>
+        <div class="control column">
+          <div class="select">
+            <select name="duration_minute"
+              v-model="durationMinute"
+              v-validate="'max_value:59'"
+              data-vv-as="走行時間(分)"
+            >
+              <option v-for="minute in minutes" :value="minute">
+                {{ minute }}
+              </option>
+            </select>
+          </div>
           分
           <p class="help is-danger" v-show="errors.has('duration_minute')">
             {{ errors.first('duration_minute') }}
@@ -197,8 +205,20 @@ export default {
         return
       }
     },
-    inputDate(date) {
+    inputDate({ date, off_road_circuit_id, off_road_circuit_name }) {
       this.date = moment(date).toDate()
+      this.cource = off_road_circuit_id
+      const hasfavoriteCourse = this.favoriteCourses.some((course) => {
+        return (course.off_road_circuit_id === off_road_circuit_id)
+      })
+      if (!hasfavoriteCourse) {
+        this.favoriteCourses.push(
+          {
+            off_road_circuit_id: off_road_circuit_id,
+            name: off_road_circuit_name
+          }
+        )
+      }
       this.isLatelyPlansModalActive = false
     }
   }

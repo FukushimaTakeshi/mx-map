@@ -7,7 +7,7 @@
       <b-loading :active.sync="loading" :is-full-page="false"	></b-loading>
       <div class="columns is-mobile is-multiline is-centered">
 
-        <div v-for="latelyPlan in latelyPlans" @click="selectDate(latelyPlan.date)" class="column is-four-fifths post">
+        <div v-for="latelyPlan in latelyPlans" @click="selectDate(latelyPlan)" class="column is-four-fifths post">
           <span class="media">
             <div class="media-left">
               <h4>{{ latelyPlan.date }}</h4>
@@ -63,8 +63,8 @@ export default {
     this.loading = false
   },
   methods: {
-    selectDate: function(date) {
-      this.$emit('selected', date)
+    selectDate: function(selectedPlan) {
+      this.$emit('selected', selectedPlan)
     },
     isRegistered: function(date) {
       const isRegistered = this.practiceRecodes.find((practiceRecode) =>{
