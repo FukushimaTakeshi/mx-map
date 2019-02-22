@@ -35,7 +35,7 @@
             </button>
           </div>
           <!-- modal component -->
-          <Modal :circuitId="circuitId"></Modal>
+          <Modal :circuit-id="circuitId" :user-id="userId"></Modal>
         </div>
       </div>
     </div>
@@ -47,7 +47,10 @@ import Modal from './Modal.vue'
 import ModalEvent from '../../packs/off_road_circuits/form.js'
 
 export default {
-  props: ['circuitId'],
+  props: [
+    'circuitId',
+    'userId'
+  ],
   components: {
     Modal
   },
@@ -94,6 +97,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'bulma-calendar/dist/css/bulma-calendar.min.css';
+
 .show-next-enter-active, .show-next-leave-active,
 .show-prev-enter-active, .show-prev-leave-active  {
   transition: all .1s;

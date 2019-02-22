@@ -1,10 +1,15 @@
 <template>
   <div class="column">
-    <div class="box">
+    <b-loading :active.sync="this.$store.state.loading"></b-loading>
+    <div class="box is-shadowless">
+      <router-view name="registration-form" :user-id="this.userId" />
+    </div>
+
+    <div class="box is-shadowless">
       <router-view name="charts" :user-id="this.userId" />
     </div>
 
-    <div class="box">
+    <div class="box is-shadowless">
       <div class="columns is-gapless is-mobile">お気に入り</div>
       <router-view name="favorite-list" :user-id="this.userId" />
       <div class="columns is-gapless is-mobile">

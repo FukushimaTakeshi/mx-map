@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     resources :users, only: [:index] do
       resources :favorite_courses, only: [:index, :create, :destroy]
+      resources :practice_recodes, only: [:index, :show, :create, :edit, :update, :destroy]
     end
 
     resources :regions, only: [:index]

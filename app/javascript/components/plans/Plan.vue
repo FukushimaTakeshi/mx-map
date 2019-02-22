@@ -17,7 +17,7 @@
             <div v-for="(holiday, index) in holidayList" :key="holiday.id" class="has-text-centered">
               <div class="vue-slide__day">
                 <p class="heading">
-                  {{ holiday.date}}{{ holiday.day, getAttendance(holiday.date, index) }}に走るよ！
+                  {{ holiday.date}}{{ holiday.day }}に走るよ！
                 </p>
 
                 <p v-if="holiday.exists" class="title-em icon mdi-18px has-text-link">
@@ -52,7 +52,10 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
 
 export default {
-  props: ['circuitId'],
+  props: [
+    'circuitId',
+    'userId'
+  ],
   data() {
     return {
       holidayList: [],
@@ -61,7 +64,7 @@ export default {
       visible_content: 0,
     }
   },
-  mounted: function() {
+  created: function() {
     const today = new Date()
     let saturday = new Date()
     let sunday = new Date()
@@ -89,6 +92,10 @@ export default {
         attendance: 0
       }
     ]
+
+    this.holidayList.forEach((holiday, index) => {
+      this.getAttendance(holiday.date, index)
+    })
   },
   methods: {
 
@@ -109,6 +116,10 @@ export default {
 
       this.holidayList[0].date = saturday
       this.holidayList[1].date = sunday
+
+      this.holidayList.forEach((holiday, index) => {
+        this.getAttendance(holiday.date, index)
+      })
     },
     next: function() {
       if (this.visible_content == 1) {
@@ -127,20 +138,28 @@ export default {
 
       this.holidayList[0].date = saturday
       this.holidayList[1].date = sunday
+
+      this.holidayList.forEach((holiday, index) => {
+        this.getAttendance(holiday.date, index)
+      })
     },
 
     getAttendance: async function(date, index) {
-      const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}&all=1`)
+      const res = await axios.get(`/api/plans/?off_road_circuit_id=${this.circuitId}&date=${date}`)
       if (res.status !== 200) {
         process.exit()
       }
-      this.holidayList[index].attendance = res.data.plans
+      this.holidayList[index].attendance = res.data.plans.length
 
-      if (res.data.id == null) {
-        this.holidayList[index].exists = false
-      } else {
+      const singnedInUserPlan = res.data.plans.find((plan) => {
+        return (this.userId === plan.user_details.id)
+      })
+
+      if (singnedInUserPlan || res.data.id) {
         this.holidayList[index].exists = true
-        this.holidayList[index].planId = res.data.id
+        this.holidayList[index].planId = (res.data.id || singnedInUserPlan['id'])
+      } else {
+        this.holidayList[index].exists = false
       }
     },
 

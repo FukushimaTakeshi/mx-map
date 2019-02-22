@@ -13,7 +13,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # view
 gem 'slim-rails'
-gem 'bulma-rails', '~> 0.7.1'
+gem 'bulma-rails'
 gem 'turbolinks', '~> 5'
 
 # api client

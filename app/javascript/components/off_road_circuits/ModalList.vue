@@ -50,7 +50,6 @@ import axios from 'axios'
 import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
 
-import ModalEvent from '../../packs/router/index.js'
 import Loading from '../load/LoadContent.vue'
 
 export default {
@@ -65,7 +64,7 @@ export default {
     }
   },
   mounted: function() {
-    ModalEvent.$on('open-circuits-modal', this.open)
+    this.$root.eventBus.$on('open-circuits-modal', this.open)
     this.findAllFavoriteCourse().then(result => {
       this.favoriteCourseList = result
     })

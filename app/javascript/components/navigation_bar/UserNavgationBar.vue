@@ -38,6 +38,6 @@ export default {
 
 <style>
 li {
-  margin-bottom: 10px;
+  margin-bottom: 10px !important;
 }
 </style>

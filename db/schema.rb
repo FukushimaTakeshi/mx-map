@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_21_131258) do
+ActiveRecord::Schema.define(version: 2019_01_16_125849) do
 
   create_table "active_admin_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "namespace"
@@ -108,6 +108,19 @@ ActiveRecord::Schema.define(version: 2018_10_21_131258) do
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
+  create_table "practice_recodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "off_road_circuit_id"
+    t.bigint "user_id"
+    t.date "practice_date"
+    t.string "comment"
+    t.integer "duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["off_road_circuit_id"], name: "index_practice_recodes_on_off_road_circuit_id"
+    t.index ["user_id", "practice_date"], name: "unique_user_date", unique: true
+    t.index ["user_id"], name: "index_practice_recodes_on_user_id"
+  end
+
   create_table "prefectures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "region_id"
@@ -157,5 +170,7 @@ ActiveRecord::Schema.define(version: 2018_10_21_131258) do
   add_foreign_key "photos", "off_road_circuits"
   add_foreign_key "plans", "off_road_circuits"
   add_foreign_key "plans", "users"
+  add_foreign_key "practice_recodes", "off_road_circuits"
+  add_foreign_key "practice_recodes", "users"
   add_foreign_key "prefectures", "regions"
 end

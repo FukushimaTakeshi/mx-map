@@ -1,7 +1,7 @@
 = javascript_pack_tag 'router/index'
 
 section.hero.is-small.is-light
-  div.hero-body
+  div.hero-body#user
     div.container.has-text-centered
       div class="columns is-centered"
         div.column
@@ -13,20 +13,5 @@ section.hero.is-small.is-light
             div
               = @user.username
 
-    div.container.has-text-centered#app
-      / user-navgation-bar
-
-      / <!-- ルートアウトレット -->
-      / <!-- ルートとマッチしたコンポーネントがここへ描画されます -->
+    div.container#app
       router-view :user-id="#{@user.id}"
-  
-
-    / div.container.has-text-centered
-      div.box#form
-        charts :user-id="#{@user.id}"
-
-
-      div.box#form2
-        div.columns.is-gapless.is-multiline.is-mobile
-          | お気に入り
-        list :iser-id="#{@user.id}"

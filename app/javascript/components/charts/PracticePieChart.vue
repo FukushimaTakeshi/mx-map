@@ -1,6 +1,5 @@
 <script>
 import { Pie } from 'vue-chartjs'
-import EventBus from '../../packs/users/form.js'
 
 export default {
   extends: Pie,
@@ -8,7 +7,7 @@ export default {
     'chartFullYearData'
   ],
   mounted: function() {
-    EventBus.$on('open-pie-chart', this.open)
+    this.$root.eventBus.$on('open-pie-chart', this.open)
   },
   methods: {
     open: function(count, name, currentMonthDate) {
