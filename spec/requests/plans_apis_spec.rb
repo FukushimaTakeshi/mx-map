@@ -15,21 +15,6 @@ RSpec.describe 'PlansApis', type: :request do
   let(:off_road_circuit) { FactoryBot.create(:off_road_circuit, prefecture_id: 1, region_id: 1) }
   let(:plan) { FactoryBot.create(:plan, date: Date.today, off_road_circuit_id: off_road_circuit.id, user_id: @user.id) }
 
-  describe 'GET /api/plans/?userid=:user_id&off_road_circuit=:off_road_circuit_id&all=1' do
-    before { get api_plans_path(user_id: @user.id, off_road_circuit: off_road_circuit.id, all: 1, date: Date.today) }
-    it 'httpステータス200が返ること' do
-      expect(response).to have_http_status(200)
-    end
-
-    it 'レスポンスが想定通り' do
-      json = JSON.parse(response.body)
-      expect(json['plans'].length).to eq 1
-      expect(json['users']).to eq nil
-      expect(json['off_road_circuits']).to eq nil
-      expect(json['id']).to eq plan.id
-    end
-  end
-
   describe 'GET /api/plans/?userid=:user_id&off_road_circuit=:off_road_circuit_id' do
     before { get api_plans_path(user_id: @user.id, off_road_circuit: off_road_circuit.id, date: Date.today) }
     it 'httpステータス200が返ること' do
@@ -41,16 +26,14 @@ RSpec.describe 'PlansApis', type: :request do
       expect(json['plans'].length).to eq 1
       expect(json['plans'][0]['id']).to eq plan.id
 
-      expect(json['users'].length).to eq 1
-      expect(json['users'][0]['id']).to eq @user.id
-      expect(json['users'][0]['username']).to eq @user.username
-      expect(json['users'][0]['avatar']).to eq @user.avatar&.url
+      expect(json['plans'][0]['user_details']['id']).to eq @user.id
+      expect(json['plans'][0]['user_details']['username']).to eq @user.username
+      expect(json['plans'][0]['user_details']['avatar']).to eq @user.avatar&.url
 
-      expect(json['off_road_circuits'].length).to eq 1
-      expect(json['off_road_circuits'][0][0]['id']).to eq off_road_circuit.id
-      expect(json['off_road_circuits'][0][0]['name']).to eq off_road_circuit.name
+      expect(json['plans'][0]['off_road_circuit_id']).to eq off_road_circuit.id
+      expect(json['plans'][0]['off_road_circuit_name']).to eq off_road_circuit.name
 
-      expect(json['id']).to eq plan.id
+      expect(json['id']).to eq nil
     end
   end
 

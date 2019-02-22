@@ -9,9 +9,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'omniauth_callbacks'
   }
 
-  resources :users, only: [:show, :edit, :update] do
-    resources :practice_recodes, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  end
+  resources :users, only: [:show, :edit, :update]
 
   root 'regions#index'
 
