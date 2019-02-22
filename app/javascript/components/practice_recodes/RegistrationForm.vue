@@ -1,5 +1,6 @@
 <template>
   <span class="has-text-left">
+    <div class="columns is-gapless is-mobile">練習を記録する</div>
     <div class="field">
       <b-field label="日時">
         <div class="control">

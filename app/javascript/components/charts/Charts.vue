@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <span class="columns is-mobile">
+    <span class="columns is-mobile has-text-centered">
       <div class="column">
         <button @click="back()" class="button is-white">
           <span class="icon is-medium mdi-18px">
