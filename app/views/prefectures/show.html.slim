@@ -58,7 +58,7 @@ div.container
                   div.media-right
                     favorite-icon :user-id="#{current_user.id}" :favorite-courses="#{@favorite_courses.to_json}" :circuit-id="#{circuit.id}"
 
-              plan :circuit-id="#{circuit.id}" :user-id="#{user_signed_in? ? current_user.id : 'NULL'}"
+              plan :circuit-id="#{circuit.id}" :user-id="#{user_signed_in? ? current_user.id : 'null'}"
 
 - content_for :footer
   div.content.has-text-right
