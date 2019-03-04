@@ -10,6 +10,10 @@
     </div>
 
     <div class="box is-shadowless">
+      <router-view name="history-list" :user-id="this.userId" />
+    </div>
+
+    <div class="box is-shadowless">
       <div class="columns is-gapless is-mobile">お気に入り</div>
       <router-view name="favorite-list" :user-id="this.userId" />
       <div class="columns is-gapless is-mobile">
