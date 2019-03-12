@@ -10,6 +10,7 @@ import UserStatusList from '../../components/users/UserStatusList.vue'
 import Charts from '../../components/charts/Charts.vue'
 import FavoriteList from '../../components/off_road_circuits/FavoriteList.vue'
 import RegistrationForm from '../../components/practice_recodes/RegistrationForm.vue'
+import HistoryList from '../../components/practice_recodes/HistoryList.vue'
 
 import List from '../../components/off_road_circuits/List.vue'
 
@@ -51,7 +52,8 @@ document.addEventListener('turbolinks:load', () => {
                     components: {
                       'registration-form': RegistrationForm,
                       'charts': Charts,
-                      'favorite-list': FavoriteList
+                      'favorite-list': FavoriteList,
+                      'history-list': HistoryList
                     }
                   }
                 ]
