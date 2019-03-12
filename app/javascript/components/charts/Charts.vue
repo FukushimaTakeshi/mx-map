@@ -50,6 +50,11 @@ export default {
       currentDate: moment().toDate()
     }
   },
+  computed: {
+    practiceRecodes() {
+      return this.$store.state.practiceRecodes
+    }
+  },
   created() {
     this.updatePracticeRecodes().then(() => {
       this.fetchBarChartData()
@@ -98,7 +103,7 @@ export default {
       for (let i = 0; i+7 <= dateListOfCalendarRange.length; i+=7) {
         let calenderFrom = dateListOfCalendarRange[i]
         let from = `${calenderFrom.year}-${calenderFrom.month}-${calenderFrom.day}`
-        let rages = this.$store.state.practiceRecodes.filter((practiceRecode) => {
+        let rages = this.practiceRecodes.filter((practiceRecode) => {
           return moment(practiceRecode.practice_date).isBetween(from, (moment(from).add(+7, 'days')), 'day', '[)')
         })
         date.push(`${calenderFrom.month}/${calenderFrom.day}`)
@@ -109,7 +114,7 @@ export default {
       this.$root.eventBus.$emit('open-bar-chart', date, count, subject)
     },
     fetchPieChartData: function() {
-      const group = this.groupByCircuit(this.$store.state.practiceRecodes)
+      const group = this.groupByCircuit(this.practiceRecodes)
       const currentMonthAndDate = `${this.currentDate.getFullYear()}/${this.currentDate.getMonth()+1}`
 
       this.$root.eventBus.$emit('open-pie-chart', group.count, group.name, currentMonthAndDate)

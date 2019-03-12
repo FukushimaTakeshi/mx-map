@@ -3,7 +3,7 @@ class Api::PracticeRecodesController < ActionController::API
 
   def index
     practice_recodes = PracticeRecode
-                         .includes(:off_road_circuit)
+                         .includes(off_road_circuit: [:photo])
                          .where(user_id: current_user.id)
                          .search_date(params[:date])
                          .sorted(params[:sort])
@@ -13,8 +13,11 @@ class Api::PracticeRecodesController < ActionController::API
         {
           id: practice_recode.id,
           practice_date: practice_recode.practice_date,
+          duration: practice_recode.duration,
+          comment: practice_recode.comment,
           off_road_circuit_id: practice_recode.off_road_circuit_id,
-          off_road_circuit_name: practice_recode.off_road_circuit.name
+          off_road_circuit_name: practice_recode.off_road_circuit.name,
+          photo_url: practice_recode.off_road_circuit.photo[0]&.url
         }
       end
     }
