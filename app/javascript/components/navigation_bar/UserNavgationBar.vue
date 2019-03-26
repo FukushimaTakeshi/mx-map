@@ -1,24 +1,34 @@
 <template>
   <div class="columns">
     <nav class="navbar is-info is-fixed-bottom is-hidden-tablet has-text-centered">
-      <div id="navbarBasicExample" class="navbar-menu is-active is-paddingless">
+      <div id="navbarBasicExample" class="navbar-menu is-active">
         <nav class="level is-mobile">
-          <div class="level-item has-text-grey has-text-centered">
+          <div class="level-item has-text-grey">
             <div>
               <p class="heading is-marginless">TOP</p>
               <p class="title">
+                <a href="/" class="icon" data-turbolinks="false">
+                  <i class="fas fa-home"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="level-item has-text-grey">
+            <div>
+              <p class="heading is-marginless">マイページ</p>
+              <p class="title">
                 <router-link to="/" class="icon">
-                  <i class="fas fa-2x fa-home"></i>
+                  <i class="far fa-user"></i>
                 </router-link>
               </p>
             </div>
           </div>
-          <div class="level-item has-text-grey has-text-centered">
+          <div class="level-item has-text-grey">
             <div>
               <p class="heading is-marginless">お気に入り</p>
               <p class="title">
                 <router-link to="/list" class="icon">
-                  <i class="far fa-2x fa-heart"></i>
+                  <i class="far fa-heart"></i>
                 </router-link>
               </p>
             </div>
