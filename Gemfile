@@ -63,6 +63,7 @@ group :development do
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem 'bullet'
+  gem 'solargraph'
 
   # deploy tools
   gem 'capistrano', require: false
