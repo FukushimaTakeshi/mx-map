@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.6.0'
+ruby '2.6.6'
 
 gem 'rails', '~> 5.2.0'
 gem 'puma', '~> 3.11'
@@ -8,7 +8,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'redis-rails'
 gem 'jbuilder', '~> 2.5'
-gem 'webpacker'
+gem 'webpacker', '~> 3.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # view
@@ -63,7 +63,6 @@ group :development do
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem 'bullet'
-  gem 'solargraph'
 
   # deploy tools
   gem 'capistrano', require: false
