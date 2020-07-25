@@ -1,5 +1,4 @@
-FROM ruby:2.6.0
-MAINTAINER fukushima
+FROM ruby:2.6.6
 ENV LANG C.UTF-8
 
 ENV TZ Asia/Tokyo
@@ -11,7 +10,7 @@ RUN apt-get update -qq && \
     build-essential \
     libpq-dev \
     sqlite \
-    mysql-client \
+    mariadb-client \
     vim
 
 # install node.js
@@ -33,6 +32,7 @@ WORKDIR $APP
 # bundle install
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
+RUN gem install bundler --version "1.17.1"
 RUN bundle install --path vendor/bundle
 #
 # yarn install
