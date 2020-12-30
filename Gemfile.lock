@@ -268,7 +268,7 @@ GEM
       rack
     orm_adapter (0.5.0)
     public_suffix (3.0.2)
-    puma (3.11.4)
+    puma (3.12.6)
     rack (2.0.5)
     rack-proxy (0.6.4)
       rack
@@ -447,7 +447,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-twitter
-  puma (~> 3.11)
+  puma (~> 3.12)
   rails (~> 5.2.0)
   rails-controller-testing
   redcarpet
