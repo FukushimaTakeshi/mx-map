@@ -3,45 +3,46 @@ source 'https://rubygems.org'
 ruby '2.6.6'
 
 gem 'rails', '5.2.0'
-gem 'puma', '3.11.4'
-gem 'sass-rails', '5.0.7'
-gem 'uglifier', '4.1.12'
-gem 'redis-rails', '5.0.2'
-gem 'jbuilder', '2.7.0'
-gem 'webpacker', '3.5.3'
-gem 'bootsnap', '1.3.0', require: false
+gem 'puma'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'redis-rails'
+gem 'jbuilder'
+gem 'webpacker'
+gem 'bootsnap', require: false
 
 # view
-gem 'slim-rails', '3.1.3'
-gem 'bulma-rails', '0.7.2'
-gem 'turbolinks', '5.1.1'
+gem 'slim-rails'
+gem 'bulma-rails'
+gem 'turbolinks'
 
 # api client
-gem 'faraday', '0.15.2'
+gem 'faraday'
 
-gem 'config', '1.7.0'
+gem 'config'
 
 # user
-gem 'devise', '4.4.3'
-gem 'omniauth-twitter', '1.4.0'
-gem 'omniauth-facebook', '1.4.0'
-gem 'omniauth-google-oauth2', '0.2.2'
+gem 'devise'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 
 # admin
-gem 'activeadmin', '1.3.1'
+gem 'activeadmin', '1.4.3'
 
-gem 'carrierwave', '1.2.3'
-gem 'mini_magick', '4.8.0'
+gem 'carrierwave'
+gem 'mini_magick'
+
 
 # markdown
-gem 'redcarpet', '3.4.0'
+gem 'redcarpet'
 
-gem 'meta-tags', '2.10.0'
+gem 'meta-tags'
 
-gem 'whenever', '0.10.0', require: false
+gem 'whenever', require: false
 
 group :production do
-  gem 'mysql2', '0.5.1'
+  gem 'mysql2', '>= 0.4.4', '< 0.6.0'
   gem 'google-analytics-rails', '1.1.1'
   gem 'newrelic_rpm', '5.5.0.348'
 end
