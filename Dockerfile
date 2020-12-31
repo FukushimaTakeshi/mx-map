@@ -32,7 +32,7 @@ WORKDIR $APP
 # bundle install
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
-RUN gem install bundler --version "1.17.1"
+RUN gem install bundler --version "1.17.2"
 RUN bundle install --path vendor/bundle
 #
 # yarn install
