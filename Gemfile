@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.6.6'
 
-gem 'rails', '5.2.0'
+gem 'rails', '5.2.4.4'
 gem 'puma'
 gem 'sass-rails'
 gem 'uglifier'
@@ -28,7 +28,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 
 # admin
-gem 'activeadmin', '1.4.3'
+# gem 'activeadmin', '1.4.3'
 
 gem 'carrierwave'
 gem 'mini_magick'
@@ -43,8 +43,8 @@ gem 'whenever', require: false
 
 group :production do
   gem 'mysql2', '>= 0.4.4', '< 0.6.0'
-  gem 'google-analytics-rails', '1.1.1'
-  gem 'newrelic_rpm', '5.5.0.348'
+  gem 'google-analytics-rails'
+  gem 'newrelic_rpm'
 end
 
 group :development, :test do
