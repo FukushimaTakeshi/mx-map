@@ -47,28 +47,28 @@ group :production do
 end
 
 group :development, :test do
-  gem 'sqlite3', '1.3.13'
-  gem 'byebug', '10.0.2', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'better_errors', '2.4.0'
-  gem 'binding_of_caller', '0.8.0'
-  gem 'rspec-rails', '3.7.2'
-  gem 'rails-controller-testing', '1.0.2'
-  gem 'factory_bot_rails', '4.10.0'
-  gem 'webmock', '3.4.2', require: false
+  gem 'sqlite3'
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem 'factory_bot_rails'
+  gem 'webmock', require: false
 end
 
 group :development do
-  gem 'web-console', '3.6.2'
-  gem 'listen', '3.1.5'
-  gem 'letter_opener', '1.6.0'
-  gem 'letter_opener_web', '1.3.4'
-  gem 'bullet', '5.9.0'
+  gem 'web-console'
+  gem 'listen'
+  gem 'letter_opener'
+  gem 'letter_opener_web'
+  gem 'bullet'
 
   # deploy tools
-  gem 'capistrano', '3.11.0', require: false
-  gem 'capistrano-rails', '1.4.0', require: false
-  gem 'capistrano-bundler', '1.3.0', require: false
-  gem 'capistrano-yarn', '2.0.2', require: false
-  gem 'capistrano3-puma', '3.1.1', require: false
-  gem 'capistrano-rbenv', '2.1.4', require: false
+  gem 'capistrano', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-yarn', require: false
+  gem 'capistrano3-puma', require: false
+  gem 'capistrano-rbenv', require: false
 end
