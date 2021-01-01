@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.0-node
+      - image: circleci/ruby:2.6.6-node
         environment:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
@@ -10,7 +10,7 @@ jobs:
 
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_ROOT_PASSWORD: 'pass'
+          MYSQL_ROOT_PASSWORD: "pass"
 
       - image: redis
         command: redis-server --appendonly yes
@@ -22,8 +22,8 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
 
       - run:
           name: Bundle Install
@@ -48,7 +48,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/ruby:2.6.0-node
+      - image: circleci/ruby:2.6.6-node
         environment:
           RAILS_ENV: development
 
@@ -59,8 +59,8 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-
 
       - run:
           name: Bundle Install
