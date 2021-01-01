@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.6.6'
 
-gem 'rails', '6.0.0'
+gem 'rails', '6.1.0'
 gem 'puma'
 gem 'sass-rails'
 gem 'uglifier'
