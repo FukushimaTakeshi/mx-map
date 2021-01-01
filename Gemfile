@@ -2,19 +2,19 @@ source 'https://rubygems.org'
 
 ruby '2.6.6'
 
-gem 'rails', '~> 5.2.0'
-gem 'puma', '~> 3.11'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'redis-rails'
-gem 'jbuilder', '~> 2.5'
-gem 'webpacker', '~> 3.5'
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'rails', '6.1.0'
+gem 'puma'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'redis'
+gem 'jbuilder'
+gem 'webpacker'
+gem 'bootsnap', require: false
 
 # view
 gem 'slim-rails'
 gem 'bulma-rails'
-gem 'turbolinks', '~> 5'
+gem 'turbolinks'
 
 # api client
 gem 'faraday'
@@ -28,10 +28,11 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 
 # admin
-gem 'activeadmin'
+# gem 'activeadmin', '1.4.3'
 
 gem 'carrierwave'
 gem 'mini_magick'
+
 
 # markdown
 gem 'redcarpet'
@@ -58,8 +59,8 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'web-console'
+  gem 'listen'
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem 'bullet'

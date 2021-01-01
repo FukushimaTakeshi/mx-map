@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :inquiry do
-    title 'タイトル'
+    title { 'タイトル' }
     sequence(:email) { |n| "inquiry#{n}@example.com" }
-    message 'メッセージ'
+    message { 'メッセージ' }
   end
 end

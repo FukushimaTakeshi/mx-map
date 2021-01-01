@@ -8,7 +8,7 @@ module Api
                 .search_user_id(params[:user_id])
                 .sorted(params[:sort])
 
-      id = Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(uuid: request.session_options[:id])&.id unless user_signed_in?
+      id = Plan.search_circuit_id(params[:off_road_circuit_id]).search_date(params[:date]).find_by(uuid: request.session_options[:id].to_s)&.id unless user_signed_in?
 
       render json: {
         plans: plans.map do |plan|

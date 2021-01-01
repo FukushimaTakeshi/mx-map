@@ -1,6 +1,4 @@
 Rails.application.configure do
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = true
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -16,27 +14,31 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_store, 'redis://redis:6379/1'
+  config.action_controller.enable_fragment_cache_logging = true
 
-  config.session_store :redis_store,
-    servers: ["redis://redis:6379/0/session"],
-    expire_after: 90.minutes,
-    key: "_#{Rails.application.class.parent_name.downcase}_session",
-    threadsafe: false
+  config.cache_store = :redis_cache_store, {
+    url: 'redis://redis:6379/1'
+  }
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{2.days.to_i}"
+  }
 
-  # Store uploaded files on the local file system (see config/storage.yml for options)
+  # config.session_store :redis_cache_store,
+  #   servers: ['redis://redis:6379/0/session'],
+  #   expire_after: 90.minutes,
+  #   key: "_#{Rails.application.class.parent_name.downcase}_session",
+  #   threadsafe: false
+
+  # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
-
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :letter_opener_web
-
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -54,14 +56,13 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  # Raises error for missing translations
+  # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  # config.file_watcher = ActiveSupport::FileUpdateChecker
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-  BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+  BetterErrors::Middleware.allow_ip! '0.0.0.0/0'
 
   config.after_initialize do
     Bullet.enable = true
