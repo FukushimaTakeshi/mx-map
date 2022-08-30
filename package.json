@@ -17,7 +17,7 @@
     "d3": "~4.9.0",
     "japanese-holidays": "^1.0.6",
     "moment": "^2.22.2",
-    "moment-timezone": "^0.5.23",
+    "moment-timezone": "^0.5.35",
     "rails-ujs": "^5.2.0",
     "swiper": "3.4.1",
     "vee-validate": "^2.1.5",
